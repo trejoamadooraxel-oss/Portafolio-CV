@@ -13,4 +13,4 @@ class Conection_playwright():
         self.browser.close()
 
     def close_conection_p(self):
-        self.conection_p.stop()
+        self.conection_p.stop() 
