@@ -1,7 +1,7 @@
 
 '''
 # ------------------------------------------------------------------------------------------------------------------- #
-REAL METRICS - All Rights Reserved
+
 DEPARTMENT: DA "DATA ACQUISITION"
 ENVIRONMENT: 2031, 2052
 PORTAL: SORIANA PORTAL

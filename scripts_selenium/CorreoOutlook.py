@@ -18,8 +18,8 @@ import time
 import random
 
 tiempoAleatorio = random.randint(0, 5)
-user = 'pumas_axel@hotmail.com'
-password = 'Iphone.2701'
+user = ''
+password = ''
 busca = 'Archivos prueba PDF'
 
 """ CorreoOutlook.py -url https://outlook.live.com/owa/ -wait_time 5 -feini 16/04/2023 -fefin 21/04/2023 """

@@ -2,7 +2,7 @@
 
 '''
 --------------------------------------------------------------------------
-REAL METRICS - All Rights Reserved
+
 DEPARTMENT: DA "DATA ACQUISITION"
 ENVIRONMENT: 2028
 PORTAL: STORE CHECK

@@ -5,7 +5,7 @@
   "supplier_id": "02",
   "host": "https://socios.soriana.com/index/index.html",
   "username": "jiram.gomez@loreal.com",
-  "password": "RGVybWEuMjU=",
+  "password": "",
   "extra_params": {"proveedor": "24201"},
   "wait": false,
   "execute_number": 0,
