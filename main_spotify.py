@@ -127,15 +127,15 @@ def scraping_spotyfy(artist, time_await_defaut, song_caracters, song_albunes,hos
         except Exception as e:
             print('Error inesperado:', e)
 
-def creacion_csv_artist(artist,song_caracters,song_albunes,path_fuentes):
+def creacion_csv_artist(song_caracters,song_albunes,path_fuentes):
 
-    print(f'Iniciando Creacion de csv de albunes para: {artist}')
+    print(f'Iniciando creacion del csv de albunes.')
     df = pd.DataFrame(song_albunes)
-    df.to_csv(f'{path_fuentes}/{artist}_albunes.csv',encoding='utf8', index=True)
+    df.to_csv(f'{path_fuentes}/albunes.csv',encoding='utf8', index= False)
 
-    print(f'Iniciando Creacion de csv de canciones top para: {artist}')
+    print(f'Iniciando creacion de csv de top 10.')
     df = pd.DataFrame(song_caracters)
-    df.to_csv(f'{path_fuentes}/{artist}_top_10.csv',encoding='utf8', index=True)
+    df.to_csv(f'{path_fuentes}/top_10.csv',encoding='utf8', index=False)
 
     
 
@@ -425,12 +425,13 @@ def main():
     pass_postgres = 'SXBob25lLjI3'
 
 
-    #scraping_spotyfy(artist,time_await_defaut,song_caracters, song_albunes,url)
+    scraping_spotyfy(artist,time_await_defaut,song_caracters, song_albunes,url)
+    print(song_caracters)
     #creacion_csv_artist(artist,song_caracters,song_albunes,path_fuente)
     #transformacion_analisis(path_fuente)
 
     #Creamos la conexion para crear y cargar la informacion.
-    bd_postgres = conection_postgresql(host_postgres,user_postgres,pass_postgres,database_new)
+    #bd_postgres = conection_postgresql(host_postgres,user_postgres,pass_postgres,database_new)
     #Creamos la tabla de artistas
     
     #Creamos un objeto Artista para mandar a crear la tabla
@@ -438,7 +439,7 @@ def main():
     #event.creacion_table()
 
     #Creamos un objeto Top_songs para mandar a crear la tabla
-    event = Albunes(bd_postgres)
+    """event = Albunes(bd_postgres)
     event.creacion_table()
 
 
@@ -453,7 +454,7 @@ def main():
     columns_album = 'artist,name_album,year,type_disc,id_artist'
     
     event_global = Acction_global(bd_postgres)
-    event_global.insert_registers('albunes',columns_album, data)
+    event_global.insert_registers('albunes',columns_album, data)"""
     
 
 

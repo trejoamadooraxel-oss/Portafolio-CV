@@ -27,10 +27,11 @@ def search_artist(page, artist, time_await_defaut):
     except Exception as e:
         print('Error inesperado durante la bsuqueda del artista:', e)
 
-def top_ten_song_artists(page, artists, time_await_defaut):
+def top_ten_song_artists(conection_p, url, artists, time_await_defaut):
 
+    page = conection_p.get_page()
+    page.goto(url)
     song_caracters = []
-    
 
     for artist in artists:
 
@@ -75,10 +76,12 @@ def top_ten_song_artists(page, artists, time_await_defaut):
         except Exception as e:
             print('Error inesperado:', e)
         
-    return song_caracters, 
+    return song_caracters 
         
-def all_albuns_artists(page, artists, time_await_defaut):
-        
+def all_albuns_artists(conection_p, url, artists, time_await_defaut):
+
+    page = conection_p.get_page()
+    page.goto(url)
     song_albunes = []
 
     for artist in artists:
@@ -89,7 +92,6 @@ def all_albuns_artists(page, artists, time_await_defaut):
         print('Obtenemos toda la discografia.')
         try:
             
-
             page_discografia = page.locator('[aria-label="Discografía"] span[data-encore-id="text"]')
             page_discografia.click()
             page.wait_for_timeout(time_await_defaut * 3)
@@ -110,8 +112,6 @@ def all_albuns_artists(page, artists, time_await_defaut):
                         'type_disc': disc_type.split(' ')[-1].replace(',','').strip()
                     })
             
-            
-
         except TimeoutError:
             print('Timeout: no apareció el elemento')
 
