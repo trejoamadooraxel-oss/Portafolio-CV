@@ -1,0 +1,349 @@
+{
+  "drt_id": 1,
+  "dro_id":1,
+  "chain_id": "99999",
+  "supplier_id": "03",
+  "host": "https://mexrmscm02023storage.blob.core.windows.net",
+  "username": "realmetrics",
+  "password": "",
+  "extra_params": {
+    "paths_azure": "realmetrics/inbound/BR/clientes/",
+    "report_base": "Clientes_BR_",
+    "extencion": ".csv"
+  },
+  "max_duration": "1",
+  "nat_ip": "34.30.79.97",
+  "wait": false,
+  "execute_number": 0,
+  "log_api": "",
+  "result_api": "",
+  "bucket_gen": "rb-00000-dst_pr",
+  "bucket_src": "rb-00000-src",
+  "tasklist": [
+    {"date": "2025-08-11", "subtype": "catclie", "status": "N"}
+
+  ],
+  "subtypes_conf": [
+    {
+      "subtype":"catclie",
+      "fact_time": "day",
+      "format_type" : "csv",
+      "decimal_separator":".",
+      "header_cols_num":35,
+      "xls_conf": {
+        "sheets_names": ["#all#"],
+        "sheets_nums": [0],
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_last_rows":0,
+        "ignore_none_col_id":0
+      },
+      "csv_conf": {
+        "delimiter": ",",
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_len_row":1
+      },
+      "header":"N",
+      "check_header":"Y",
+      "check_date":"",
+      "base_table" : "bif_aut_wee_mex00005_stochek_v0_00",
+      "fields" : [
+        {
+          "file_name": "sessionuid",
+          "file_type": "string",
+          "bd_name": "sessionuid",
+          "bd_type" : "STRING",
+          "pos": 0,
+          "required": "N"
+        },
+        {
+          "file_name": "VisitDate",
+          "file_type": "string",
+          "file_format":"%Y-%m-%d",
+          "bd_name": "visitdate",
+          "bd_type" : "DATE",
+          "pos": 1,
+          "required": "N"
+        },
+        {
+          "file_name": "Embotellador_Corto",
+          "file_type": "string",
+          "bd_name": "embotellador_corto",
+          "bd_type" : "STRING",
+          "pos": 2,
+          "required": "N"
+        },
+        {
+          "file_name": "Embotellador",
+          "file_type": "string",
+          "bd_name": "embotellador",
+          "bd_type" : "STRING",
+          "pos": 3,
+          "required": "N"
+        },
+        {
+          "file_name": "Cadena",
+          "file_type": "string",
+          "bd_name": "cadena",
+          "bd_type" : "STRING",
+          "pos": 4  ,
+          "required": "N"
+        },
+        {
+          "file_name": "Formato",
+          "file_type": "string",
+          "bd_name": "formato",
+          "bd_type" : "STRING",
+          "pos": 5,
+          "required": "N"
+        },
+        {
+          "file_name": "Zona",
+          "file_type": "string",
+          "bd_name": "zona",
+          "bd_type" : "STRING",
+          "pos": 6,
+          "required": "N"
+        },
+        {
+          "file_name": "Ciudad",
+          "file_type": "string",
+          "bd_name": "ciudad",
+          "bd_type" : "STRING",
+          "pos": 7,
+          "required": "N"
+        },
+        {
+          "file_name": "locationId",
+          "file_type": "string",
+          "bd_name": "locationid",
+          "bd_type" : "INT",
+          "pos": 8,
+          "required": "N"
+        },
+        {
+          "file_name": "Nombre_Tienda",
+          "file_type": "string",
+          "bd_name": "nombre_tienda",
+          "bd_type" : "STRING",
+          "pos": 9,
+          "required": "N"
+        },
+        {
+          "file_name": "Clasificacion",
+          "file_type": "string",
+          "bd_name": "clasificacion",
+          "bd_type" : "STRING",
+          "pos": 10,
+          "required": "N"
+        },
+        {
+          "file_name": "Ubicacion_1",
+          "file_type": "string",
+          "bd_name": "ubicacion_1",
+          "bd_type" : "STRING",
+          "pos": 11,
+          "required": "N"
+        },
+        {
+          "file_name": "Ubicacion_2",
+          "file_type": "string",
+          "bd_name": "ubicacion_2",
+          "bd_type" : "STRING",
+          "pos": 12,
+          "required": "N"
+        },
+        {
+          "file_name": "No_Exhibicion",
+          "file_type": "string",
+          "bd_name": "no_exhibicion",
+          "bd_type" : "STRING",
+          "pos": 13,
+          "required": "N"
+        },
+        {
+          "file_name": "Categoria",
+          "file_type": "string",
+          "bd_name": "categoria",
+          "bd_type" : "STRING",
+          "pos": 14,
+          "required": "N"
+        },
+        {
+          "file_name": "SubCategoria",
+          "file_type": "string",
+          "bd_name": "subcategoria",
+          "bd_type" : "STRING",
+          "pos": 15,
+          "required": "N"
+        },
+        {
+          "file_name": "Fabricante",
+          "file_type": "string",
+          "bd_name": "fabricante",
+          "bd_type" : "STRING",
+          "pos": 16,
+          "required": "N"
+        },
+        {
+          "file_name": "Marca",
+          "file_type": "string",
+          "bd_name": "marca",
+          "bd_type" : "STRING",
+          "pos": 17,
+          "required": "N"
+        },
+        {
+          "file_name": "SubMarca",
+          "file_type": "string",
+          "bd_name": "submarca",
+          "bd_type" : "STRING",
+          "pos": 18,
+          "required": "N"
+        },
+        {
+          "file_name": "Empaque",
+          "file_type": "string",
+          "bd_name": "empaque",
+          "bd_type" : "STRING",
+          "pos": 19,
+          "required": "N"
+        },
+        {
+          "file_name": "productid",
+          "file_type": "string",
+          "bd_name": "productid",
+          "bd_type" : "INT",
+          "pos": 20,
+          "required": "N"
+        },
+        {
+          "file_name": "ITEM",
+          "file_type": "string",
+          "bd_name": "item",
+          "bd_type" : "STRING",
+          "pos": 21,
+          "required": "N"
+        },
+        {
+          "file_name": "SABOR",
+          "file_type": "string",
+          "bd_name": "sabor",
+          "bd_type" : "STRING",
+          "pos": 22,
+          "required": "N"
+        },
+        {
+          "file_name": "Tamano",
+          "file_type": "string",
+          "bd_name": "tamano",
+          "bd_type" : "FLOAT",
+          "pos": 23,
+          "required": "N"
+        },
+        {
+          "file_name": "Tipo",
+          "file_type": "string",
+          "bd_name": "tipo",
+          "bd_type" : "STRING",
+          "pos": 24,
+          "required": "N"
+        },
+        {
+          "file_name": "frentes",
+          "file_type": "string",
+          "bd_name": "frentes",
+          "bd_type" : "INT",
+          "pos": 25,
+          "required": "N"
+        },
+        {
+          "file_name": "Ubicacion_3",
+          "file_type": "string",
+          "bd_name": "ubicacion_3",
+          "bd_type" : "STRING",
+          "pos": 26,
+          "required": "N"
+        },
+        {
+          "file_name": "Ubicacion_4",
+          "file_type": "string",
+          "bd_name": "ubicacion_4",
+          "bd_type" : "STRING",
+          "pos": 27,
+          "required": "N"
+        },
+        {
+          "file_name": "precio_etiqueta",
+          "file_type": "string",
+          "bd_name": "precio_etiqueta",
+          "bd_type" : "FLOAT",
+          "pos": 28,
+          "required": "N"
+        },
+        {
+          "file_name": "Precio_verificador",
+          "file_type": "string",
+          "bd_name": "precio_verificador",
+          "bd_type" : "FLOAT",
+          "pos": 29,
+          "required": "N"
+        },
+        {
+          "file_name": "Product",
+          "file_type": "string",
+          "bd_name": "product",
+          "bd_type" : "STRING",
+          "pos": 30,
+          "required": "N"
+        },
+        {
+          "file_name": "ShortName",
+          "file_type": "string",
+          "bd_name": "shortname",
+          "bd_type" : "STRING",
+          "pos": 31,
+          "required": "N"
+        },
+        {
+          "file_name": "Periodo",
+          "file_type": "string",
+          "bd_name": "periodo",
+          "bd_type" : "STRING",
+          "pos": 32,
+          "required": "N"
+        },
+        {
+          "file_name": "code",
+          "file_type": "string",
+          "bd_name": "code",
+          "bd_type" : "STRING",
+          "pos": 33,
+          "required": "N"
+        },
+        {
+          "file_name": "rm_time_id_file",
+          "file_type": "string",
+          "file_format":"%Y-%m-%d",
+          "bd_name": "rm_time_id_file",
+          "bd_type" : "DATE",
+          "role" : "time_id",
+          "pos": 34,
+          "required": "N"
+        }
+      ],
+      "defaults": [ ]
+    }
+
+
+  ]
+}
+
+
+
+
+
+
+
+

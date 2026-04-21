@@ -1,0 +1,440 @@
+{
+  "drt_id": 1,
+  "dro_id":1,
+  "chain_id": "00005",
+  "supplier_id": "02",
+  "host": "https://socios.soriana.com/index/index.html",
+  "username": "jiram.gomez@loreal.com",
+  "password": "RGVybWEuMjU=",
+  "extra_params": {"proveedor": "24201"},
+  "wait": false,
+  "execute_number": 0,
+  "log_api": "",
+  "result_api": "",
+  "bucket_gen": "rb-00000-dst_pr",
+  "bucket_src": "rb-00000-src",
+  "tasklist": [{"date": "2025-09-09", "subtype": "sori00v", "status": "N"},
+               {"date": "2025-09-09", "subtype": "sori00b", "status": "N"},
+               {"date": "2025-09-09", "subtype": "sori00i", "status": "N"}],
+  "subtypes_conf": [
+    {
+      "subtype":"sori00v",
+      "fact_time": "day",
+      "dimensiones": ["Código Tienda", "Tienda", "División", "Código de Barras", "Artículo", "Fecha"],
+      "metricas": ["Venta (Pesos)", "Venta (Unidades)"],
+      "formatos": ["Org. Vtas.  Hiper", "Org. Vtas. Super", "Org. Vtas. Express", "Org. Vtas. Mercado"],
+      "format_type" : "csv",
+      "decimal_separator":".",
+      "header_cols_num":8,
+      "xls_conf": {
+        "sheets_names": ["#all#"],
+        "sheets_nums": [0],
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_last_rows":0,
+        "ignore_none_col_id":0
+      },
+      "csv_conf": {
+        "delimiter": ",",
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_len_row":1
+      },
+      "header":"Y",
+      "check_header":"Y",
+      "check_date":"",
+      "base_table" : "bif_aut_day_mex00005_sori00v_v00_00",
+      "fields": [
+
+        {
+            "file_name": "Codigo Tienda",
+            "file_type": "string",
+            "bd_name": "codigo_tienda",
+            "bd_type": "STRING",
+            "role": "pos_import",
+            "pos": 0,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Tienda",
+            "file_type": "string",
+            "bd_name": "tienda",
+            "bd_type": "STRING",
+            "pos": 1,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Division",
+            "file_type": "string",
+            "bd_name": "division",
+            "bd_type": "STRING",
+            "pos": 2,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Codigo de Barras",
+            "file_type": "string",
+            "bd_name": "codigo_de_barras",
+            "bd_type": "STRING",
+            "role": "prod_import",
+            "pos": 3,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Articulo",
+            "file_type": "string",
+            "bd_name": "articulo",
+            "bd_type": "STRING",
+            "pos": 4,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Fecha",
+            "file_type": "string",
+            "file_format":"%Y-%m-%d",
+            "bd_name": "fecha",
+            "bd_type" : "DATE",
+            "role" : "time_id",
+            "transform":{"type":"strip"},
+            "pos": 5,
+            "required": "Y"
+        },
+        {
+            "file_name": "Venta (Pesos)",
+            "file_type": "string",
+            "bd_name": "venta_pesos",
+            "bd_type": "FLOAT64",
+            "pos": 6,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Venta (Unidades)",
+            "file_type": "string",
+            "bd_name": "venta_unidades",
+            "bd_type": "FLOAT64",
+            "pos": 7,
+            "required": "N"
+        }
+    ],
+      "defaults": [ ]
+    },
+    {
+      "subtype":"sori00b",
+      "fact_time": "day",
+      "dimensiones": ["Código Tienda", "Tienda", "División", "Código de Barras", "Artículo", "Fecha"],
+      "metricas": ["Venta (Pesos)", "Venta (Unidades)"],
+      "formatos": ["Org. Vtas.  Hiper", "Org. Vtas. Super", "Org. Vtas. Express", "Org. Vtas. Mercado"],
+      "format_type" : "csv",
+      "decimal_separator":".",
+      "header_cols_num":8,
+      "xls_conf": {
+        "sheets_names": ["#all#"],
+        "sheets_nums": [0],
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_last_rows":0,
+        "ignore_none_col_id":0
+      },
+      "csv_conf": {
+        "delimiter": ",",
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_len_row":1
+      },
+      "header":"Y",
+      "check_header":"Y",
+      "check_date":"",
+      "base_table" : "bif_aut_day_mex00005_sori00b_v00_00",
+      "fields": [
+
+        {
+            "file_name": "Codigo Tienda",
+            "file_type": "string",
+            "bd_name": "codigo_tienda",
+            "bd_type": "STRING",
+            "pos": 0,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Tienda",
+            "file_type": "string",
+            "bd_name": "tienda",
+            "bd_type": "STRING",
+            "pos": 1,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Division",
+            "file_type": "string",
+            "bd_name": "division",
+            "bd_type": "STRING",
+            "pos": 2,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Codigo de Barras",
+            "file_type": "string",
+            "bd_name": "codigo_de_barras",
+            "bd_type": "STRING",
+            "pos": 3,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Articulo",
+            "file_type": "string",
+            "bd_name": "articulo",
+            "bd_type": "STRING",
+            "pos": 4,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Fecha",
+            "file_type": "string",
+            "file_format":"%Y-%m-%d",
+            "bd_name": "fecha",
+            "bd_type" : "DATE",
+            "role" : "time_id",
+            "transform":{"type":"strip"},
+            "pos": 5,
+            "required": "Y"
+        },
+        {
+            "file_name": "Venta (Pesos)",
+            "file_type": "string",
+            "bd_name": "venta_(pesos)",
+            "bd_type": "FLOAT64",
+            "pos": 6,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Venta (Unidades)",
+            "file_type": "string",
+            "bd_name": "venta_(unidades)",
+            "bd_type": "FLOAT64",
+            "pos": 7,
+            "required": "N"
+        }
+    ],
+      "defaults": [ ]
+    },
+    {
+      "subtype":"sori00i",
+      "fact_time": "day",
+      "dimensiones": ["Código Tienda", "Código de Barras", "Fecha"],
+      "metricas": ["Inventario (Actual)"],
+      "formatos": ["Org. Vtas.  Hiper", "Org. Vtas. Express", "Org. Vtas. Mercado", "Org. Vtas. Super"],
+      "format_type" : "csv",
+      "decimal_separator":".",
+      "header_cols_num":5,
+      "xls_conf": {
+        "sheets_names": ["#all#"],
+        "sheets_nums": [0],
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_last_rows":0,
+        "ignore_none_col_id":0
+      },
+      "csv_conf": {
+        "delimiter": ",",
+        "header_offset":0,
+        "encoding":"utf-8",
+        "ignore_len_row":1
+      },
+      "header":"Y",
+      "check_header":"Y",
+      "check_date":"",
+      "base_table" : "bif_aut_day_mex00005_sori00i_v00_00",
+      "fields": [
+
+        {
+            "file_name": "Codigo Tienda",
+            "file_type": "string",
+            "bd_name": "codigo_tienda",
+            "bd_type": "STRING",
+            "role": "pos_import",
+            "pos": 0,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Codigo de Barras",
+            "file_type": "string",
+            "bd_name": "codigo_de_barras",
+            "bd_type": "STRING",
+            "role": "prod_import",
+            "pos": 1,
+            "transforms": [
+                {
+                    "type": "replace",
+                    "prev": ",",
+                    "new": ""
+                },
+                {
+                    "type": "strip"
+                }
+            ],
+            "required": "N"
+        },
+        {
+            "file_name": "Fecha",
+            "file_type": "string",
+            "file_format":"%Y-%m-%d",
+            "bd_name": "fecha",
+            "bd_type" : "DATE",
+            "transform":{"type":"strip"},
+            "pos": 2,
+            "required": "Y"
+        },
+        {
+            "file_name": "Inventario (Actual)",
+            "file_type": "string",
+            "bd_name": "inventario_actual",
+            "bd_type": "FLOAT64",
+            "pos": 3,
+            "required": "N"
+        },
+        {
+            "file_name": "rm_time_id",
+            "file_type": "string",
+            "file_format":"%Y-%m-%d",
+            "bd_name": "rm_time_id",
+            "bd_type" : "DATE",
+            "role": "time_id",
+            "transform":{"type":"strip"},
+            "pos": 4,
+            "required": "Y"
+        }
+      ],
+      "defaults": [ ]
+    }
+  ]
+}
