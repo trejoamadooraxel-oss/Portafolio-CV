@@ -35,7 +35,7 @@ class Albunes:
             query = (f"""INSERT INTO albunes ({colums}) VALUES %s""")
             execute_values(self.cli, query, data)
             self.bd_postgres.commit()
-            print('EXITO.Registros incertados correctamente')
+            print('EXITO. Registros incertados correctamente')
 
         except Exception as e:
             print(f'ERROR. No se pudieron insertar los registros a la tabla "albunes", {e}')

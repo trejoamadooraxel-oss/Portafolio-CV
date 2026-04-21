@@ -26,8 +26,7 @@ class Artist:
                 followers NUMERIC,
                 monthly_listeners NUMERIC
             );
-            """)
-        
+            """)        
             self.bd_postgres.commit()
             print('Tabla verificada/creada correctamente')
         
@@ -65,4 +64,22 @@ class Artist:
         except Exception as e:
             print(f'ERROR. No se pudieron traer las columnas a la tabla "artist", {e}')
             return None
-            
+
+    def select_artist(self):
+        try:
+
+            self.cli.execute("""
+                select name_artist from artist order by id_artist;
+            """)
+
+            #Obtenmos el resultado en una 
+            columns = [col[0] for col in self.cli.fetchall()]
+            #Une y concatena lo de una lista en un string
+            #columns_artist = ', '.join(col for col in columns)
+
+            #print(f'Las columnas de la tabla "artist" son: {columns}')
+            return columns
+        
+        except Exception as e:
+            print(f'ERROR. No se pudieron traer las columnas a la tabla "artist", {e}')
+            return None
