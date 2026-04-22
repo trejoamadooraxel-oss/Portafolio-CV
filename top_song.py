@@ -35,7 +35,7 @@ class Top_songs:
             query = (f"""INSERT INTO top_songs ({colums}) VALUES %s""")
             execute_values(self.cli, query, data)
             self.bd_postgres.commit()
-            print('Registros incertados correctamente')
+            print('EXITO. Registros incertados correctamente')
 
         except Exception as e:
             print(f'ERROR. No se pudieron insertar los registros a la tabla "top_songs", {e}')

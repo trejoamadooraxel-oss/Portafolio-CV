@@ -45,7 +45,7 @@ def top_ten_song_artists(conection_p, url, artists, time_await_defaut):
             page.get_by_text('Ver más').click()
             page.wait_for_timeout(time_await_defaut * 3)
             card_list_songs = page.locator('[role="presentation"] div[data-testid="tracklist-row"]')
-            print(card_list_songs.count())
+   
 
             for i in range(card_list_songs.count()):
 

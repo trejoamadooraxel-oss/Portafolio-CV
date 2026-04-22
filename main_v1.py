@@ -25,8 +25,11 @@ def process_by_top_ten(host, user, passw, db_name, artists, url, time_await_defa
     actions_csv = ccdb.Acctios_csv()     
 
     #Guardamos el la informacion en un csv
-    actions_csv.creacion_csv_albunes(song_top_ten)
+    actions_csv.creation_csv_top_ten(song_top_ten)
 
+    process_by_artist(host, user, passw, db_name)
+
+  
     #Verificamos que la tabla sea creada
     top_ten = top.Top_songs(db, cli)
     top_ten.creacion_table()
@@ -81,10 +84,12 @@ def process_by_album(host, user, passw, db_name, artists, url, time_await_defaut
     #Cerramos conexion a postgres
     postgres.close_conection()
 
+
 def process_by_artist(host, user, passw, db_name):
     postgres = con_postgres.conection_postgres_sql(host, user, passw, db_name)
     db, cli = postgres.db_cli()
     artista = art.Artist(db, cli)
+    artista.creacion_table()
     columns = artista.columns_table()
     actions_csv = ccdb.Acctios_csv() 
     actions_csv.creation_csv_artist(columns.split(','))
@@ -92,12 +97,13 @@ def process_by_artist(host, user, passw, db_name):
     artista.insert_registers(columns, data)
     postgres.close_conection()
 
+
 def main():
     #Variables
     #--Scrapping
     url = "https://open.spotify.com/"
     time_await_defaut = 1000
-    artists = ['Geometric Vision', 'Mareux']
+    artists = ['Queen', 'Michael Jackson', 'Interpol', 'She Past Away']
 
     #--Conexion a postgres
     host = 'bG9jYWxob3N0'
@@ -110,11 +116,9 @@ def main():
 
     #Funcion para scrapear, crear
     process_by_top_ten(host, user, passw, db_name, artists, url, time_await_defaut)
-    #process_by_album(host, user, passw, db_name, artists, url, time_await_defaut)
-    #process_by_artist(host, user, passw, db_name)
+    process_by_album(host, user, passw, db_name, artists, url, time_await_defaut)
+   
 
-    
-    
 
 if __name__ == "__main__":
     main()

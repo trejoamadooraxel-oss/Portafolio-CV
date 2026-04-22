@@ -1,21 +1,98 @@
-artist,name song,num reproduction,time duration
-Geometric Vision,Jelly Dream,1923978,4:03
-Geometric Vision,Fire Fire Fire,713742,3:46
-Geometric Vision,Tower of Glass - Geometric Vision Remix,196291,4:16
-Geometric Vision,Slowemotion (Molchat Doma Remix),328736,4:26
-Geometric Vision,Slowemotion,396056,4:32
-Geometric Vision,Letania,172113,4:47
-Geometric Vision,Stella,7732,3:12
-Geometric Vision,79 D.C.,219445,3:06
-Geometric Vision,Another Day Without Blue,162797,3:00
-Geometric Vision,Luna,53383,6:00
-Mareux,The Perfect Girl,591323571,3:14
-Mareux,Killer,57037091,3:06
-Mareux,Lovers From The Past,65862338,3:19
-Mareux,The Perfect Girl - The Motion Retrowave Remix,90432306,3:01
-Mareux,Summertime,39968766,3:37
-Mareux,baby give me more (feat. Mareux),3427493,3:45
-Mareux,The Perfect Girl - Instrumental,39483278,3:14
-Mareux,Night Vision,8332732,3:50
-Mareux,Laugh Now Cry Later,4266611,3:19
-Mareux,Glass (feat. King Woman),6301946,4:07
+artist,name album,year,type_disc
+Queen,Queen II (2026 Mix),2026,Álbum
+Queen,Queen II,2026,Álbum
+Queen,Seven Seas Of Rhye (2026 Mix),2026,Sencillo
+Queen,Who Wants To Live Forever (Stranger Things Remix),2025,Sencillo
+Queen,Acoustic,2025,Compilación
+Queen,B-Sides,2025,Compilación
+Queen,Rock N Roll,2025,Compilación
+Queen,Slightly Mad,2025,Compilación
+Queen,Ballads,2025,Compilación
+Queen,Funk,2025,Compilación
+Queen,Anthems,2025,Compilación
+Queen,Pop,2025,Compilación
+Queen,Riffs,2025,Compilación
+Queen,Heavy,2025,Compilación
+Queen,Epic,2025,Compilación
+Queen,Modern Times Rock 'n’ Roll (2024 Mix),2024,Sencillo
+Queen,The Night Comes Down (2024 Mix),2024,Sencillo
+Queen,We Will Rock You (Megan Thee Stallion Version),2024,Sencillo
+Queen,My Radio,2023,Sencillo
+Queen,The Miracle (Collector's Edition),2022,Álbum
+Queen,Face It Alone,2022,Sencillo
+Queen,Who Wants To Live Forever,2020,Sencillo
+Queen,Live Around The World (Deluxe),2020,Álbum
+Queen,You Are The Champions (In Support Of The Covid-19 Solidarity Response Fund),2020,Sencillo
+Queen,Greatest Hits In Japan,2020,Compilación
+Queen,Bohemian Rhapsody (The Original Soundtrack),2018,Compilación
+Queen,Queen at Live Aid (Live at Wembley Stadium 13th July 1985),2018,EP
+Queen,We Will Rock You (Raw Sessions Version),2017,Sencillo
+Michael Jackson,Michael: The Birth of A Superstar,2026,Álbum
+Michael Jackson,Thriller 40,2022,Álbum
+Michael Jackson,Michael Jackson x Mark Ronson: Diamonds are Invincible,2018,Sencillo
+Michael Jackson,Thriller (Steve Aoki Midnight Hour Remix),2017,Sencillo
+Michael Jackson,Scream,2017,Compilación
+Michael Jackson,Slave to the Rhythm (Audien Remix Radio Edit),2014,Sencillo
+Michael Jackson,Love Never Felt So Good (David Morales and Eric Kupper Def Mix),2014,Sencillo
+Michael Jackson,Love Never Felt So Good (Fedde Le Grand Remix Radio Edit),2014,Sencillo
+Michael Jackson,XSCAPE - Track by Track Commentary,2014,Álbum
+Michael Jackson,XSCAPE,2014,Álbum
+Michael Jackson,Bad 25th Anniversary,2012,Álbum
+Michael Jackson,Immortal,2011,Compilación
+Michael Jackson,Michael,2010,Álbum
+Michael Jackson,Michael Jackson's This Is It,2009,Compilación
+Michael Jackson,Michael Jackson: The Complete Remix Suite,2009,Compilación
+Michael Jackson,Hello World - The Motown Solo Collection,2009,Compilación
+Michael Jackson,The Stripped Mixes,2009,Compilación
+Michael Jackson,The Definitive Collection,2009,Compilación
+Michael Jackson,Pure Michael: Motown A Cappella,2009,Compilación
+Michael Jackson,Ben / You Can Cry On My Shoulder,2009,Compilación
+Michael Jackson,Gold,2008,Compilación
+Michael Jackson,Thriller 25 Super Deluxe Edition,2008,Álbum
+Michael Jackson,The Essential Michael Jackson,2005,Compilación
+Michael Jackson,Number Ones,2003,Compilación
+Michael Jackson,Love Songs,2002,Compilación
+Michael Jackson,Invincible,2001,Álbum
+Michael Jackson,20th Century Masters: The Millennium Collection: Best of Michael Jackson,2000,Compilación
+Michael Jackson,BLOOD ON THE DANCE FLOOR/ HIStory In The Mix,1997,Álbum
+Interpol,Rabbit Run (Interpol Remix),2025,Sencillo
+Interpol,Live at Third Man Records,2024,Álbum
+Interpol,Antics (The Twentieth Anniversary Edition),2024,Álbum
+Interpol,Greenwich (Daniel Avery Interpolation),2023,Sencillo
+Interpol,Something Changed (Water From Your Eyes Interpolation),2023,Sencillo
+Interpol,Toni (Jesu Interpolation),2023,Sencillo
+Interpol,Passenger (Jeff Parker Interpolation),2023,Sencillo
+Interpol,Big Shot City (Makaya McCraven Interpolation),2023,Sencillo
+Interpol,Fables (Edit),2022,Sencillo
+Interpol,The Black EP,2022,EP
+Interpol,The Other Side Of Make-Believe,2022,Álbum
+Interpol,Gran Hotel,2022,Sencillo
+Interpol,Fables,2022,Sencillo
+Interpol,Something Changed,2022,Sencillo
+Interpol,Toni,2022,Sencillo
+Interpol,A Fine Mess,2019,EP
+Interpol,Complications (Mexican Institute of Sound Remix),2018,Sencillo
+Interpol,Party's Over (Lao Remix),2018,Sencillo
+Interpol,If You Really Love Nothing (Serban Ghenea Mix),2018,Sencillo
+Interpol,If You Really Love Nothing (Reimagined by Pêtr Aleksänder),2018,Sencillo
+Interpol,The Rover (DJDS Remix),2018,Sencillo
+Interpol,Marauder,2018,Álbum
+Interpol,If You Really Love Nothing,2018,Sencillo
+Interpol,Number 10,2018,Sencillo
+Interpol,The Rover,2018,Sencillo
+Interpol,El Pintor (Bonus Tracks),2018,EP
+Interpol,Everything Is Wrong (Solomun Remixes),2016,Sencillo
+Interpol,All the Rage Back Home (Panda Bear Remix),2015,Sencillo
+She Past Away,Mizantrop,2026,Álbum
+She Past Away,Ölüm Günüm,2024,Sencillo
+She Past Away,İnziva,2024,Sencillo
+She Past Away,Akinesia (She Past Away Remix),2021,Sencillo
+She Past Away,Excess,2021,Sencillo
+She Past Away,Portal to the Void (She Past Away Remix),2021,Sencillo
+She Past Away,Part Time Punks Session,2020,Álbum
+She Past Away,X,2020,Álbum
+She Past Away,Ritüel (The Soft Moon Remix),2020,Sencillo
+She Past Away,Disko Anksiyete,2019,Álbum
+She Past Away,Narin Yalnizlik,2019,Álbum
+She Past Away,Belirdi Gece,2019,Álbum
+She Past Away,Kasvetli Kutlama,2010,Sencillo
