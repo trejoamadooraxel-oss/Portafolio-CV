@@ -1,0 +1,24 @@
+{
+    "Axel_cocina": {
+        "frutas": [
+            "manzana",
+            "sandia",
+            "uva"
+        ],
+        "verduras": [
+            "papa",
+            "calabaza",
+            "zanahoria"
+        ],
+        "cubiertos": [
+            "tenedor",
+            "cuchillo",
+            "cuchara"
+        ],
+        "Comidas": {
+            "desayuno": "huevo_mexicana",
+            "comida": "milanesa_sopa",
+            "cena": "cafe_pan"
+        }
+    }
+}
