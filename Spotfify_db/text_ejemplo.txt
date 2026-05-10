@@ -1,0 +1,9 @@
+Buena dia Alejandro.
+
+Te comparto mi portafolio por github, en la carpeta llamada
+scripts_selenium vienen algunos script que desarolle a lo largo de RM, 
+el mas reciente es el de liverpool y soriana.
+
+(No hacen nada sin las credenciales, esas ya no las poseo.)
+
+Ando al tanto de todo seguimiento y comentario para la vacante.
