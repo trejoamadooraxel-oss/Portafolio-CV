@@ -4,15 +4,6 @@ import base64
 import codecs
 
 
-"""
-Hola como estas
-
-"""
-
-
-##hola como estas
-
-
 class conection_postgres_sql():
     def __init__(self, host, user, passw, name_db):
         hola = 'hola'
