@@ -1,6 +1,15 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from Models.queries import Queries
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+
+
+
 
 app = FastAPI()
 
@@ -41,6 +50,12 @@ diccionario_albunes = {
                     }
 #####----------------------
 #Funciona para hacer querrys
+@app.get("/buscar/all_artists")
+def buscar():
+    querry = Queries.all_artist()
+    return {"all_artistas": querry}
+#####----------------------
+#Funciona para hacer querrys
 @app.get("/buscar")
 def buscar(id_artista: int):
     if id_artista not in diccionario_artistas:
@@ -63,7 +78,7 @@ def buscar_for_entidad(entidad: str):
 class ArtistaInput(BaseModel):
     nombre: str
 
-@app.post("/artista", status_code=201)
+@app.post("/artistas", status_code=201)
 def crear_artista(artista: ArtistaInput):
     nuevo_id = max(diccionario_artistas.keys()) + 1
     diccionario_artistas[nuevo_id] = artista.nombre

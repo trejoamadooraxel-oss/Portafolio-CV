@@ -54,14 +54,6 @@ if __name__ == '__main__':
     #DB_admin.crear_usuario('miranda','mona')
     """ """
 
-
-
-
-
-
-
-
-
     """
     
     Artist.__table__.create(bind=engine, checkfirst=True)   # crear tabla
