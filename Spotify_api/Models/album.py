@@ -1,12 +1,7 @@
-import sys
-import os
-
-# Agrega la carpeta raíz al path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
 from sqlalchemy import insert, delete, select
-from conect_sqlalchemy import Base, engine, Session
+from conect_sqlalchemy import Base, engine, AsyncSessionLocal
 
 class Album(Base):
     __tablename__ = 'album'
@@ -22,33 +17,35 @@ class Album(Base):
     def __str__(self):
         return self.username
 
-    def create_table():
-        Album.__table__.create(bind=engine, checkfirst=True)
+    #def create_table():
+    #    Album.__table__.create(bind=engine, checkfirst=True)
 
     @classmethod
-    def insert_to_table(cls, values):
-        session = Session()
-        try:
-            session.execute(insert(cls), values)
-            session.commit()
-            print("Registro insertado correctamente")
-        except Exception as e:
-            session.rollback()
-            print(f"ERROR: {e}")
-        finally:
-            session.close()
+    async def create_table(cls):
+        async with engine.begin() as conn:
+            await conn.run_sync(lambda sync_conn: cls.__table__.create(bind=sync_conn, checkfirst=True))
 
     @classmethod
-    def id_db(cls, value):
-        session = Session()
-        try:
-            stmt = select(Album.id_album).where(Album.id_spotify == value)
-            id = session.scalars(stmt).first()
-            print(f"El id_album asociado con {value} es: {id}")
-        except Exception as e:
-            session.rollback()
-            print(f"ERROR: {e}")
-        finally:
-            session.close()
+    async def insert_to_table(cls, values):
+        async with AsyncSessionLocal() as session:
+            try:
+                await session.execute(insert(cls), values)
+                await session.commit()
+                print("Registro insertado correctamente")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
 
-        return id
+    @classmethod
+    async def id_db(cls, value):
+        async with AsyncSessionLocal() as session:
+            id = None
+            try:
+                stmt = select(Album.id_album).where(Album.id_spotify == value)
+                result = await session.scalars(stmt)
+                id = result.first()
+                print(f"El id_album asociado con {value} es: {id}")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+            return id

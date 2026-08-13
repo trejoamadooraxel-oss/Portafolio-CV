@@ -1,18 +1,13 @@
 import os
 import time
-import json
 import requests
 from datetime import datetime
-from datetime import timedelta
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from dotenv import load_dotenv
+from Models import Artist, Album, Track
 
-from Models.artist import Artist
-from Models.album import Album
-from Models.track import Track
-
-load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
+load_dotenv('/Users/axel/Documents/Portafolio/Spztify_api/env_var/varaibles_credential.env')
 
 def conection_spotify():
     sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
@@ -82,7 +77,7 @@ def normalizar_fecha(fecha_str):
     except:
         return None
 
-def list_albums(sp, id_artist, name_artist):
+async def list_albums(sp, id_artist, name_artist):
     all_albums = []
     dicc_abums = []
 
@@ -96,7 +91,7 @@ def list_albums(sp, id_artist, name_artist):
         time.sleep(1)
 
     #Traemos el id que corresponde al artista:
-    id_artista = Artist.id_db(name_artist)
+    id_artista = await Artist.id_db(name_artist)
     time.sleep(1)
 
     for album in all_albums:
@@ -111,14 +106,14 @@ def list_albums(sp, id_artist, name_artist):
     return dicc_abums
 
 
-def list_tracks(sp, dicc_abums):
+async def list_tracks(sp, dicc_abums):
     dicc_track = []
     all_albums = [album["id_spotify"] for album in dicc_abums]
 
     for album_id in all_albums:
 
         # Traemos el id que corresponde al artista:
-        id_album = Album.id_db(album_id)
+        id_album = await Album.id_db(album_id)
         time.sleep(1)
 
         tracks = sp.album_tracks(album_id)

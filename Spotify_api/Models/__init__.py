@@ -1,4 +1,3 @@
-
 from Models.artist import Artist
 from Models.album import Album
 from Models.track import Track

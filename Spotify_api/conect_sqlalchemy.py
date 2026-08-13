@@ -1,17 +1,31 @@
 import os
-from datetime import datetime
-from sqlalchemy import create_engine, Column, Integer, String, DateTime #Tipo de datos que vamos estar manejando
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from dotenv import load_dotenv
 
 load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
- # reads from a .env file
-credenciales = os.getenv('SQLALCHEMY_HOST')
-engine = create_engine(credenciales, echo=True)
+credenciales = os.getenv('SQLALCHEMY_HOST')  # debe iniciar con postgresql+asyncpg://
+
+engine = create_async_engine(
+    credenciales,
+    echo=True,
+    pool_size=10,
+    max_overflow=5,
+    pool_pre_ping=True,
+    pool_recycle=1800
+)
 
 
 class Base(DeclarativeBase):
     pass
 
-Session = sessionmaker(bind=engine)
 
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine,
+    expire_on_commit=False
+)
+
+
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session

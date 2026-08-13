@@ -1,66 +1,37 @@
-import time
-
-from conect_sqlalchemy import engine
-from sqlalchemy import Table
-from Models.artist import Artist
-from Models.album import Album
-from Models.track import Track
+import asyncio
+from Models import Artist, Album, Track
 from Models.users_db import DB_admin
 import conection_api as spotify_api
 
+async def creacion_tablas():
+    await Artist.create_table()
+    await asyncio.sleep(3)
+    await Album.create_table()
+    await asyncio.sleep(3)
+    await Track.create_table()
 
-def creacion_tablas():
+async def informacion_artista(sp, name_artist):
+    id_artista, dic_artist = spotify_api.identificador_artistas(sp, name_artist)
+    await Artist.insert_to_table(dic_artist)
 
-    Artist.create_table()
-    time.sleep(3)
-    Album.create_table()
-    time.sleep(3)
-    Track.create_table()
+    dicc_albums = await spotify_api.list_albums(sp, id_artista, name_artist)
+    await Album.insert_to_table(dicc_albums)
 
-def informacion_artista(sp, name_artist):
-    id_artista, dic_artist = spotify_api.identificador_artistas(sp,name_artist)
-    #insertar_artista(dic_artist)
+    dic_canciones = await spotify_api.list_tracks(sp, dicc_albums)
+    await Track.insert_to_table(dic_canciones)
 
-    dicc_albums = spotify_api.list_albums(sp, id_artista, name_artist)
-    Album.insert_to_table(dicc_albums)
+    return dic_artist, dicc_albums, dic_canciones
 
-    dic_canciones = spotify_api.list_tracks(sp, dicc_albums)
-    Track.insert_to_table(dic_canciones)
+async def main():
+    sp = spotify_api.conection_spotify()
+    search_artista = input('Ingresa el Artista que deseas buscar: ')
 
-def insertar_artista(dic_artist):
-    Artist.insert_to_table(dic_artist)
+    await creacion_tablas()
+    await asyncio.sleep(1)
+    dic_artist, dicc_albums, dic_canciones = await informacion_artista(sp, search_artista)
 
-def insertar_albums(dicc_albums):
-    Album.insert_to_table(dicc_albums)
-
-def insertar_canciones(dic_canciones):
-    Track.insert_to_table(dic_canciones)
+    print(dic_artist, dicc_albums, dic_canciones)
 
 
 if __name__ == '__main__':
-
-    #Conexcion y extracion de informaion de API
-
-    sp = spotify_api.conection_spotify()
-    search_artista = input('Ingresa el Artista que deseas bucar: ')
-    creacion_tablas()
-    time.sleep(1)
-    dic_artist, dicc_albums, dic_canciones = informacion_artista(sp,search_artista)
-
-
-
-    #Area de Administracion de usuarios y permisos
-    """ """
-    #DB_admin.crear_usuario('miranda','mona')
-    """ """
-
-    """
-    
-    Artist.__table__.create(bind=engine, checkfirst=True)   # crear tabla
-    Artist.__table__.drop(bind=engine, checkfirst=True)     # eliminar tabla
-    Artist.__table__.exists(bind=engine)                    # verificar si existe
-    Artist.__table__.name                                   # nombre de la tabla
-    Artist.__table__.columns                                # columnas
-    Artist.__table__.primary_key        
-        
-    """
+    asyncio.run(main())
