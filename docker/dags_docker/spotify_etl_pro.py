@@ -8,6 +8,7 @@ from airflow.decorators import task
 from airflow.models.param import Param
 from airflow.decorators import task_group
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import ShortCircuitOperator
 from airflow.sensors.python import PythonSensor
 from airflow.providers.docker.operators.docker import DockerOperator
 
@@ -15,6 +16,8 @@ import logging
 
 from wirerope.wire import descriptor_bind
 
+def verificar_parametros(flag_name, **kwargs):
+    return kwargs['params'].get(flag_name) is True
 
 def notificar_error_pipeline(context):
     import requests
@@ -80,12 +83,30 @@ with DAG(
     tags=["spotify", "etl"],
     params={
         "nombre_artista": Param(default="Bad Bunny", type="string", description="Nombre del artista a buscar en Spotify",),
-        "proceso_artista": Param(default="SI", type="String", description="Realiza el proceso para la tabla artista crear, extraer y subir inf."),
-        "proceso_album": Param(default="SI", type="String", description="Realiza el proceso para la tabla album crear, extraer y subir inf."),
-        "proceso_canciones": Param(default="SI", type="String", description="Realiza el proceso para la tabla canciones crear, extraer y subir inf."),
-        "proceso_mas_informacion": Param(default="SI", type="String", description="Realiza el proceso para la tabla mas_inf crear, extraer y subir inf.")
+        "proceso_artista": Param(default=True, type="boolean", description="Realiza el proceso para la tabla artista crear, extraer y subir inf."),
+        "proceso_album": Param(default=True, type="boolean", description="Realiza el proceso para la tabla album crear, extraer y subir inf."),
+        "proceso_canciones": Param(default=True, type="boolean", description="Realiza el proceso para la tabla canciones crear, extraer y subir inf."),
+        "proceso_mas_informacion": Param(default=True, type="boolean", description="Realiza el proceso para la tabla mas_inf crear, extraer y subir inf.")
     },
 ) as dag:
+
+    condicion_proceso_album = ShortCircuitOperator(
+        task_id="condicion_proceso_album",
+        python_callable=verificar_parametros,
+        op_kwargs={"flag_name": "proceso_album"},
+    )
+
+    condicion_proceso_canciones = ShortCircuitOperator(
+        task_id="condicion_proceso_canciones",
+        python_callable=verificar_parametros,
+        op_kwargs={"flag_name": "proceso_canciones"},
+    )
+
+    condicion_mas_inf = ShortCircuitOperator(
+        task_id="condicion_mas_informacion",
+        python_callable=verificar_parametros,
+        op_kwargs={"flag_name": "proceso_mas_informacion"},
+    )
 
     start_process = BashOperator(
         task_id="inicializador",
@@ -255,21 +276,21 @@ with DAG(
         create_tabla_artista()
         resultado_artista_xcom = extraer_artista()
         subir_inf_artista(resultado_artista_xcom["datos_artista"])
-        # Retornamos la TAREA para que Airflow la pueda amarrar fuera del grupo
         return resultado_artista_xcom
 
     @task_group(group_id="albun")
-    def procesar_albunes(id_spotify):  # <- Recibe el ID directamente
+    def procesar_albunes(id_spotify):
         create_tabla_album()
         return_dicc_albums = extraer_album(id_artist=id_spotify)
         subir_inf_albums(return_dicc_albums)
-        return return_dicc_albums  # <- Retorna los álbumes para el siguiente grupo
+        return return_dicc_albums
 
     @task_group(group_id="canciones")
-    def procesar_canciones(lista_albums):  # <- Recibe la lista directamente
+    def procesar_canciones(lista_albums):
         create_tabla_canciones()
         return_dicc_tracks = extraer_tacks(lista_albums)
         subir_inf_tracks(return_dicc_tracks)
+        return return_dicc_tracks
 
     @task_group(group_id="mas_informacion")
     def procesar_mas_info():
@@ -279,7 +300,7 @@ with DAG(
 
     xcom_artista = procesar_artista()
     xcom_albums = procesar_albunes(xcom_artista["id_spotify"])
-    procesar_canciones(xcom_albums)
+    xcom_canciones = procesar_canciones(xcom_albums)
     xcom_mas_inf = procesar_mas_info()
 
 
@@ -288,8 +309,8 @@ with DAG(
     >> verify_spotify_api_conect
     >> xcom_artista
     >> esperar_un_momento
-    >> xcom_albums
-    >> verify_playwright_conect
-    >> xcom_mas_inf
+    >> condicion_proceso_album >> xcom_albums
+    >> condicion_proceso_canciones >> xcom_canciones
+    >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
     )
 
