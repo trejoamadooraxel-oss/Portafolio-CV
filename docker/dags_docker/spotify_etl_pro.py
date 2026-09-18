@@ -94,7 +94,7 @@ with DAG(
 
     esperar_un_momento = BashOperator(
         task_id="tiempo_espera_30s",
-        bash_command="sleep 30",  # <--- Tiempo en segundos que se va a congelar
+        bash_command="sleep 30",
     )
 
     verify_spotify_api_conect = PythonSensor(
@@ -258,14 +258,12 @@ with DAG(
         # Retornamos la TAREA para que Airflow la pueda amarrar fuera del grupo
         return resultado_artista_xcom
 
-
     @task_group(group_id="albun")
     def procesar_albunes(id_spotify):  # <- Recibe el ID directamente
         create_tabla_album()
         return_dicc_albums = extraer_album(id_artist=id_spotify)
         subir_inf_albums(return_dicc_albums)
         return return_dicc_albums  # <- Retorna los álbumes para el siguiente grupo
-
 
     @task_group(group_id="canciones")
     def procesar_canciones(lista_albums):  # <- Recibe la lista directamente
