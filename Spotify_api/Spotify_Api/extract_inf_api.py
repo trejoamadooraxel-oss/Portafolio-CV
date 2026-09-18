@@ -1,20 +1,11 @@
 import os
 import time
 import requests
+
+import Spotify_api.Conexiones.conection_api as spotify_api
 from datetime import datetime
-import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
-from dotenv import load_dotenv
-from Models import Artist, Album, Track
-
-load_dotenv('/Users/axel/Documents/Portafolio/Spztify_api/env_var/varaibles_credential.env')
-
-def conection_spotify():
-    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-        client_id=os.getenv('SPOTIFY_CLIENT_ID'),
-        client_secret=os.getenv('SPOTIFY_CLIENT_SECRET')
-    ))
-    return sp
+from Spotify_api.Models import Sync_Artist, Sync_Album, Sync_Track
 
 def all_artist_by_token():
 
@@ -77,7 +68,8 @@ def normalizar_fecha(fecha_str):
     except:
         return None
 
-async def list_albums(sp, id_artist, name_artist):
+
+def list_albums(sp, id_artist, name_artist):
     all_albums = []
     dicc_abums = []
 
@@ -90,8 +82,7 @@ async def list_albums(sp, id_artist, name_artist):
         all_albums.extend(results['items'])
         time.sleep(1)
 
-    #Traemos el id que corresponde al artista:
-    id_artista = await Artist.id_db(name_artist)
+    id_artista = Sync_Artist.id_db(name_artist)
     time.sleep(1)
 
     for album in all_albums:
@@ -106,14 +97,14 @@ async def list_albums(sp, id_artist, name_artist):
     return dicc_abums
 
 
-async def list_tracks(sp, dicc_abums):
+def list_tracks(sp, dicc_abums):
     dicc_track = []
     all_albums = [album["id_spotify"] for album in dicc_abums]
 
     for album_id in all_albums:
 
         # Traemos el id que corresponde al artista:
-        id_album = await Album.id_db(album_id)
+        id_album = Sync_Album.id_db(album_id)
         time.sleep(1)
 
         tracks = sp.album_tracks(album_id)
@@ -130,19 +121,15 @@ async def list_tracks(sp, dicc_abums):
     return dicc_track
 
 def main():
-    sp = conection_spotify()
+    sp = spotify_api.conection_spotify()
 
     #Conexion mediante token
     #all_artist_by_token()
 
-    id_artista, dic_artist = identificador_artistas(sp)
+    id_artista, dic_artist = identificador_artistas(sp, "Nigga")
 
-    dicc_abums = list_albums(sp, id_artista)
+    Sync_Artist.insert_to_table(dic_artist)
 
-    tracsk = list_tracks(sp, dicc_abums)
-
-    for song in tracsk:
-        print(song)
 
 if __name__ == "__main__":
 

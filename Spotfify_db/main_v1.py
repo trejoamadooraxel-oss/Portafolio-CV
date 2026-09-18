@@ -101,8 +101,8 @@ def process_by_artist(host, user, passw, db_name):
 def main():
     #Variables
     #--Scrapping
-    #url = "https://open.spotify.com/"
-    #time_await_defaut = 1000
+    url = "https://open.spotify.com/"
+    time_await_defaut = 1000
     #artists = ['Queen', 'Michael Jackson', 'Interpol', 'She Past Away']
 
     #--Conexion a postgres
@@ -115,7 +115,7 @@ def main():
     creation_db_new(host,user, passw, 'postgres', db_name)
 
     #Funcion para scrapear, crear
-    #process_by_top_ten(host, user, passw, db_name, artists, url, time_await_defaut)
+    process_by_top_ten(host, user, passw, db_name, artists, url, time_await_defaut)
     #process_by_album(host, user, passw, db_name, artists, url, time_await_defaut)
    
 

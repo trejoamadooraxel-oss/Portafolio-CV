@@ -1,7 +1,7 @@
 
-from sqlalchemy import Column, Integer, String, Numeric, Date
-from sqlalchemy import insert, delete, select
-from conect_sqlalchemy import Base, engine, AsyncSessionLocal
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import insert, select
+from Spotify_api.Conexiones.conect_sqlalchemy import Base, engine, AsyncSessionLocal
 
 class Artist(Base):
     __tablename__ = 'artista'

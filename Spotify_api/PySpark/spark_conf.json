@@ -1,0 +1,7 @@
+
+{
+  "spark.app.name": "DataSpotify",
+  "spark.master": "local[*]",
+  "spark.driver.memory": "2g",
+  "spark.executor.memory": "2g"
+}

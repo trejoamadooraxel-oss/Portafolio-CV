@@ -1,7 +1,7 @@
 import asyncio
 from Models import Artist, Album, Track
-from Models.users_db import DB_admin
-import conection_api as spotify_api
+from Spotify_api.Conexiones import conection_api as spotify_api
+
 
 async def creacion_tablas():
     await Artist.create_table()

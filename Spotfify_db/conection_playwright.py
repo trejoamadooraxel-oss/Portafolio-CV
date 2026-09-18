@@ -4,6 +4,7 @@ class Conection_playwright():
     def __init__(self):
         self.conection_p = sync_playwright().start()
         self.browser = self.conection_p.chromium.launch(headless=False)
+        self.context = self.browser.new_context(locale="es-ES")
         self.page = self.browser.new_page()
 
     def get_page(self):

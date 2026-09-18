@@ -1,6 +1,6 @@
 import asyncio
-from sqlalchemy import insert, delete, select, text
-from conect_sqlalchemy import Base, engine, AsyncSessionLocal
+from sqlalchemy import text
+from Spotify_api.Conexiones.conect_sqlalchemy import AsyncSessionLocal
 
 class DB_admin:
 

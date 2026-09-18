@@ -1,27 +1,11 @@
 from pydantic import BaseModel
-from fastapi import FastAPI, HTTPException
-from Models import Artist, Album, Track, Queries
+from fastapi import HTTPException
+from Spotify_api.Models_async import Artist, Album, Track, Queries
 from fastapi.middleware.cors import CORSMiddleware
-import conection_api as spotify_api
+import Spotify_api.Conexiones.conection_api as spotify_api
+import Spotify_api.Spotify_Api.extract_inf_api_asyn as inf_api
 
-
-'''
-Mostrar todo lo de las tablas
-
-buscar albunes por artistas
-buscar canciones por artista
-buscar canciones por album
-
-insertar un nuevo artista
-insertar un nuevos album 
-insertar un nuevas canciones
-
-### Developer perfil ###
-update
-delete
-
-'''
-
+from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -74,14 +58,14 @@ class ArtistaInput(BaseModel):
 
 async def ingresar_artista(artista: ArtistaInput):
     sp = spotify_api.conection_spotify()
-    id_artista, dic_artist = spotify_api.identificador_artistas(sp, artista.nombre_artista)
+    id_artista, dic_artist = inf_api.identificador_artistas(sp, artista.nombre_artista)
     await Artist.insert_to_table(dic_artist)
 
-    dicc_albums = await spotify_api.list_albums(sp, id_artista, artista.nombre_artista)
+    dicc_albums = await inf_api.list_albums(sp, id_artista, artista.nombre_artista)
     await Album.insert_to_table(dicc_albums)
 
-    dic_canciones = await spotify_api.list_tracks(sp, dicc_albums)
-    await Track.insert_to_table(dic_canciones)
+    #dic_canciones = await inf_api.list_tracks(sp, dicc_albums)
+    #await Track.insert_to_table(dic_canciones)
 
     return {"status": "insertado", "artista": dic_artist}
 

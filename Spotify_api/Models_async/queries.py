@@ -1,7 +1,9 @@
 import asyncio
-from Models import Artist, Album, Track
-from sqlalchemy import insert, delete, select, desc, asc
-from conect_sqlalchemy import Base, engine, AsyncSessionLocal
+from Spotify_api.Models_async.artist import Artist
+from Spotify_api.Models_async.album import Album
+from Spotify_api.Models_async.track import Track
+from sqlalchemy import select
+from Spotify_api.Conexiones.conect_sqlalchemy import AsyncSessionLocal
 
 
 class Queries:
@@ -126,9 +128,43 @@ class Queries:
 
         return resultados
 
+    @staticmethod
+    async def querry_custom_spark():
+        async with AsyncSessionLocal() as session:
+            lista = []
+            try:
+
+                stmt = (
+                    select(
+                        Artist.id_artista,
+                        Artist.nombre_artista,
+                        Album.id_album,
+                        Album.nombre_album,
+                        Track.id_cancion,
+                        Track.nombre_cancion,
+                        Track.num_cancion,
+                        Track.duracion
+                    ).
+                    join(Album, Artist.id_artista == Album.id_artista, isouter=True).
+                    join(Track, Album.id_album == Track.id_album, isouter=True).
+                    order_by(Track.id_cancion)
+                )
+
+                result = await session.execute(stmt)
+                resultados = result.mappings().all()
+
+                for registro in resultados:
+                    lista.append(registro)
+
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+
+        return lista
+
 
 async def main():
-    infor = await Queries.all_artist()
+    infor = await Queries.querry_custom_spark()
     print(infor)
 
 if __name__ == '__main__':
