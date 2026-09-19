@@ -59,6 +59,7 @@ services:
     env_file:
       - ./Spotify_api/env_var/varaibles_credential.env
     environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/gcloud/adc.json
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow_user:airflow_pass@postgres:5432/airflow_db
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
@@ -68,6 +69,7 @@ services:
       - ./docker/logs_docker:/opt/airflow/logs
       - ./docker/plugins:/opt/airflow/plugins
       - ./Spotify_api:/opt/airflow/include/Spotify_api
+      - ./docker/secrets/gcp_adc.json:/opt/airflow/gcloud/adc.json:ro
     ports:
       - "8080:8080"
     command: webserver
@@ -82,6 +84,7 @@ services:
     env_file:
       - ./Spotify_api/env_var/varaibles_credential.env
     environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/gcloud/adc.json
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow_user:airflow_pass@postgres:5432/airflow_db
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
@@ -91,6 +94,7 @@ services:
       - ./docker/logs_docker:/opt/airflow/logs
       - ./docker/plugins:/opt/airflow/plugins
       - ./Spotify_api:/opt/airflow/include/Spotify_api
+      - ./docker/secrets/gcp_adc.json:/opt/airflow/gcloud/adc.json:ro
     command: scheduler
 
   fastapi:

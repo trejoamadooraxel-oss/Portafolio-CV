@@ -8,13 +8,15 @@ from airflow.decorators import task
 from airflow.models.param import Param
 from airflow.decorators import task_group
 from airflow.operators.bash import BashOperator
-from airflow.operators.python import ShortCircuitOperator
+from airflow.operators.python import ShortCircuitOperator, PythonOperator
 from airflow.sensors.python import PythonSensor
 from airflow.providers.docker.operators.docker import DockerOperator
 
 import logging
 
 from wirerope.wire import descriptor_bind
+
+
 
 def verificar_parametros(flag_name, **kwargs):
     return kwargs['params'].get(flag_name) is True
@@ -36,6 +38,7 @@ def notificar_error_pipeline(context):
     )
 
     logging.error(f"ERROR: FATAL ERROR DURANTE EL ETL DE SPOTIFY{mensaje}")
+
 
 default_args = {
     'owner': 'axel',
@@ -73,6 +76,36 @@ def verify_conection_playwright():
         if conection_p:
             conection_p.close_browser()
             conection_p.close_conection_p()
+
+
+def verificar_conexion_bigquery(**context):
+    """
+    Reproduce, paso a paso, la misma verificación que se hizo
+    manualmente dentro del contenedor:
+      1. Instanciar el cliente
+      2. Confirmar el project_id
+      3. Listar datasets existentes (llamada real a la API)
+    """
+    from google.cloud import bigquery
+
+    logging.info(f"OK. Instanciando cliente de BigQuery...")
+    client = bigquery.Client(project=os.environ['GCP_PROJECT_ID'])  # toma el proyecto de GOOGLE_APPLICATION_CREDENTIALS / ADC
+    logging.info(f"OK. Cliente conectado al proyecto: {client.project}")
+
+    logging.info(f"OK. Listando datasets existentes...")
+    datasets = list(client.list_datasets())
+
+    if datasets:
+        logging.info(f"OK. Se encontraron {len(datasets)} dataset(s):")
+        for ds in datasets:
+            logging.info(f"OK.  - {ds.dataset_id}")
+    else:
+        logging.info(f"OK. Conexión exitosa. Aún no existen datasets en este proyecto.")
+
+    logging.info(f"OK. Verificación de conexión a BigQuery completada sin errores.")
+
+    # Deja el project_id disponible en XCom por si otra tarea lo necesita después
+    return client.project
 
 
 with DAG(
@@ -132,6 +165,11 @@ with DAG(
         poke_interval=30,
         timeout=300,
         mode="reschedule",
+    )
+
+    verify_big_querry_conect = PythonOperator(
+        task_id="verify_big_querry_conect",
+        python_callable=verificar_conexion_bigquery
     )
 
     @task(multiple_outputs=True)
@@ -312,5 +350,6 @@ with DAG(
     >> condicion_proceso_album >> xcom_albums
     >> condicion_proceso_canciones >> xcom_canciones
     >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
+    >> verify_big_querry_conect
     )
 
