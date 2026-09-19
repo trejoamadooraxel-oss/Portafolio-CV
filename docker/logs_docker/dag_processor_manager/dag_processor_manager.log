@@ -28038,3 +28038,40 @@ File Path                             PID    Runtime      # DAGs    # Errors  La
 /opt/airflow/dags/spotify_etl_pro.py                           1           0  0.23s           2026-09-19T00:26:35                      12
 ================================================================================
 [2026-09-19T00:26:54.087+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2026-09-19T22:51:03.748+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2026-09-19T22:51:03.749+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2026-09-19T22:51:03.749+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2026-09-19T22:51:03.750+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2026-09-19T22:51:03.753+0000] {manager.py:824} INFO - There are 1 files in /opt/airflow/dags
+[2026-09-19T22:51:03.894+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                               PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+------------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/spotify_etl_pro.py    167  0.03s             0           0                                                   0
+================================================================================
+[2026-09-19T22:51:34.219+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                               PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spotify_etl_pro.py    172  0.01s             1           0  0.17s           2026-09-19T22:51:04                      12
+================================================================================
+[2026-09-19T22:52:04.780+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                               PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spotify_etl_pro.py    203  0.03s             1           0  0.19s           2026-09-19T22:51:34                      12
+================================================================================
+[2026-09-19T22:52:35.255+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                               PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spotify_etl_pro.py    211  0.02s             1           0  0.21s           2026-09-19T22:52:04                      12
+================================================================================
