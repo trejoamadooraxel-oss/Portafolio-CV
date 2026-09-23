@@ -9,7 +9,7 @@ from Spotify_api.Models.sync_trancks import Sync_Track
 class Sync_Queries:
 
     @classmethod
-    def all_name_artist(cls):  # Es buena práctica incluir 'cls' en métodos de clase
+    def all_name_artist(cls):
         with SessionLocal() as session:
             lista = []
             try:
@@ -19,11 +19,10 @@ class Sync_Queries:
                 )
                 result = session.execute(stmt)
 
-                # scalars().all() extrae directamente el texto del nombre, ignorando la tupla/mapeo
                 lista = list(result.scalars().all())
 
             except Exception as e:
-                session.rollback()  # <-- CORREGIDO: Alineado perfectamente con el print
+                session.rollback()
                 print(f"ERROR: {e}")
 
             return lista

@@ -24,7 +24,6 @@ class Sync_Artist(Base):
 
     @classmethod
     def insert_to_table(cls, values):
-        """Inserta registros de forma síncrona tradicional"""
         with SessionLocal() as session:
             try:
                 session.execute(insert(cls), values)

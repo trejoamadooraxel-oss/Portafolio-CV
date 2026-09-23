@@ -20,7 +20,6 @@ engine = create_engine(
 
 Base = declarative_base()
 
-# Configuramos el administrador de sesiones síncronas estándar
 SessionLocal = sessionmaker(
     bind=engine,
     autocommit=False,
