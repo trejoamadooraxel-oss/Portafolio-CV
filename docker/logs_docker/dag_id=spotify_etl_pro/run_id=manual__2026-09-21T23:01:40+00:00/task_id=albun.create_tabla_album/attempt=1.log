@@ -1,0 +1,38 @@
+[2026-09-21T23:01:54.223+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-21T23:01:54.235+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-21T23:01:40+00:00 [queued]>
+[2026-09-21T23:01:54.241+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-21T23:01:40+00:00 [queued]>
+[2026-09-21T23:01:54.241+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-21T23:01:54.248+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): albun.create_tabla_album> on 2026-09-21 23:01:40+00:00
+[2026-09-21T23:01:54.252+0000] {standard_task_runner.py:72} INFO - Started process 718 to run task
+[2026-09-21T23:01:54.255+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'albun.create_tabla_album', 'manual__2026-09-21T23:01:40+00:00', '--job-id', '732', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpljb0sk7z']
+[2026-09-21T23:01:54.259+0000] {standard_task_runner.py:105} INFO - Job 732: Subtask albun.create_tabla_album
+[2026-09-21T23:01:54.330+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-21T23:01:40+00:00 [running]> on host 96d0bddc4644
+[2026-09-21T23:01:54.711+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='albun.create_tabla_album' AIRFLOW_CTX_EXECUTION_DATE='2026-09-21T23:01:40+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-21T23:01:40+00:00'
+[2026-09-21T23:01:54.715+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-21T23:01:54.785+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,784 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+[2026-09-21T23:01:54.784+0000] {base.py:1863} INFO - select pg_catalog.version()
+[2026-09-21T23:01:54.787+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,786 INFO sqlalchemy.engine.Engine [raw sql] {}
+[2026-09-21T23:01:54.786+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-21T23:01:54.788+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,787 INFO sqlalchemy.engine.Engine select current_schema()
+[2026-09-21T23:01:54.787+0000] {base.py:1863} INFO - select current_schema()
+[2026-09-21T23:01:54.790+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,789 INFO sqlalchemy.engine.Engine [raw sql] {}
+[2026-09-21T23:01:54.789+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-21T23:01:54.794+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,794 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+[2026-09-21T23:01:54.794+0000] {base.py:1863} INFO - show standard_conforming_strings
+[2026-09-21T23:01:54.797+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,797 INFO sqlalchemy.engine.Engine [raw sql] {}
+[2026-09-21T23:01:54.797+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-21T23:01:54.800+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,799 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+[2026-09-21T23:01:54.799+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-21T23:01:54.802+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,801 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[2026-09-21T23:01:54.801+0000] {base.py:1863} INFO - select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[2026-09-21T23:01:54.802+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,802 INFO sqlalchemy.engine.Engine [generated in 0.00052s] {'name': 'album'}
+[2026-09-21T23:01:54.802+0000] {base.py:1868} INFO - [generated in 0.00052s] {'name': 'album'}
+[2026-09-21T23:01:54.805+0000] {logging_mixin.py:190} INFO - 2026-09-21 23:01:54,805 INFO sqlalchemy.engine.Engine COMMIT
+[2026-09-21T23:01:54.805+0000] {base.py:1092} INFO - COMMIT
+[2026-09-21T23:01:54.805+0000] {logging_mixin.py:190} INFO - Tabla 'album' verificada/creada correctamente.
+[2026-09-21T23:01:54.806+0000] {spotify_etl_pro.py:253} INFO - OK. Se creo la Tabla.
+[2026-09-21T23:01:54.806+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-21T23:01:54.829+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-21T23:01:54.830+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=albun.create_tabla_album, run_id=manual__2026-09-21T23:01:40+00:00, execution_date=20260921T230140, start_date=20260921T230154, end_date=20260921T230154
+[2026-09-21T23:01:54.900+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-21T23:01:54.924+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

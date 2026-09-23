@@ -1,0 +1,37 @@
+[2026-09-23T04:26:20.892+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T04:26:20.914+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:26:20.924+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:26:20.924+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T04:26:20.934+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.extraer_mas_info> on 2026-09-23 04:21:33+00:00
+[2026-09-23T04:26:20.942+0000] {standard_task_runner.py:72} INFO - Started process 3414 to run task
+[2026-09-23T04:26:20.950+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.extraer_mas_info', 'manual__2026-09-23T04:21:33+00:00', '--job-id', '1051', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpxjydcw8o']
+[2026-09-23T04:26:20.957+0000] {standard_task_runner.py:105} INFO - Job 1051: Subtask mas_informacion.extraer_mas_info
+[2026-09-23T04:26:21.016+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-23T04:21:33+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T04:26:21.086+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.extraer_mas_info' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T04:21:33+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T04:21:33+00:00'
+[2026-09-23T04:26:21.087+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T04:26:21.129+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T04:26:21.130+0000] {base.py:1863} INFO - SELECT artista.nombre_artista 
+FROM artista LEFT OUTER JOIN mas_inf ON artista.id_artista = mas_inf.id_artista 
+WHERE mas_inf.id_artista IS NULL
+[2026-09-23T04:26:21.130+0000] {base.py:1868} INFO - [generated in 0.00028s] {}
+[2026-09-23T04:26:21.131+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-23T04:26:21.132+0000] {spotify_etl_pro.py:231} INFO - ['Austra']
+[2026-09-23T04:26:21.704+0000] {spotify_etl_pro.py:233} INFO - OK. Iniciando proceso de extraccion mediante Playwrite
+[2026-09-23T04:26:26.559+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Austra.
+[2026-09-23T04:26:32.408+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-23T04:26:42.095+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-23T04:26:42.157+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Austra', 'Jonas Brothers', 'Austral Iris', 'Australis', 'Australian Chamber Orchestra', 'Australian Crawl', 'Australian Blonde', 'AC/DC', 'Tame Impala', 'Astrallbass', 'Sia', 'Astrality', 'Astrix', '5 Seconds of Summer', 'The Kid LAROI', 'Austin TV', 'astralis', 'Au/Ra', 'Gotye', 'INXS', 'Iggy Azalea', 'Olivia Newton-John', 'PNAU', 'Men At Work', 'Astronaut', 'The Temper Trap', 'Flume', 'Astronomía Interior', 'ASTROPICAL', 'Mau Moctezuma']
+[2026-09-23T04:26:42.317+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-23T04:26:55.878+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T04:26:55.890+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-23T04:26:55.890+0000] {base.py:1868} INFO - [generated in 0.00127s] {'nombre_artista_1': 'Austra'}
+[2026-09-23T04:26:55.897+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Austra es: 84
+[2026-09-23T04:26:55.898+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-23T04:26:58.118+0000] {python.py:240} INFO - Done. Returned value was: [{'id_artista': 84, 'artista': 'Austra', 'seguidores': 172440, 'escuchas_mensuales': 141783, 'ciudad_oyente_uno': 'Berlin, DE', 'num_oyentes_uno': 4753, 'ciudad_oyente_dos': 'London, GB', 'num_oyentes_dos': 2577, 'ciudad_oyente_tres': 'Mexico City, MX', 'num_oyentes_tres': 2140, 'ciudad_oyente_cuatro': 'Los Angeles, US', 'num_oyentes_cuatro': 1819, 'ciudad_oyente_cinco': 'Vienna, AT', 'num_oyentes_cinco': 1633}]
+[2026-09-23T04:26:58.178+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T04:26:58.178+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=mas_informacion.extraer_mas_info, run_id=manual__2026-09-23T04:21:33+00:00, execution_date=20260923T042133, start_date=20260923T042620, end_date=20260923T042658
+[2026-09-23T04:26:58.230+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T04:26:58.283+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T04:26:58.284+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

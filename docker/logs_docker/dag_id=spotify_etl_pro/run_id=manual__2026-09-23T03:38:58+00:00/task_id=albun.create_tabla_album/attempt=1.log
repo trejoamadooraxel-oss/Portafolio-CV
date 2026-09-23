@@ -1,0 +1,23 @@
+[2026-09-23T03:39:04.262+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T03:39:04.332+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-23T03:38:58+00:00 [queued]>
+[2026-09-23T03:39:04.350+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-23T03:38:58+00:00 [queued]>
+[2026-09-23T03:39:04.351+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T03:39:04.396+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): albun.create_tabla_album> on 2026-09-23 03:38:58+00:00
+[2026-09-23T03:39:04.413+0000] {standard_task_runner.py:72} INFO - Started process 2559 to run task
+[2026-09-23T03:39:04.471+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'albun.create_tabla_album', 'manual__2026-09-23T03:38:58+00:00', '--job-id', '1011', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpgq32m044']
+[2026-09-23T03:39:04.514+0000] {standard_task_runner.py:105} INFO - Job 1011: Subtask albun.create_tabla_album
+[2026-09-23T03:39:05.183+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.albun.create_tabla_album manual__2026-09-23T03:38:58+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T03:39:05.745+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='albun.create_tabla_album' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T03:38:58+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T03:38:58+00:00'
+[2026-09-23T03:39:05.756+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T03:39:05.762+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T03:39:05.764+0000] {base.py:1863} INFO - select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[2026-09-23T03:39:05.764+0000] {base.py:1868} INFO - [generated in 0.00062s] {'name': 'album'}
+[2026-09-23T03:39:05.768+0000] {base.py:1092} INFO - COMMIT
+[2026-09-23T03:39:05.768+0000] {logging_mixin.py:190} INFO - Tabla 'album' verificada/creada correctamente.
+[2026-09-23T03:39:05.769+0000] {spotify_etl_pro.py:260} INFO - OK. Se creo la Tabla.
+[2026-09-23T03:39:05.769+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T03:39:05.782+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T03:39:05.783+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=albun.create_tabla_album, run_id=manual__2026-09-23T03:38:58+00:00, execution_date=20260923T033858, start_date=20260923T033904, end_date=20260923T033905
+[2026-09-23T03:39:05.812+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T03:39:05.911+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T03:39:05.915+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

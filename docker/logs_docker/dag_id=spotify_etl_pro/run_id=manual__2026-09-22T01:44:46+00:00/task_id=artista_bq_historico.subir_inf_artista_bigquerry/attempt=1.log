@@ -1,0 +1,57 @@
+[2026-09-22T01:44:57.824+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T01:44:57.837+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:44:46+00:00 [queued]>
+[2026-09-22T01:44:57.847+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:44:46+00:00 [queued]>
+[2026-09-22T01:44:57.847+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T01:44:57.856+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista_bq_historico.subir_inf_artista_bigquerry> on 2026-09-22 01:44:46+00:00
+[2026-09-22T01:44:57.859+0000] {standard_task_runner.py:72} INFO - Started process 1831 to run task
+[2026-09-22T01:44:57.862+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista_bq_historico.subir_inf_artista_bigquerry', 'manual__2026-09-22T01:44:46+00:00', '--job-id', '792', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpktggn09w']
+[2026-09-22T01:44:57.865+0000] {standard_task_runner.py:105} INFO - Job 792: Subtask artista_bq_historico.subir_inf_artista_bigquerry
+[2026-09-22T01:44:57.900+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:44:46+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T01:44:57.958+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista_bq_historico.subir_inf_artista_bigquerry' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T01:44:46+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T01:44:46+00:00'
+[2026-09-22T01:44:57.959+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T01:44:58.319+0000] {_default.py:685} WARNING - No project ID could be determined. Consider running `gcloud config set project` or setting the GOOGLE_CLOUD_PROJECT environment variable
+[2026-09-22T01:44:58.785+0000] {logging_mixin.py:190} INFO - [{'id_artista': 1, 'nombre_artista': 'Hocico', 'id_spotify': '5cilSDFcAQcLwh0dNqMhrE'}, {'id_artista': 2, 'nombre_artista': 'Kendrick Lamar', 'id_spotify': '2YZyLoL8N0Wb9xBt1NhZWg'}, {'id_artista': 3, 'nombre_artista': 'Metallica', 'id_spotify': '2ye2Wgw4gimLv2eAKyk1NB'}, {'id_artista': 4, 'nombre_artista': 'EXO', 'id_spotify': '3cjEqqelV9zb4BYE3qDQ4O'}, {'id_artista': 5, 'nombre_artista': 'Tyga', 'id_spotify': '5LHRHt1k9lMyONurDHEdrp'}, {'id_artista': 6, 'nombre_artista': 'Hapax', 'id_spotify': '4VdNQVxiDpa6IDLZ8Y18el'}, {'id_artista': 9, 'nombre_artista': 'Mecano', 'id_spotify': '5BMgsAFg8rZQc3tqs5BB8G'}, {'id_artista': 10, 'nombre_artista': 'Boy Harsher', 'id_spotify': '4iom7VVRU6AHRIu1JUXpLG'}, {'id_artista': 11, 'nombre_artista': 'Rihanna', 'id_spotify': '5pKCCKE2ajJHZ9KAiaK11H'}, {'id_artista': 12, 'nombre_artista': 'Charles Ans', 'id_spotify': '5lYeiQxUTcGKVgAuTqbTeL'}, {'id_artista': 13, 'nombre_artista': 'Méne', 'id_spotify': '5r3DSRaJz8ckIw4XPH9Whd'}, {'id_artista': 14, 'nombre_artista': 'Ductape', 'id_spotify': '2Qte1S9njYjLMRDYlbRFny'}, {'id_artista': 15, 'nombre_artista': 'Justin Bieber', 'id_spotify': '1uNFoZAHBGtllmzznpCI3s'}, {'id_artista': 16, 'nombre_artista': 'The Weeknd', 'id_spotify': '1Xyo4u8uXC1ZmMpatF05PJ'}, {'id_artista': 17, 'nombre_artista': 'Kiddie Gang', 'id_spotify': '1BIPunmLho7BYxe9gD4bFg'}, {'id_artista': 18, 'nombre_artista': 'Belanova', 'id_spotify': '3oNy8cjBtJzLC07I70sklp'}, {'id_artista': 21, 'nombre_artista': 'fedesttar', 'id_spotify': '4F72CuIcolrKN0s5FTxoTy'}, {'id_artista': 22, 'nombre_artista': 'Kris Floyd', 'id_spotify': '7aG8YUI5alfF2pi0n5Cg5H'}, {'id_artista': 23, 'nombre_artista': 'Tony Succar', 'id_spotify': '17S2mEKDY4xHBWCy9kAPzk'}, {'id_artista': 25, 'nombre_artista': 'Steve Lukather', 'id_spotify': '7vLNQciZsWdkYFCqY2osFM'}, {'id_artista': 27, 'nombre_artista': 'Robot95', 'id_spotify': '30CTTIqrcr82nS6B40j975'}, {'id_artista': 28, 'nombre_artista': 'Zoé', 'id_spotify': '6IdtcAwaNVAggwd6sCKgTI'}, {'id_artista': 29, 'nombre_artista': 'Dabeull', 'id_spotify': '7sw3xJMTpdcpfssx17hfrb'}, {'id_artista': 30, 'nombre_artista': 'Daddy Yankee', 'id_spotify': '4VMYDCV2IEDYJArk749S6m'}, {'id_artista': 31, 'nombre_artista': 'Plan B', 'id_spotify': '2jSGzJw0ebJLu7OLVSOcBP'}, {'id_artista': 32, 'nombre_artista': 'Linkin Park', 'id_spotify': '6XyY86QOPPrYVGvF9ch6wz'}, {'id_artista': 33, 'nombre_artista': 'José José', 'id_spotify': '4mN0qcMxWX8oToqfDPM5yV'}, {'id_artista': 36, 'nombre_artista': 'Marilyn Manson', 'id_spotify': '2VYQTNDsvvKN9wmU5W7xpj'}, {'id_artista': 37, 'nombre_artista': 'Bad Bunny', 'id_spotify': '4q3ewBCX7sLwd24euuV69X'}, {'id_artista': 39, 'nombre_artista': 'Utro', 'id_spotify': '3KzQbvnYBpg4JNgZnPeCx2'}, {'id_artista': 41, 'nombre_artista': 'Amduscia', 'id_spotify': '3nasc5I5Nmzq7KgKENcetM'}, {'id_artista': 51, 'nombre_artista': 'Empire Of The Sun', 'id_spotify': '67hb7towEyKvt5Z8Bx306c'}, {'id_artista': 52, 'nombre_artista': 'Soda Stereo', 'id_spotify': '7An4yvF7hDYDolN4m5zKBp'}, {'id_artista': 64, 'nombre_artista': 'Snoop Dogg', 'id_spotify': '7hJcb9fa4alzcOq3EaNPoG'}]
+[2026-09-22T01:44:58.890+0000] {logging_mixin.py:190} INFO -     id_artista  ...                    fecha_ingesta
+0            1  ... 2026-09-22 01:44:58.810736+00:00
+1            2  ... 2026-09-22 01:44:58.810736+00:00
+2            3  ... 2026-09-22 01:44:58.810736+00:00
+3            4  ... 2026-09-22 01:44:58.810736+00:00
+4            5  ... 2026-09-22 01:44:58.810736+00:00
+5            6  ... 2026-09-22 01:44:58.810736+00:00
+6            9  ... 2026-09-22 01:44:58.810736+00:00
+7           10  ... 2026-09-22 01:44:58.810736+00:00
+8           11  ... 2026-09-22 01:44:58.810736+00:00
+9           12  ... 2026-09-22 01:44:58.810736+00:00
+10          13  ... 2026-09-22 01:44:58.810736+00:00
+11          14  ... 2026-09-22 01:44:58.810736+00:00
+12          15  ... 2026-09-22 01:44:58.810736+00:00
+13          16  ... 2026-09-22 01:44:58.810736+00:00
+14          17  ... 2026-09-22 01:44:58.810736+00:00
+15          18  ... 2026-09-22 01:44:58.810736+00:00
+16          21  ... 2026-09-22 01:44:58.810736+00:00
+17          22  ... 2026-09-22 01:44:58.810736+00:00
+18          23  ... 2026-09-22 01:44:58.810736+00:00
+19          25  ... 2026-09-22 01:44:58.810736+00:00
+20          27  ... 2026-09-22 01:44:58.810736+00:00
+21          28  ... 2026-09-22 01:44:58.810736+00:00
+22          29  ... 2026-09-22 01:44:58.810736+00:00
+23          30  ... 2026-09-22 01:44:58.810736+00:00
+24          31  ... 2026-09-22 01:44:58.810736+00:00
+25          32  ... 2026-09-22 01:44:58.810736+00:00
+26          33  ... 2026-09-22 01:44:58.810736+00:00
+27          36  ... 2026-09-22 01:44:58.810736+00:00
+28          37  ... 2026-09-22 01:44:58.810736+00:00
+29          39  ... 2026-09-22 01:44:58.810736+00:00
+30          41  ... 2026-09-22 01:44:58.810736+00:00
+31          51  ... 2026-09-22 01:44:58.810736+00:00
+32          52  ... 2026-09-22 01:44:58.810736+00:00
+33          64  ... 2026-09-22 01:44:58.810736+00:00
+
+[34 rows x 4 columns]
+[2026-09-22T01:45:02.200+0000] {spotify_etl_pro.py:315} INFO - OK. Se ingreso la informacion a la tabla del datasert
+[2026-09-22T01:45:02.208+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T01:45:02.262+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T01:45:02.263+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista_bq_historico.subir_inf_artista_bigquerry, run_id=manual__2026-09-22T01:44:46+00:00, execution_date=20260922T014446, start_date=20260922T014457, end_date=20260922T014502
+[2026-09-22T01:45:02.355+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T01:45:02.402+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T01:45:02.404+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

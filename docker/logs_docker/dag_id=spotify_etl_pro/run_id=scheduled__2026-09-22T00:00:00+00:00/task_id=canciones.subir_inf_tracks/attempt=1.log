@@ -1,0 +1,22 @@
+[2026-09-23T00:07:25.709+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T00:07:25.721+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.canciones.subir_inf_tracks scheduled__2026-09-22T00:00:00+00:00 [queued]>
+[2026-09-23T00:07:25.731+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.canciones.subir_inf_tracks scheduled__2026-09-22T00:00:00+00:00 [queued]>
+[2026-09-23T00:07:25.731+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T00:07:25.738+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): canciones.subir_inf_tracks> on 2026-09-22 00:00:00+00:00
+[2026-09-23T00:07:25.742+0000] {standard_task_runner.py:72} INFO - Started process 1074 to run task
+[2026-09-23T00:07:25.745+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'canciones.subir_inf_tracks', 'scheduled__2026-09-22T00:00:00+00:00', '--job-id', '936', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpp3de2bu7']
+[2026-09-23T00:07:25.752+0000] {standard_task_runner.py:105} INFO - Job 936: Subtask canciones.subir_inf_tracks
+[2026-09-23T00:07:25.812+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.canciones.subir_inf_tracks scheduled__2026-09-22T00:00:00+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T00:07:25.915+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='canciones.subir_inf_tracks' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-22T00:00:00+00:00'
+[2026-09-23T00:07:25.917+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T00:07:25.922+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T00:07:25.924+0000] {base.py:1863} INFO - INSERT INTO canciones (nombre_cancion, id_spotify, num_cancion, duracion, id_album) VALUES (%(nombre_cancion)s, %(id_spotify)s, %(num_cancion)s, %(duracion)s, %(id_album)s)
+[2026-09-23T00:07:25.924+0000] {base.py:1868} INFO - [generated in 0.00066s] ({'nombre_cancion': 'NUEVAYoL', 'id_spotify': '5TFD2bmFKGhoCRbX61nXY5', 'num_cancion': 1, 'duracion': 183685, 'id_album': 278}, {'nombre_cancion': 'VOY A LLeVARTE PA PR', 'id_spotify': '59D4DOkspUbWyMmbAPQkxZ', 'num_cancion': 2, 'duracion': 156364, 'id_album': 278}, {'nombre_cancion': 'BAILE INoLVIDABLE', 'id_spotify': '2lTm559tuIvatlT1u0JYG2', 'num_cancion': 3, 'duracion': 367725, 'id_album': 278}, {'nombre_cancion': 'PERFuMITO NUEVO', 'id_spotify': '1Q9Efnm5csdCMFynISxL2x', 'num_cancion': 4, 'duracion': 200680, 'id_album': 278}, {'nombre_cancion': 'WELTiTA', 'id_spotify': '5WEF0icHWmAZBBMglBd599', 'num_cancion': 5, 'duracion': 187507, 'id_album': 278}, {'nombre_cancion': 'VeLDÁ', 'id_spotify': '7d6yK8v8J484SWH5prIQiE', 'num_cancion': 6, 'duracion': 235336, 'id_album': 278}, {'nombre_cancion': 'EL CLúB', 'id_spotify': '0iKo4pNNjHHdKUcFARlfCa', 'num_cancion': 7, 'duracion': 222568, 'id_album': 278}, {'nombre_cancion': 'KETU TeCRÉ', 'id_spotify': '4c2Pc0NrfkesPR0jff6q3F', 'num_cancion': 8, 'duracion': 250789, 'id_album': 278}  ... displaying 10 of 131 total bound parameter sets ...  {'nombre_cancion': 'Estamos Bien', 'id_spotify': '2OWVCFTolecLiGZPquvWvT', 'num_cancion': 14, 'duracion': 208079, 'id_album': 286}, {'nombre_cancion': 'MIA', 'id_spotify': '3gE4eQH3K83Sght0ZLvuBK', 'num_cancion': 15, 'duracion': 210367, 'id_album': 286})
+[2026-09-23T00:07:25.960+0000] {base.py:1092} INFO - COMMIT
+[2026-09-23T00:07:25.961+0000] {logging_mixin.py:190} INFO - Registro insertado correctamente
+[2026-09-23T00:07:25.962+0000] {spotify_etl_pro.py:305} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-23T00:07:25.962+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T00:07:25.971+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T00:07:25.971+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=canciones.subir_inf_tracks, run_id=scheduled__2026-09-22T00:00:00+00:00, execution_date=20260922T000000, start_date=20260923T000725, end_date=20260923T000725
+[2026-09-23T00:07:26.008+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T00:07:26.021+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

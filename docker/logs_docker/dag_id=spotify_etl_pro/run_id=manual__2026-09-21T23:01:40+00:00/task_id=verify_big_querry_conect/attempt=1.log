@@ -1,0 +1,24 @@
+[2026-09-21T23:01:57.629+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-21T23:01:57.656+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.verify_big_querry_conect manual__2026-09-21T23:01:40+00:00 [queued]>
+[2026-09-21T23:01:57.663+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.verify_big_querry_conect manual__2026-09-21T23:01:40+00:00 [queued]>
+[2026-09-21T23:01:57.663+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-21T23:01:57.676+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): verify_big_querry_conect> on 2026-09-21 23:01:40+00:00
+[2026-09-21T23:01:57.680+0000] {standard_task_runner.py:72} INFO - Started process 730 to run task
+[2026-09-21T23:01:57.684+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'verify_big_querry_conect', 'manual__2026-09-21T23:01:40+00:00', '--job-id', '735', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpksrzmy2q']
+[2026-09-21T23:01:57.686+0000] {standard_task_runner.py:105} INFO - Job 735: Subtask verify_big_querry_conect
+[2026-09-21T23:01:57.736+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.verify_big_querry_conect manual__2026-09-21T23:01:40+00:00 [running]> on host 96d0bddc4644
+[2026-09-21T23:01:57.807+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='verify_big_querry_conect' AIRFLOW_CTX_EXECUTION_DATE='2026-09-21T23:01:40+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-21T23:01:40+00:00'
+[2026-09-21T23:01:57.808+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-21T23:01:58.440+0000] {spotify_etl_pro.py:90} INFO - OK. Instanciando cliente de BigQuery...
+[2026-09-21T23:01:58.448+0000] {_default.py:685} WARNING - No project ID could be determined. Consider running `gcloud config set project` or setting the GOOGLE_CLOUD_PROJECT environment variable
+[2026-09-21T23:01:58.450+0000] {spotify_etl_pro.py:93} INFO - OK. Cliente conectado al proyecto: vital-pillar-509021-s9
+[2026-09-21T23:01:58.450+0000] {spotify_etl_pro.py:94} INFO - OK. Listando datasets existentes...
+[2026-09-21T23:01:58.931+0000] {spotify_etl_pro.py:98} INFO - OK. Se encontraron 1 dataset(s):
+[2026-09-21T23:01:58.933+0000] {spotify_etl_pro.py:100} INFO - OK.  - Spotify_dataset
+[2026-09-21T23:01:58.934+0000] {spotify_etl_pro.py:104} INFO - OK. Verificación de conexión a BigQuery completada sin errores.
+[2026-09-21T23:01:58.936+0000] {python.py:240} INFO - Done. Returned value was: vital-pillar-509021-s9
+[2026-09-21T23:01:59.041+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-21T23:01:59.043+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=verify_big_querry_conect, run_id=manual__2026-09-21T23:01:40+00:00, execution_date=20260921T230140, start_date=20260921T230157, end_date=20260921T230159
+[2026-09-21T23:01:59.129+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-21T23:01:59.196+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-21T23:01:59.197+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

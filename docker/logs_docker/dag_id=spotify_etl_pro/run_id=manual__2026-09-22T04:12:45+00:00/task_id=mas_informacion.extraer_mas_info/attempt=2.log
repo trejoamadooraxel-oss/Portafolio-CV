@@ -1,0 +1,226 @@
+[2026-09-22T05:08:36.725+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T05:08:36.776+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T05:08:36.801+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T05:08:36.801+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 3
+[2026-09-22T05:08:36.815+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.extraer_mas_info> on 2026-09-22 04:12:45+00:00
+[2026-09-22T05:08:36.831+0000] {standard_task_runner.py:72} INFO - Started process 3648 to run task
+[2026-09-22T05:08:36.844+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.extraer_mas_info', 'manual__2026-09-22T04:12:45+00:00', '--job-id', '878', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpnas1rm8j']
+[2026-09-22T05:08:36.849+0000] {standard_task_runner.py:105} INFO - Job 878: Subtask mas_informacion.extraer_mas_info
+[2026-09-22T05:08:36.933+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T05:08:37.029+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.extraer_mas_info' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:12:45+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:12:45+00:00'
+[2026-09-22T05:08:37.030+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T05:08:37.108+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:08:37.109+0000] {base.py:1863} INFO - SELECT artista.nombre_artista 
+FROM artista ORDER BY artista.nombre_artista ASC
+[2026-09-22T05:08:37.109+0000] {base.py:1868} INFO - [generated in 0.00025s] {}
+[2026-09-22T05:08:37.110+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:08:37.110+0000] {spotify_etl_pro.py:231} INFO - ['Amduscia', 'Bad Bunny', 'Belanova', 'Boy Harsher', 'Charles Ans', 'Dabeull', 'Daddy Yankee', 'Doja Cat', 'Ductape', 'Empire Of The Sun', 'EXO', 'fedesttar', 'Hapax', 'Hocico', 'José José', 'Justin Bieber', 'Kendrick Lamar', 'Kiddie Gang', 'Kris Floyd', 'Linkin Park', 'Marilyn Manson', 'Mecano', 'Méne', 'Metallica', 'Plan B', 'Rihanna', 'Robot95', 'Snoop Dogg', 'Soda Stereo', 'Steve Lukather', 'The Weeknd', 'Tony Succar', 'Tyga', 'Utro', 'Zoé']
+[2026-09-22T05:08:38.449+0000] {spotify_etl_pro.py:233} INFO - OK. Iniciando proceso de extraccion mediante Playwrite
+[2026-09-22T05:08:40.985+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Amduscia.
+[2026-09-22T05:08:49.135+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:08:58.407+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:08:58.460+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Amduscia', 'Hocico', 'Amduscias', 'Amduscias Heirs', 'Amduscias Heirs', 'La Bande-Son Imaginaire', 'Amduscias', 'Amduscias', 'Amduscias', 'Axiom_amduscias', 'Adlomusic', 'Alabanza Musical', 'Grupo Musical Amadeus', 'Asmed', 'Música Expansiva - Omar Valen', 'Música Cristiana', 'Mafia music', 'Musica Catolica', 'Música Más Vida', 'TC Music', '5 Music MX', 'Ryzen Musik', 'Amistad Música', 'Brain Power Amadeus', 'Música Cristiana Para Niños de TraxLab', 'Amaus', 'Musicalísimo Fuego Indio', 'Musica Sonidera inc', 'WC Music', 'Muzik Junkies']
+[2026-09-22T05:08:58.799+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:09:13.370+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:09:13.415+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:09:13.417+0000] {base.py:1868} INFO - [generated in 0.00417s] {'nombre_artista_1': 'Amduscia'}
+[2026-09-22T05:09:13.444+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Amduscia es: 41
+[2026-09-22T05:09:13.447+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:09:16.485+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Bad Bunny.
+[2026-09-22T05:09:23.088+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:09:32.392+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:09:32.466+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Bad Bunny', 'KAROL G', 'Peso Pluma', 'Tito Double P', 'Maluma', 'Ozuna', 'Anuel AA', 'Rauw Alejandro', 'J Balvin', 'Myke Towers', 'Omar Courtz', 'Duki', 'Bad Bunny Music', 'Feid', 'Mora', 'BAD BUNNY BAND', 'Tainy', 'Bad Bunny Peruano', 'Bad bunny gang', 'Bad Bunny Chapin', 'Bad Bunny - Piano Cover', 'bunny', 'Bad Bunny PH', 'Milky Bunny', 'Bad Red Bunny', 'Bad Pepa Bunny', 'Tiny Bunny', 'Bad Juice Bunny', 'Bunny the BAd GiRL a.k.a. クロノコ', 'Bunny and the Badfire']
+[2026-09-22T05:09:32.700+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:09:46.586+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:09:46.623+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:09:46.627+0000] {base.py:1868} INFO - [cached since 33.21s ago] {'nombre_artista_1': 'Bad Bunny'}
+[2026-09-22T05:09:46.647+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Bad Bunny es: 37
+[2026-09-22T05:09:46.653+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:09:49.710+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Belanova.
+[2026-09-22T05:09:56.040+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:10:05.407+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:10:05.447+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Belanova', 'Kenia Os', 'Miranda!', 'Morat', 'Julieta Venegas', 'Mon Laferte', 'Zoé', 'Yuridia', 'Playa Limbo', 'Reik', 'DANNA', 'Belinda', 'Cazzu', 'Elefante', 'El Junior', 'Bellanova', 'Belnova', 'Bella Nova', 'Tito Double P', 'Béla Kovács', 'Belan Camp', 'Isobel Belano', 'Gabito Ballesteros', 'BELANO', 'Belonoga', 'BELIBOVA', 'Belanga', 'BELANO', 'Belanda Hitam', 'Belanegara Abe']
+[2026-09-22T05:10:05.609+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:10:20.332+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:10:20.337+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:10:20.337+0000] {base.py:1868} INFO - [cached since 66.93s ago] {'nombre_artista_1': 'Belanova'}
+[2026-09-22T05:10:20.340+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Belanova es: 18
+[2026-09-22T05:10:20.340+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:10:23.854+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Boy Harsher.
+[2026-09-22T05:10:30.580+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:10:40.052+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:10:40.180+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Boy Harsher', 'BOY HARSHER', 'Lebanon Hanover', 'Twin Tribes', 'TR/ST', 'Nation of Language', 'BOY HARSHER', 'She Past Away', 'And One', 'Siouxsie and the Banshees', 'Sextile', 'Drab Majesty', 'Sexual Purity', 'Echoberyl', 'Pixel Grip', 'Hante.', 'The frozen Autumn', 'Hotel Hazbin LATAM', 'SARCOMA HORROR', 'Bauhaus', 'Brutal Pig', 'Dismembered Pig', 'KMFDM', 'La Bande-Son Imaginaire', 'mentalHAZRD', 'Hocico', 'Motorama', 'Harsh Symmetry', 'Calaverx', 'Biowaverave']
+[2026-09-22T05:10:40.710+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:10:54.325+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:10:54.333+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:10:54.334+0000] {base.py:1868} INFO - [cached since 100.9s ago] {'nombre_artista_1': 'Boy Harsher'}
+[2026-09-22T05:10:54.336+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Boy Harsher es: 10
+[2026-09-22T05:10:54.337+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:10:57.156+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Charles Ans.
+[2026-09-22T05:11:04.404+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:11:13.889+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:11:13.975+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Charles Ans', 'Gera MX', 'Charles Ans', 'C-Kan', 'Alemán', 'Nanpa Básico', 'Rels B', 'Sabino', 'Adán Cruz', 'DAAZ', 'Robot95', 'Samantha Barrón', 'Rich Vagos', 'Charles Ans', 'Charles Ans', 'Charles Ans', 'Charles Ans', 'Nsqk', 'Ray Charles', 'Charles Aznavour', 'Charles Sanson', 'Charles Sardo', 'Charles Wesley Godwin', 'Charles Parsson', 'Charles Weems', 'Charles Strouse', 'Charles Pasi', 'Adolphe Adam', 'Charles Daisey & Friends', 'Charles New']
+[2026-09-22T05:11:14.185+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:11:27.981+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:11:27.988+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:11:27.989+0000] {base.py:1868} INFO - [cached since 134.6s ago] {'nombre_artista_1': 'Charles Ans'}
+[2026-09-22T05:11:27.991+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Charles Ans es: 12
+[2026-09-22T05:11:27.991+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:11:32.046+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Dabeull.
+[2026-09-22T05:11:39.344+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:11:48.652+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:11:48.733+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Dabeull', 'HolyBrune', "L'Impératrice", 'Dezzy Hollow', 'Dabeull', 'Mike Patton', 'Darell', 'Boko Yout', 'Sūn Byrd', 'Boca Paila', 'Rude Jude', 'Patchwork Inc.', 'Sofia Rei', 'Lorelle Meets The Obsolete', 'Lemon Bucket Orkestra', 'Busy P', 'DaBella', 'DABELLE', 'DannyLux', 'Dabeunotres', 'Fabriell', 'Danbul', 'Dauble', 'Fabruuhh', 'DABUDABU', 'J Abdiel', 'Dahel', 'Dav1el', 'The Dave Brubeck Quartet', 'VV Brujo']
+[2026-09-22T05:11:48.989+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:12:06.875+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:12:06.890+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:12:06.891+0000] {base.py:1868} INFO - [cached since 173.5s ago] {'nombre_artista_1': 'Dabeull'}
+[2026-09-22T05:12:06.895+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Dabeull es: 29
+[2026-09-22T05:12:06.899+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:12:15.160+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Daddy Yankee.
+[2026-09-22T05:12:27.513+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:12:39.371+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:12:39.534+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Daddy Yankee', 'Wisin & Yandel', 'Don Omar', 'Bad Bunny', 'Daddy Yankee', 'J Balvin', 'Daddy Yankee Tributo', 'Ozuna', 'Farruko', 'Maluma', 'Arcángel', 'Plan B', 'Danny Ocean', 'Daddy Yankee (AI)', 'Nicky Jam', 'Daddy Yankee', 'Daddy yankee jefe', 'Feid', 'Daddy Yankee', 'Daddy Yankee', 'DJ Daddy Yankee', 'Ayala (Hermano de Daddy Yankee)', 'Daddy Yanke', 'Wisin', 'Tainy', 'Made famous by Daddy Yankee feat Jory', 'Made famous by Don Omar feat Daddy Yankee', 'Made famous by Daddy Yankee', 'Luis Fonsi, Daddy Yankee/Daddy Yankee', 'Made famous by Baby Rasta & Gringo Ft Daddy Yankee']
+[2026-09-22T05:12:40.746+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:12:57.426+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:12:57.466+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:12:57.474+0000] {base.py:1868} INFO - [cached since 224.1s ago] {'nombre_artista_1': 'Daddy Yankee'}
+[2026-09-22T05:12:57.512+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Daddy Yankee es: 30
+[2026-09-22T05:12:57.519+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:13:03.616+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Doja Cat.
+[2026-09-22T05:13:13.408+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:13:24.084+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:13:24.188+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Doja Cat', 'The Weeknd', 'Cardi B', 'Mon Laferte', 'Kali Uchis', 'Dua Lipa', 'Rihanna', 'Kenia Os', 'Young Miko', 'Ariana Grande', 'Zoé', 'Yeri Mua', 'FLVCKKA', 'Cazzu', 'Nicki Minaj', 'Nicki Nicole', 'Bellakath', 'Rels B', 'Doja Cata', 'Duki', 'Dója Kati', 'Dojo Cuts', 'Shakira', 'Bizarrap', 'Trueno', 'HUMBE', 'NBA YOUNGA DOJA BILLIE CAT', 'rusowsky', 'El Bogueto', 'DANNA']
+[2026-09-22T05:13:24.737+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:13:39.791+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:13:39.811+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:13:39.813+0000] {base.py:1868} INFO - [cached since 266.4s ago] {'nombre_artista_1': 'Doja Cat'}
+[2026-09-22T05:13:39.824+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Doja Cat es: 72
+[2026-09-22T05:13:39.829+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:13:44.232+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Ductape.
+[2026-09-22T05:13:52.017+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:14:02.466+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:14:02.793+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Ductape', 'Ductape', 'Ductape Halo', 'DucTape', 'Ductape Junkies', 'OTB DucTape', 'Cupcake Ductape', 'DuckTape', 'Midnight Generation', 'Liquits', 'Night Tapes', 'Girl Ultra', 'Dumbmonei', 'suciopata', 'Duck Fizz', 'CLUBZ', 'Tankeone', 'Los Dutis', 'Ape Drums', 'Duck Sauce', 'UTCK-Lmntal', 'Madame Récamier', 'Dapuntobeat', 'Delux', 'Delux', 'Rey Pila', 'Sotomayor', 'PUGSPUGSPUGS', 'MLKMN', 'Tanke']
+[2026-09-22T05:14:03.502+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:14:22.653+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:14:22.681+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:14:22.686+0000] {base.py:1868} INFO - [cached since 309.3s ago] {'nombre_artista_1': 'Ductape'}
+[2026-09-22T05:14:22.693+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Ductape es: 14
+[2026-09-22T05:14:22.696+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:14:27.129+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Empire Of The Sun.
+[2026-09-22T05:14:36.540+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:14:50.382+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:14:53.433+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Empire Of The Sun', 'Daft Punk', 'RÜFÜS DU SOL', 'Tame Impala', 'Mac Miller', 'Foster The People', 'Zoé', 'Capital Cities', 'Danny Ocean', 'Kygo', 'Enjambre', 'Siddhartha', 'DLD', 'MGMT', 'The Strokes', 'Ed Maverick', 'Cuco', 'Kevin Kaarl', 'Odisseo', "L'Impératrice", 'Suns of the Empire', 'LSD', 'HUMBE', 'rusowsky', 'Labrinth', 'Djo', 'Diplo', 'DISHYPE', 'Caloncho', 'EMJAY']
+[2026-09-22T05:14:54.676+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:15:11.696+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:15:11.779+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:15:11.783+0000] {base.py:1868} INFO - [cached since 358.5s ago] {'nombre_artista_1': 'Empire Of The Sun'}
+[2026-09-22T05:15:11.845+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Empire Of The Sun es: 51
+[2026-09-22T05:15:11.850+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:15:16.947+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: EXO.
+[2026-09-22T05:15:28.032+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:15:42.327+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:15:42.514+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['EXO', 'KAI', 'CHANYEOL', 'GOT7', 'LAY', 'CHEN', 'SUPER JUNIOR', 'BIGBANG', 'SEVENTEEN', 'SHINee', 'Exodus', 'XIUMIN', 'EXO-CBX', 'EXO', 'NCT 127', 'EXO', 'SUHO', 'BAEKHYUN', 'EXO', 'EXO-K', 'EXO', 'EXOA', 'Éxodo Lirical', 'EXO', 'EXO-M', 'Martinwhite', 'Exotic', 'Mora', 'Exodar', 'exotic']
+[2026-09-22T05:15:43.366+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:16:18.811+0000] {job.py:229} INFO - Heartbeat recovered after 32.42 seconds
+[2026-09-22T05:16:24.700+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:16:24.713+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:16:24.714+0000] {base.py:1868} INFO - [cached since 404.1s ago] {'nombre_artista_1': 'EXO'}
+[2026-09-22T05:16:24.724+0000] {logging_mixin.py:190} INFO - El id_artista asociado con EXO es: 4
+[2026-09-22T05:16:24.728+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:16:28.318+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: fedesttar.
+[2026-09-22T05:16:37.682+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:16:47.188+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:16:47.744+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['fedesttar', 'Fede Tarifeño', 'Fede Vigevani', 'Fede Tarifeño', 'Festari Labs', 'Destripando la Historia', 'Federico Villa', 'F4ST', 'Fiesta 85', 'Fede Eyherabide', 'La Orquesta Y Coros Del Festival De Praga', 'Federico Vega', 'Fede Figueroa', 'Fresto Music', 'Fester Witch', 'Feist', 'Festival huasteco', 'Fedde Le Grand', 'Starkids Music', 'fedo DJ', 'MAYESTIK', 'Ferso', 'Fede Guelmos', 'Fresto', 'Fasten', 'Dj Dasten', 'INFERAART', 'Deseos Fab', 'RUIDO', 'Kapostik']
+[2026-09-22T05:18:03.018+0000] {job.py:229} INFO - Heartbeat recovered after 77.97 seconds
+[2026-09-22T05:18:14.299+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:18:28.454+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:18:28.465+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:18:28.466+0000] {base.py:1868} INFO - [cached since 459.2s ago] {'nombre_artista_1': 'fedesttar'}
+[2026-09-22T05:18:28.472+0000] {logging_mixin.py:190} INFO - El id_artista asociado con fedesttar es: 21
+[2026-09-22T05:18:28.472+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:18:32.093+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Hapax.
+[2026-09-22T05:18:40.032+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:18:52.864+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:18:53.103+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Hapax', 'Hapax Legomenon', 'Hapax', 'hapax', 'HapaX.', 'Hapa', 'Hapax, Arcos da Lapa', 'hapaxanthous', 'HAPAX', 'Hapaxx', 'Hapax', 'Jim Hapax', 'Noah Hapax', 'HAPAXAN', 'Noah Hapax', 'Haparvarim', 'Hapex Guru', 'Rapazolla', 'Nethsara Hapangama', 'Kishan Hapa', 'Kishan Hapa', 'Dj Kishan Hapa', 'Kishan Hapa', 'הפטריקים']
+[2026-09-22T05:18:54.259+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:19:09.562+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:19:09.572+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:19:09.573+0000] {base.py:1868} INFO - [cached since 500.3s ago] {'nombre_artista_1': 'Hapax'}
+[2026-09-22T05:19:09.577+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Hapax es: 6
+[2026-09-22T05:19:09.578+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:19:14.766+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Hocico.
+[2026-09-22T05:19:33.287+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:19:44.780+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:19:49.538+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Hocico', 'Prayers', 'Blutengel', 'La Bande-Son Imaginaire', 'Lacrimosa', 'Amduscia', 'And One', 'Hocico', 'Dulce Liquido', 'Suicide Commando', 'Combichrist', 'Size', 'Cenobita', "Hocico'e Tarro", 'Rabia Sorda', 'Margaritas Podridas', 'Alien Vampires', 'Chicos de Barrio', 'Chico Che Chico', 'Chico Che y La Crisis', 'Hocho', 'Haus-A-Holics', 'Huichol Musical', 'Xochilt', 'Ovi', 'Hector Vargas', 'ICC', 'Nuco', 'XOchitl', 'Bicho Ramirez']
+[2026-09-22T05:19:50.959+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:20:27.362+0000] {job.py:229} INFO - Heartbeat recovered after 32.37 seconds
+[2026-09-22T05:20:32.855+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:20:32.863+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:20:32.863+0000] {base.py:1868} INFO - [cached since 556.5s ago] {'nombre_artista_1': 'Hocico'}
+[2026-09-22T05:20:32.866+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Hocico es: 1
+[2026-09-22T05:20:32.867+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:20:36.383+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: José José.
+[2026-09-22T05:20:44.584+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:25:26.536+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:25:26.760+0000] {job.py:229} INFO - Heartbeat recovered after 278.65 seconds
+[2026-09-22T05:25:37.034+0000] {job.py:229} INFO - Heartbeat recovered after 10.56 seconds
+[2026-09-22T05:25:39.129+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['José José', 'Joan Sebastian', 'Vicente Fernández', 'Mon Laferte', 'Juan Gabriel', 'Luis Miguel', 'Leo Dan', 'José Alfredo Jimenez', 'Rocío Dúrcal', 'Alejandro Fernández', 'María José', 'Cristian Castro', 'José Maria Napoleón', 'Jósean Log', 'Emmanuel', 'Jose Jose Jose', 'Jose Gomez Romero', 'Jose Lopez', 'Selecto Instrumental de Jose Jose', 'José Joel', 'Jose Joel', 'José Otero', 'Jose Gomez', 'José Serebrier', 'José James', 'Josh Joseph', 'Jose Seron', 'Jose Roberto', 'Jose lopez', 'jose jimenez']
+[2026-09-22T05:25:40.523+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:25:57.471+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:25:57.480+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:25:57.481+0000] {base.py:1868} INFO - [cached since 612s ago] {'nombre_artista_1': 'José José'}
+[2026-09-22T05:25:57.486+0000] {logging_mixin.py:190} INFO - El id_artista asociado con José José es: 33
+[2026-09-22T05:25:57.487+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:26:02.086+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Justin Bieber.
+[2026-09-22T05:26:15.399+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T05:26:26.586+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T05:26:26.736+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Justin Bieber', 'Bruno Mars', 'Shakira', 'BTS', 'Maluma', 'Ariana Grande', 'Taylor Swift', 'Dua Lipa', 'Ozuna', 'Morat', 'Luis Miguel', 'Rauw Alejandro', 'J Balvin', 'Feid', 'Justin Timberlake', 'Justin Bieber Cover Band', 'Justin Bieber Tribute Team', 'Justin Bieber Karaoke Band', "Justin Bieber's Karaoke Band", 'Justin Bieber - Piano Covers', 'Ed Sheeran & Justin Bieber', 'Justin Bieberau', 'Justin Quiles', 'The Justin Bieber Cover Band', 'KAROL G', 'Justine Bieber', 'Justin', 'Justin', 'justilay', 'JU5TŸN']
+[2026-09-22T05:26:27.221+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T05:26:51.236+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:26:51.273+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T05:26:51.275+0000] {base.py:1868} INFO - [cached since 665.8s ago] {'nombre_artista_1': 'Justin Bieber'}
+[2026-09-22T05:26:51.278+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Justin Bieber es: 15
+[2026-09-22T05:26:51.283+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:27:01.786+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Kendrick Lamar.
+[2026-09-22T05:27:57.714+0000] {job.py:229} INFO - Heartbeat recovered after 35.60 seconds
+[2026-09-22T05:28:13.561+0000] {logging_mixin.py:190} INFO - Error inesperado durante la bsuqueda del artista: Locator.press: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[role=\"combobox\"], input[data-testid=\"search-input\"]").first
+[2026-09-22T05:28:16.138+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T05:28:16.441+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T05:28:16.447+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=mas_informacion.extraer_mas_info, run_id=manual__2026-09-22T04:12:45+00:00, execution_date=20260922T041245, start_date=20260922T050836, end_date=20260922T052816
+[2026-09-22T05:28:16.563+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T05:28:16.787+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T05:28:16.789+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

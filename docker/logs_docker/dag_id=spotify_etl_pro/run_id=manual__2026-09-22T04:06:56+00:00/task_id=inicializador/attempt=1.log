@@ -1,0 +1,21 @@
+[2026-09-22T04:07:17.735+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T04:07:17.772+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.inicializador manual__2026-09-22T04:06:56+00:00 [queued]>
+[2026-09-22T04:07:17.790+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.inicializador manual__2026-09-22T04:06:56+00:00 [queued]>
+[2026-09-22T04:07:17.791+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T04:07:17.851+0000] {taskinstance.py:2889} INFO - Executing <Task(BashOperator): inicializador> on 2026-09-22 04:06:56+00:00
+[2026-09-22T04:07:17.882+0000] {standard_task_runner.py:72} INFO - Started process 2637 to run task
+[2026-09-22T04:07:17.902+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'inicializador', 'manual__2026-09-22T04:06:56+00:00', '--job-id', '836', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpbioc7l_t']
+[2026-09-22T04:07:17.917+0000] {standard_task_runner.py:105} INFO - Job 836: Subtask inicializador
+[2026-09-22T04:07:18.107+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.inicializador manual__2026-09-22T04:06:56+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T04:07:18.360+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='inicializador' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:06:56+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:06:56+00:00'
+[2026-09-22T04:07:18.362+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T04:07:18.365+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2026-09-22T04:07:18.367+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'echo "Iniciando pipeline de Spotify..."']
+[2026-09-22T04:07:18.414+0000] {subprocess.py:99} INFO - Output:
+[2026-09-22T04:07:18.468+0000] {subprocess.py:106} INFO - Iniciando pipeline de Spotify...
+[2026-09-22T04:07:18.470+0000] {subprocess.py:110} INFO - Command exited with return code 0
+[2026-09-22T04:07:18.535+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T04:07:18.536+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=inicializador, run_id=manual__2026-09-22T04:06:56+00:00, execution_date=20260922T040656, start_date=20260922T040717, end_date=20260922T040718
+[2026-09-22T04:07:18.572+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T04:07:18.723+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T04:07:18.727+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

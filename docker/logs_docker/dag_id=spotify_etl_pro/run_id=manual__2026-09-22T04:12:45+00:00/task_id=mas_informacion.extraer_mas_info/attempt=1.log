@@ -1,0 +1,191 @@
+[2026-09-22T04:14:18.494+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T04:14:18.530+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T04:14:18.543+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T04:14:18.547+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T04:14:18.560+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.extraer_mas_info> on 2026-09-22 04:12:45+00:00
+[2026-09-22T04:14:18.576+0000] {standard_task_runner.py:72} INFO - Started process 2858 to run task
+[2026-09-22T04:14:18.587+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.extraer_mas_info', 'manual__2026-09-22T04:12:45+00:00', '--job-id', '859', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpn7jgjz1_']
+[2026-09-22T04:14:18.591+0000] {standard_task_runner.py:105} INFO - Job 859: Subtask mas_informacion.extraer_mas_info
+[2026-09-22T04:14:18.671+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info manual__2026-09-22T04:12:45+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T04:14:18.774+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.extraer_mas_info' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:12:45+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:12:45+00:00'
+[2026-09-22T04:14:18.776+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T04:14:18.847+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:14:18.849+0000] {base.py:1863} INFO - SELECT artista.nombre_artista 
+FROM artista ORDER BY artista.nombre_artista ASC
+[2026-09-22T04:14:18.850+0000] {base.py:1868} INFO - [generated in 0.00087s] {}
+[2026-09-22T04:14:18.863+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:14:18.864+0000] {spotify_etl_pro.py:231} INFO - ['Amduscia', 'Bad Bunny', 'Belanova', 'Boy Harsher', 'Charles Ans', 'Dabeull', 'Daddy Yankee', 'Doja Cat', 'Ductape', 'Empire Of The Sun', 'EXO', 'fedesttar', 'Hapax', 'Hocico', 'José José', 'Justin Bieber', 'Kendrick Lamar', 'Kiddie Gang', 'Kris Floyd', 'Linkin Park', 'Marilyn Manson', 'Mecano', 'Méne', 'Metallica', 'Plan B', 'Rihanna', 'Robot95', 'Snoop Dogg', 'Soda Stereo', 'Steve Lukather', 'The Weeknd', 'Tony Succar', 'Tyga', 'Utro', 'Zoé']
+[2026-09-22T04:14:19.658+0000] {spotify_etl_pro.py:233} INFO - OK. Iniciando proceso de extraccion mediante Playwrite
+[2026-09-22T04:14:25.846+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Amduscia.
+[2026-09-22T04:14:31.995+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:14:43.277+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:14:43.357+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Amduscia', 'Hocico', 'Amduscias', 'Amduscias Heirs', 'Amduscias Heirs', 'La Bande-Son Imaginaire', 'Amduscias', 'Amduscias', 'Amduscias', 'Axiom_amduscias', 'Adlomusic', 'Alabanza Musical', 'Grupo Musical Amadeus', 'Asmed', 'Música Expansiva - Omar Valen', 'Música Cristiana', 'Mafia music', 'Musica Catolica', 'Música Más Vida', 'TC Music', '5 Music MX', 'Ryzen Musik', 'Amistad Música', 'Brain Power Amadeus', 'Música Cristiana Para Niños de TraxLab', 'Amaus', 'Musicalísimo Fuego Indio', 'Musica Sonidera inc', 'WC Music', 'Muzik Junkies']
+[2026-09-22T04:14:43.597+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:14:57.144+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:14:57.158+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:14:57.159+0000] {base.py:1868} INFO - [generated in 0.00160s] {'nombre_artista_1': 'Amduscia'}
+[2026-09-22T04:14:57.166+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Amduscia es: 41
+[2026-09-22T04:14:57.167+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:15:00.438+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Bad Bunny.
+[2026-09-22T04:15:06.900+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:15:16.305+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:15:16.413+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Bad Bunny', 'KAROL G', 'Peso Pluma', 'Tito Double P', 'Maluma', 'Ozuna', 'Anuel AA', 'Rauw Alejandro', 'J Balvin', 'Myke Towers', 'Omar Courtz', 'Duki', 'Bad Bunny Music', 'Feid', 'Mora', 'BAD BUNNY BAND', 'Tainy', 'Bad Bunny Peruano', 'Bad bunny gang', 'Bad Bunny Chapin', 'Bad Bunny - Piano Cover', 'bunny', 'Bad Bunny PH', 'Milky Bunny', 'Bad Red Bunny', 'Bad Pepa Bunny', 'Tiny Bunny', 'Bad Juice Bunny', 'Bunny the BAd GiRL a.k.a. クロノコ', 'Bunny and the Badfire']
+[2026-09-22T04:15:16.803+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:15:30.615+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:15:30.622+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:15:30.626+0000] {base.py:1868} INFO - [cached since 33.46s ago] {'nombre_artista_1': 'Bad Bunny'}
+[2026-09-22T04:15:30.637+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Bad Bunny es: 37
+[2026-09-22T04:15:30.639+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:15:33.690+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Belanova.
+[2026-09-22T04:15:39.973+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:15:50.210+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:15:50.309+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Belanova', 'Kenia Os', 'Miranda!', 'Morat', 'Julieta Venegas', 'Mon Laferte', 'Zoé', 'Yuridia', 'Playa Limbo', 'Reik', 'DANNA', 'Belinda', 'Cazzu', 'Elefante', 'El Junior', 'Bellanova', 'Belnova', 'Bella Nova', 'Tito Double P', 'Béla Kovács', 'Belan Camp', 'Isobel Belano', 'Gabito Ballesteros', 'BELANO', 'Belonoga', 'BELIBOVA', 'Belanga', 'BELANO', 'Belanda Hitam', 'Belanegara Abe']
+[2026-09-22T04:15:50.563+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:16:04.765+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:16:04.815+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:16:04.822+0000] {base.py:1868} INFO - [cached since 67.66s ago] {'nombre_artista_1': 'Belanova'}
+[2026-09-22T04:16:04.846+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Belanova es: 18
+[2026-09-22T04:16:04.850+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:16:08.937+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Boy Harsher.
+[2026-09-22T04:16:16.453+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:16:29.554+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:16:29.626+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Boy Harsher', 'BOY HARSHER', 'Lebanon Hanover', 'Twin Tribes', 'TR/ST', 'Nation of Language', 'BOY HARSHER', 'She Past Away', 'And One', 'Siouxsie and the Banshees', 'Sextile', 'Drab Majesty', 'Sexual Purity', 'Echoberyl', 'Pixel Grip', 'Hante.', 'The frozen Autumn', 'h4teboy', 'SARCOMA HORROR', 'Dan Salvato', 'Brutal Pig', 'Cyriak Harris', 'Dismembered Pig', 'KMFDM', 'La Bande-Son Imaginaire', 'mentalHAZRD', 'Hocico', 'Motorama', 'Harsh Symmetry', 'Calaverx']
+[2026-09-22T04:16:29.903+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:16:43.580+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:16:43.592+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:16:43.593+0000] {base.py:1868} INFO - [cached since 106.4s ago] {'nombre_artista_1': 'Boy Harsher'}
+[2026-09-22T04:16:43.599+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Boy Harsher es: 10
+[2026-09-22T04:16:43.600+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:16:47.718+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Charles Ans.
+[2026-09-22T04:16:57.230+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:17:06.936+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:17:07.362+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Charles Ans', 'Gera MX', 'Charles Ans', 'C-Kan', 'Alemán', 'Nanpa Básico', 'Rels B', 'Sabino', 'Adán Cruz', 'DAAZ', 'Robot95', 'Samantha Barrón', 'Rich Vagos', 'Charles Ans', 'Charles Ans', 'Charles Ans', 'Charles Ans', 'Nsqk', 'Ray Charles', 'Charles Aznavour', 'Charles Sanson', 'Charles Sardo', 'Charles Wesley Godwin', 'Charles Parsson', 'Charles Weems', 'Charles Strouse', 'Charles Pasi', 'Adolphe Adam', 'Charles Daisey & Friends', 'Charles New']
+[2026-09-22T04:17:09.242+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:17:23.649+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:17:23.655+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:17:23.656+0000] {base.py:1868} INFO - [cached since 146.5s ago] {'nombre_artista_1': 'Charles Ans'}
+[2026-09-22T04:17:23.662+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Charles Ans es: 12
+[2026-09-22T04:17:23.663+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:17:28.239+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Dabeull.
+[2026-09-22T04:17:35.372+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:17:45.583+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:17:45.685+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Dabeull', 'HolyBrune', "L'Impératrice", 'Dezzy Hollow', 'Dabeull', 'Mike Patton', 'Darell', 'Boko Yout', 'Sūn Byrd', 'Boca Paila', 'Rude Jude', 'Patchwork Inc.', 'Sofia Rei', 'Lorelle Meets The Obsolete', 'Lemon Bucket Orkestra', 'Busy P', 'DaBella', 'DABELLE', 'Dabeunotres', 'DannyLux', 'MC Davo', 'Danbul', 'Dauble', 'Fabruuhh', 'J Abdiel', 'DABUDABU', 'Dahel', 'Dav1el', 'Ruzzo Doblezz', 'VV Brujo']
+[2026-09-22T04:17:45.987+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:18:01.180+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:18:01.194+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:18:01.195+0000] {base.py:1868} INFO - [cached since 184s ago] {'nombre_artista_1': 'Dabeull'}
+[2026-09-22T04:18:01.207+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Dabeull es: 29
+[2026-09-22T04:18:01.211+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:18:04.616+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Daddy Yankee.
+[2026-09-22T04:18:11.869+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:18:21.253+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:18:21.297+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Daddy Yankee', 'Wisin & Yandel', 'Don Omar', 'Bad Bunny', 'Daddy Yankee', 'J Balvin', 'Daddy Yankee Tributo', 'Ozuna', 'Farruko', 'Maluma', 'Arcángel', 'Plan B', 'Danny Ocean', 'Daddy Yankee (AI)', 'Nicky Jam', 'Daddy Yankee', 'Daddy yankee jefe', 'Feid', 'Daddy Yankee', 'Daddy Yankee', 'DJ Daddy Yankee', 'Ayala (Hermano de Daddy Yankee)', 'Daddy Yanke', 'Wisin', 'Tainy', 'Made famous by Daddy Yankee feat Jory', 'Made famous by Don Omar feat Daddy Yankee', 'Made famous by Daddy Yankee', 'Luis Fonsi, Daddy Yankee/Daddy Yankee', 'Made famous by Baby Rasta & Gringo Ft Daddy Yankee']
+[2026-09-22T04:18:21.425+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:18:34.980+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:18:34.983+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:18:34.983+0000] {base.py:1868} INFO - [cached since 217.8s ago] {'nombre_artista_1': 'Daddy Yankee'}
+[2026-09-22T04:18:34.985+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Daddy Yankee es: 30
+[2026-09-22T04:18:34.985+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:18:37.788+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Doja Cat.
+[2026-09-22T04:18:43.980+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:18:53.338+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T04:18:53.396+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Doja Cat', 'The Weeknd', 'Cardi B', 'Mon Laferte', 'Kali Uchis', 'Dua Lipa', 'Rihanna', 'Kenia Os', 'Young Miko', 'Ariana Grande', 'Zoé', 'Yeri Mua', 'FLVCKKA', 'Cazzu', 'Nicki Minaj', 'Nicki Nicole', 'Bellakath', 'Rels B', 'Doja Cata', 'Duki', 'Dója Kati', 'Dojo Cuts', 'Shakira', 'Bizarrap', 'Trueno', 'HUMBE', 'NBA YOUNGA DOJA BILLIE CAT', 'rusowsky', 'El Bogueto', 'DANNA']
+[2026-09-22T04:18:53.602+0000] {logging_mixin.py:190} INFO - Nos movemos al elemento de Acerc de:
+[2026-09-22T04:19:07.173+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:19:07.183+0000] {base.py:1863} INFO - SELECT artista.id_artista 
+FROM artista 
+WHERE artista.nombre_artista = %(nombre_artista_1)s
+[2026-09-22T04:19:07.184+0000] {base.py:1868} INFO - [cached since 250s ago] {'nombre_artista_1': 'Doja Cat'}
+[2026-09-22T04:19:07.187+0000] {logging_mixin.py:190} INFO - El id_artista asociado con Doja Cat es: 72
+[2026-09-22T04:19:07.187+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T04:19:10.767+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Ductape.
+[2026-09-22T04:19:16.913+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T04:19:18.821+0000] {timeout.py:68} ERROR - Process timed out, PID: 2858
+[2026-09-22T04:58:30.205+0000] {job.py:229} INFO - Heartbeat recovered after 32.51 seconds
+[2026-09-22T05:05:23.534+0000] {job.py:229} INFO - Heartbeat recovered after 360.11 seconds
+[2026-09-22T05:05:31.106+0000] {local_task_job_runner.py:346} WARNING - State of this instance has been externally set to up_for_retry. Terminating instance.
+[2026-09-22T05:05:31.230+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
+[2026-09-22T05:05:31.330+0000] {process_utils.py:132} INFO - Sending 15 to group 2858. PIDs of all processes in the group: [2861, 2874, 2876, 2877, 2895, 2925, 2893, 2858]
+[2026-09-22T05:05:31.360+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 2858
+[2026-09-22T05:05:31.759+0000] {taskinstance.py:3093} ERROR - Received SIGTERM. Terminating subprocesses.
+[2026-09-22T05:05:33.678+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/spotify_etl_pro.py", line 234, in extraer_mas_info
+    list_info = extract_artist_inf(conection_p, 'https://open.spotify.com/', list_artist, Sync_Artist)
+  File "/opt/airflow/include/Spotify_api/Playwright/scrapp_spotify.py", line 58, in extract_artist_inf
+    page.wait_for_timeout(time_await_defaut * 3)
+  File "/home/airflow/.local/lib/python3.10/site-packages/playwright/sync_api/_generated.py", line 12744, in wait_for_timeout
+    self._sync(
+  File "/home/airflow/.local/lib/python3.10/site-packages/playwright/_impl/_sync_base.py", line 113, in _sync
+    self._dispatcher_fiber.switch()
+  File "/home/airflow/.local/lib/python3.10/site-packages/playwright/sync_api/_context_manager.py", line 55, in greenlet_main
+    self._loop.run_until_complete(self._connection.run_as_sync())
+  File "/usr/local/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.10/asyncio/base_events.py", line 1871, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/usr/local/lib/python3.10/selectors.py", line 469, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/timeout.py", line 69, in handle_timeout
+    raise AirflowTaskTimeout(self.error_message)
+airflow.exceptions.AirflowTaskTimeout: Timeout, PID: 2858
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/decorators/base.py", line 266, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+  File "/opt/airflow/dags/spotify_etl_pro.py", line 241, in extraer_mas_info
+    conection_p.close_browser()
+  File "/opt/airflow/include/Spotify_api/Conexiones/conection_playwright.py", line 25, in close_browser
+    self.context.close()
+  File "/home/airflow/.local/lib/python3.10/site-packages/playwright/sync_api/_generated.py", line 15470, in close
+    return mapping.from_maybe_impl(self._sync(self._impl_obj.close(reason=reason)))
+  File "/home/airflow/.local/lib/python3.10/site-packages/playwright/_impl/_sync_base.py", line 113, in _sync
+    self._dispatcher_fiber.switch()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 3095, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+[2026-09-22T05:05:33.846+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=spotify_etl_pro, task_id=mas_informacion.extraer_mas_info, run_id=manual__2026-09-22T04:12:45+00:00, execution_date=20260922T041245, start_date=20260922T041418, end_date=20260922T050533
+[2026-09-22T05:05:34.600+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T05:05:34.951+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2876, status='terminated', started='04:14:19') (2876) terminated with exit code None
+[2026-09-22T05:05:35.038+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2925, status='terminated', started='04:14:19') (2925) terminated with exit code None
+[2026-09-22T05:05:35.044+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2893, status='terminated', started='04:14:19') (2893) terminated with exit code None
+[2026-09-22T05:05:35.051+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2858, status='terminated', exitcode=2, started='04:14:18') (2858) terminated with exit code 2
+[2026-09-22T05:05:35.057+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2895, status='terminated', started='04:14:19') (2895) terminated with exit code None
+[2026-09-22T05:05:35.062+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2874, status='terminated', started='04:14:19') (2874) terminated with exit code None
+[2026-09-22T05:05:35.069+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2877, status='terminated', started='04:14:19') (2877) terminated with exit code None
+[2026-09-22T05:05:35.335+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=2861, status='terminated', started='04:14:18') (2861) terminated with exit code None
+[2026-09-22T05:05:35.599+0000] {standard_task_runner.py:217} INFO - Process not found (most likely exited), stop collecting metrics

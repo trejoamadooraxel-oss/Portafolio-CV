@@ -1,0 +1,22 @@
+[2026-09-23T04:25:50.249+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T04:25:50.376+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.subir_inf_albums manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:25:50.422+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.albun.subir_inf_albums manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:25:50.431+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T04:25:50.473+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): albun.subir_inf_albums> on 2026-09-23 04:21:33+00:00
+[2026-09-23T04:25:50.547+0000] {standard_task_runner.py:72} INFO - Started process 3304 to run task
+[2026-09-23T04:25:50.629+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'albun.subir_inf_albums', 'manual__2026-09-23T04:21:33+00:00', '--job-id', '1045', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpx3pui_3o']
+[2026-09-23T04:25:50.668+0000] {standard_task_runner.py:105} INFO - Job 1045: Subtask albun.subir_inf_albums
+[2026-09-23T04:25:51.042+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.albun.subir_inf_albums manual__2026-09-23T04:21:33+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T04:25:51.429+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='albun.subir_inf_albums' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T04:21:33+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T04:21:33+00:00'
+[2026-09-23T04:25:51.441+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T04:25:51.459+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T04:25:51.463+0000] {base.py:1863} INFO - INSERT INTO album (nombre_album, id_spotify, fecha_lanzamiento, num_canciones, id_artista) VALUES (%(nombre_album)s, %(id_spotify)s, %(fecha_lanzamiento)s, %(num_canciones)s, %(id_artista)s)
+[2026-09-23T04:25:51.465+0000] {base.py:1868} INFO - [generated in 0.00118s] ({'nombre_album': 'Chin Up Buttercup', 'id_spotify': '6HgcWTOYtsZaLlNOoyjqGL', 'fecha_lanzamiento': datetime.date(2025, 11, 14), 'num_canciones': 10, 'id_artista': 84}, {'nombre_album': 'Swan Song (Original Score)', 'id_spotify': '1MqdekNvsg1MCVV6QSKUhw', 'fecha_lanzamiento': datetime.date(2023, 12, 8), 'num_canciones': 14, 'id_artista': 84}, {'nombre_album': 'HiRUDiN REMiXED', 'id_spotify': '6w55pQ0HS5b0mqHXh31c35', 'fecha_lanzamiento': datetime.date(2020, 11, 16), 'num_canciones': 7, 'id_artista': 84}, {'nombre_album': 'HiRUDiN', 'id_spotify': '70dAWY6KDpSriewnxFngXt', 'fecha_lanzamiento': datetime.date(2020, 5, 1), 'num_canciones': 11, 'id_artista': 84}, {'nombre_album': 'Future Politics', 'id_spotify': '5Qwuw7s1jPcObpL21OJ6IC', 'fecha_lanzamiento': datetime.date(2017, 1, 1), 'num_canciones': 11, 'id_artista': 84}, {'nombre_album': 'Olympia', 'id_spotify': '1RCeRYu4AxfeRnPt4n0lYS', 'fecha_lanzamiento': datetime.date(2013, 6, 16), 'num_canciones': 13, 'id_artista': 84}, {'nombre_album': 'Feel It Break (Deluxe Version)', 'id_spotify': '1jjBoDYIshey9omXoqWai2', 'fecha_lanzamiento': datetime.date(2011, 11, 28), 'num_canciones': 20, 'id_artista': 84}, {'nombre_album': 'Sparkle', 'id_spotify': '2JkQzSSMnnlwPLsNlSdlNk', 'fecha_lanzamiento': datetime.date(2011, 7, 25), 'num_canciones': 10, 'id_artista': 84})
+[2026-09-23T04:25:51.514+0000] {base.py:1092} INFO - COMMIT
+[2026-09-23T04:25:51.518+0000] {logging_mixin.py:190} INFO - Registro insertado correctamente
+[2026-09-23T04:25:51.521+0000] {spotify_etl_pro.py:296} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-23T04:25:51.526+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T04:25:51.592+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T04:25:51.593+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=albun.subir_inf_albums, run_id=manual__2026-09-23T04:21:33+00:00, execution_date=20260923T042133, start_date=20260923T042550, end_date=20260923T042551
+[2026-09-23T04:25:51.702+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T04:25:51.837+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

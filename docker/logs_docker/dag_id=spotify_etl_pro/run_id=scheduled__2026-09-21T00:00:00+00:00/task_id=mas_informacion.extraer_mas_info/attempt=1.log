@@ -1,0 +1,31 @@
+[2026-09-22T01:38:12.735+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T01:38:12.750+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info scheduled__2026-09-21T00:00:00+00:00 [queued]>
+[2026-09-22T01:38:12.758+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info scheduled__2026-09-21T00:00:00+00:00 [queued]>
+[2026-09-22T01:38:12.759+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T01:38:12.770+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.extraer_mas_info> on 2026-09-21 00:00:00+00:00
+[2026-09-22T01:38:12.775+0000] {standard_task_runner.py:72} INFO - Started process 1614 to run task
+[2026-09-22T01:38:12.778+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.extraer_mas_info', 'scheduled__2026-09-21T00:00:00+00:00', '--job-id', '772', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpmeaujdaz']
+[2026-09-22T01:38:12.782+0000] {standard_task_runner.py:105} INFO - Job 772: Subtask mas_informacion.extraer_mas_info
+[2026-09-22T01:38:12.827+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.extraer_mas_info scheduled__2026-09-21T00:00:00+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T01:38:12.889+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.extraer_mas_info' AIRFLOW_CTX_EXECUTION_DATE='2026-09-21T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-21T00:00:00+00:00'
+[2026-09-22T01:38:12.890+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T01:38:13.083+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T01:38:13.083+0000] {base.py:1863} INFO - SELECT artista.nombre_artista 
+FROM artista ORDER BY artista.nombre_artista ASC
+[2026-09-22T01:38:13.084+0000] {base.py:1868} INFO - [generated in 0.00025s] {}
+[2026-09-22T01:38:13.085+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T01:38:13.085+0000] {spotify_etl_pro.py:224} INFO - ['Amduscia', 'Bad Bunny', 'Belanova', 'Boy Harsher', 'Charles Ans', 'Dabeull', 'Daddy Yankee', 'Ductape', 'Empire Of The Sun', 'EXO', 'fedesttar', 'Hapax', 'Hocico', 'José José', 'Justin Bieber', 'Kendrick Lamar', 'Kiddie Gang', 'Kris Floyd', 'Linkin Park', 'Marilyn Manson', 'Mecano', 'Méne', 'Metallica', 'Plan B', 'Rihanna', 'Robot95', 'Snoop Dogg', 'Soda Stereo', 'Steve Lukather', 'The Weeknd', 'Tony Succar', 'Tyga', 'Utro', 'Zoé']
+[2026-09-22T01:38:13.484+0000] {spotify_etl_pro.py:226} INFO - OK. Iniciando proceso de extraccion mediante Playwrite
+[2026-09-22T01:38:16.220+0000] {logging_mixin.py:190} INFO - Ingresamos en el buscador a: Amduscia.
+[2026-09-22T01:38:22.948+0000] {logging_mixin.py:190} INFO - Seleccionamos apartado de Artistas.
+[2026-09-22T01:38:32.277+0000] {logging_mixin.py:190} INFO - Validando que exista el artista a buscar.
+[2026-09-22T01:38:32.353+0000] {logging_mixin.py:190} INFO - Tarjetas encontradas: ['Anuel AA', 'Aitana', 'KATSEYE', 'La Arrolladora Banda El Limón De Rene Camacho', 'Ariana Grande', 'Ana Gabriel', 'AC/DC', 'Aleks Syntek', 'Alvaro Diaz', 'Alfredo Olivas', 'Romeo Santos', 'Alemán', 'Arcángel', 'Adele', 'Aventura', 'Alejandro Sanz', 'Antonio Aguilar', 'Arctic Monkeys', 'Alejandro Fernández', 'Rauw Alejandro', 'ADÉLA', 'A', 'Adán Cruz', 'A', 'Arijit Singh', 'A', 'A', 'A', 'Â', 'A']
+[2026-09-22T01:38:42.385+0000] {logging_mixin.py:190} INFO - Error inesperado durante la bsuqueda del artista: Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("p[title=\"Amduscia\"]").first to be visible
+[2026-09-22T01:38:42.572+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T01:38:42.610+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T01:38:42.611+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=mas_informacion.extraer_mas_info, run_id=scheduled__2026-09-21T00:00:00+00:00, execution_date=20260921T000000, start_date=20260922T013812, end_date=20260922T013842
+[2026-09-22T01:38:42.663+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T01:38:42.740+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T01:38:42.744+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -1,0 +1,23 @@
+[2026-09-23T04:25:11.741+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T04:25:11.762+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:25:11.768+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:25:11.768+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T04:25:11.780+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista.subir_inf_artista> on 2026-09-23 04:21:33+00:00
+[2026-09-23T04:25:11.790+0000] {standard_task_runner.py:72} INFO - Started process 3288 to run task
+[2026-09-23T04:25:11.794+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista.subir_inf_artista', 'manual__2026-09-23T04:21:33+00:00', '--job-id', '1042', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmphti5xy1a']
+[2026-09-23T04:25:11.798+0000] {standard_task_runner.py:105} INFO - Job 1042: Subtask artista.subir_inf_artista
+[2026-09-23T04:25:11.857+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T04:21:33+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T04:25:11.928+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista.subir_inf_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T04:21:33+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T04:21:33+00:00'
+[2026-09-23T04:25:11.929+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T04:25:11.933+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T04:25:11.933+0000] {base.py:1863} INFO - INSERT INTO artista (nombre_artista, id_spotify) VALUES (%(nombre_artista)s, %(id_spotify)s) RETURNING artista.id_artista
+[2026-09-23T04:25:11.934+0000] {base.py:1868} INFO - [generated in 0.00033s] {'nombre_artista': 'Austra', 'id_spotify': '1o43SzzuLoyOxqThmp7s0g'}
+[2026-09-23T04:25:11.954+0000] {base.py:1092} INFO - COMMIT
+[2026-09-23T04:25:11.955+0000] {logging_mixin.py:190} INFO - Registro insertado correctamente
+[2026-09-23T04:25:11.955+0000] {spotify_etl_pro.py:287} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-23T04:25:11.955+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T04:25:11.962+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T04:25:11.962+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista.subir_inf_artista, run_id=manual__2026-09-23T04:21:33+00:00, execution_date=20260923T042133, start_date=20260923T042511, end_date=20260923T042511
+[2026-09-23T04:25:11.971+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T04:25:11.992+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T04:25:11.993+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

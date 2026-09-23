@@ -1,0 +1,23 @@
+[2026-09-23T04:26:59.620+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T04:26:59.632+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:26:59.638+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:26:59.638+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T04:26:59.646+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.subir_mas_inf_artista> on 2026-09-23 04:21:33+00:00
+[2026-09-23T04:26:59.650+0000] {standard_task_runner.py:72} INFO - Started process 3520 to run task
+[2026-09-23T04:26:59.655+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.subir_mas_inf_artista', 'manual__2026-09-23T04:21:33+00:00', '--job-id', '1053', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmp8vpndzgr']
+[2026-09-23T04:26:59.658+0000] {standard_task_runner.py:105} INFO - Job 1053: Subtask mas_informacion.subir_mas_inf_artista
+[2026-09-23T04:26:59.723+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-23T04:21:33+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T04:26:59.810+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.subir_mas_inf_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T04:21:33+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T04:21:33+00:00'
+[2026-09-23T04:26:59.811+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T04:26:59.814+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T04:26:59.815+0000] {base.py:1863} INFO - INSERT INTO mas_inf (id_artista, artista, seguidores, escuchas_mensuales, ciudad_oyente_uno, num_oyentes_uno, ciudad_oyente_dos, num_oyentes_dos, ciudad_oyente_tres, num_oyentes_tres, ciudad_oyente_cuatro, num_oyentes_cuatro, ciudad_oyente_cinco, num_oyentes_cinco) VALUES (%(id_artista)s, %(artista)s, %(seguidores)s, %(escuchas_mensuales)s, %(ciudad_oyente_uno)s, %(num_oyentes_uno)s, %(ciudad_oyente_dos)s, %(num_oyentes_dos)s, %(ciudad_oyente_tres)s, %(num_oyentes_tres)s, %(ciudad_oyente_cuatro)s, %(num_oyentes_cuatro)s, %(ciudad_oyente_cinco)s, %(num_oyentes_cinco)s)
+[2026-09-23T04:26:59.815+0000] {base.py:1868} INFO - [generated in 0.00034s] {'id_artista': 84, 'artista': 'Austra', 'seguidores': 172440, 'escuchas_mensuales': 141783, 'ciudad_oyente_uno': 'Berlin, DE', 'num_oyentes_uno': 4753, 'ciudad_oyente_dos': 'London, GB', 'num_oyentes_dos': 2577, 'ciudad_oyente_tres': 'Mexico City, MX', 'num_oyentes_tres': 2140, 'ciudad_oyente_cuatro': 'Los Angeles, US', 'num_oyentes_cuatro': 1819, 'ciudad_oyente_cinco': 'Vienna, AT', 'num_oyentes_cinco': 1633}
+[2026-09-23T04:26:59.817+0000] {base.py:1092} INFO - COMMIT
+[2026-09-23T04:26:59.818+0000] {logging_mixin.py:190} INFO - Registro insertado correctamente
+[2026-09-23T04:26:59.818+0000] {spotify_etl_pro.py:331} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-23T04:26:59.818+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T04:26:59.826+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T04:26:59.826+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=mas_informacion.subir_mas_inf_artista, run_id=manual__2026-09-23T04:21:33+00:00, execution_date=20260923T042133, start_date=20260923T042659, end_date=20260923T042659
+[2026-09-23T04:26:59.868+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T04:26:59.894+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T04:26:59.895+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

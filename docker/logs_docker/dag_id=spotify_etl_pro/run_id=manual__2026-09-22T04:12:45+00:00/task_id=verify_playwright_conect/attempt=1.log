@@ -1,0 +1,19 @@
+[2026-09-22T04:14:09.768+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T04:14:09.783+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.verify_playwright_conect manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T04:14:09.789+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.verify_playwright_conect manual__2026-09-22T04:12:45+00:00 [queued]>
+[2026-09-22T04:14:09.789+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T04:14:09.800+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonSensor): verify_playwright_conect> on 2026-09-22 04:12:45+00:00
+[2026-09-22T04:14:09.810+0000] {standard_task_runner.py:72} INFO - Started process 2767 to run task
+[2026-09-22T04:14:09.815+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'verify_playwright_conect', 'manual__2026-09-22T04:12:45+00:00', '--job-id', '857', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpfwfc58g0']
+[2026-09-22T04:14:09.823+0000] {standard_task_runner.py:105} INFO - Job 857: Subtask verify_playwright_conect
+[2026-09-22T04:14:09.903+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.verify_playwright_conect manual__2026-09-22T04:12:45+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T04:14:09.979+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='verify_playwright_conect' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:12:45+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:12:45+00:00'
+[2026-09-22T04:14:09.981+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T04:14:09.989+0000] {python.py:75} INFO - Poking callable: <function verify_conection_playwright at 0xffffb1d6eb90>
+[2026-09-22T04:14:16.696+0000] {spotify_etl_pro.py:70} INFO - OK. La conexion con Playwright ha sido Exitosa
+[2026-09-22T04:14:16.899+0000] {base.py:336} INFO - Success criteria met. Exiting.
+[2026-09-22T04:14:16.951+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T04:14:16.952+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=verify_playwright_conect, run_id=manual__2026-09-22T04:12:45+00:00, execution_date=20260922T041245, start_date=20260922T041409, end_date=20260922T041416
+[2026-09-22T04:14:17.034+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T04:14:17.125+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T04:14:17.126+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

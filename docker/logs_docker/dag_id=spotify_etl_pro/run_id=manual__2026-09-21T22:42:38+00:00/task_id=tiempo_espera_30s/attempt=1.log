@@ -1,0 +1,20 @@
+[2026-09-21T22:42:55.785+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-21T22:42:55.798+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.tiempo_espera_30s manual__2026-09-21T22:42:38+00:00 [queued]>
+[2026-09-21T22:42:55.804+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.tiempo_espera_30s manual__2026-09-21T22:42:38+00:00 [queued]>
+[2026-09-21T22:42:55.805+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-21T22:42:55.813+0000] {taskinstance.py:2889} INFO - Executing <Task(BashOperator): tiempo_espera_30s> on 2026-09-21 22:42:38+00:00
+[2026-09-21T22:42:55.816+0000] {standard_task_runner.py:72} INFO - Started process 482 to run task
+[2026-09-21T22:42:55.824+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'tiempo_espera_30s', 'manual__2026-09-21T22:42:38+00:00', '--job-id', '716', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmp0_m9dqfp']
+[2026-09-21T22:42:55.830+0000] {standard_task_runner.py:105} INFO - Job 716: Subtask tiempo_espera_30s
+[2026-09-21T22:42:55.884+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.tiempo_espera_30s manual__2026-09-21T22:42:38+00:00 [running]> on host 96d0bddc4644
+[2026-09-21T22:42:55.959+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='tiempo_espera_30s' AIRFLOW_CTX_EXECUTION_DATE='2026-09-21T22:42:38+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-21T22:42:38+00:00'
+[2026-09-21T22:42:55.961+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-21T22:42:55.964+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2026-09-21T22:42:55.966+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'sleep 30']
+[2026-09-21T22:42:55.975+0000] {subprocess.py:99} INFO - Output:
+[2026-09-21T22:43:26.006+0000] {subprocess.py:110} INFO - Command exited with return code 0
+[2026-09-21T22:43:26.143+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-21T22:43:26.144+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=tiempo_espera_30s, run_id=manual__2026-09-21T22:42:38+00:00, execution_date=20260921T224238, start_date=20260921T224255, end_date=20260921T224326
+[2026-09-21T22:43:26.183+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-21T22:43:26.240+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-21T22:43:26.241+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

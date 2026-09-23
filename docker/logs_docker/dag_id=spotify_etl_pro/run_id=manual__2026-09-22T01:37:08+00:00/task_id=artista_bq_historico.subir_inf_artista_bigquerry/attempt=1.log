@@ -1,0 +1,55 @@
+[2026-09-22T01:37:25.226+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T01:37:25.256+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:37:08+00:00 [queued]>
+[2026-09-22T01:37:25.267+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:37:08+00:00 [queued]>
+[2026-09-22T01:37:25.268+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T01:37:25.284+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista_bq_historico.subir_inf_artista_bigquerry> on 2026-09-22 01:37:08+00:00
+[2026-09-22T01:37:25.294+0000] {standard_task_runner.py:72} INFO - Started process 1478 to run task
+[2026-09-22T01:37:25.300+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista_bq_historico.subir_inf_artista_bigquerry', 'manual__2026-09-22T01:37:08+00:00', '--job-id', '760', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpk2yvuwt2']
+[2026-09-22T01:37:25.315+0000] {standard_task_runner.py:105} INFO - Job 760: Subtask artista_bq_historico.subir_inf_artista_bigquerry
+[2026-09-22T01:37:25.407+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista_bq_historico.subir_inf_artista_bigquerry manual__2026-09-22T01:37:08+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T01:37:25.500+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista_bq_historico.subir_inf_artista_bigquerry' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T01:37:08+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T01:37:08+00:00'
+[2026-09-22T01:37:25.502+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T01:37:25.910+0000] {_default.py:685} WARNING - No project ID could be determined. Consider running `gcloud config set project` or setting the GOOGLE_CLOUD_PROJECT environment variable
+[2026-09-22T01:37:26.363+0000] {logging_mixin.py:190} INFO - ['Hocico', 'Kendrick Lamar', 'Metallica', 'EXO', 'Tyga', 'Hapax', 'Mecano', 'Boy Harsher', 'Rihanna', 'Charles Ans', 'Méne', 'Ductape', 'Justin Bieber', 'The Weeknd', 'Kiddie Gang', 'Belanova', 'fedesttar', 'Kris Floyd', 'Tony Succar', 'Steve Lukather', 'Robot95', 'Zoé', 'Dabeull', 'Daddy Yankee', 'Plan B', 'Linkin Park', 'José José', 'Marilyn Manson', 'Bad Bunny', 'Utro', 'Amduscia', 'Empire Of The Sun', 'Soda Stereo', 'Snoop Dogg']
+[2026-09-22T01:37:26.387+0000] {logging_mixin.py:190} INFO -                     0                    fecha_ingesta
+0              Hocico 2026-09-22 01:37:26.369209+00:00
+1      Kendrick Lamar 2026-09-22 01:37:26.369209+00:00
+2           Metallica 2026-09-22 01:37:26.369209+00:00
+3                 EXO 2026-09-22 01:37:26.369209+00:00
+4                Tyga 2026-09-22 01:37:26.369209+00:00
+5               Hapax 2026-09-22 01:37:26.369209+00:00
+6              Mecano 2026-09-22 01:37:26.369209+00:00
+7         Boy Harsher 2026-09-22 01:37:26.369209+00:00
+8             Rihanna 2026-09-22 01:37:26.369209+00:00
+9         Charles Ans 2026-09-22 01:37:26.369209+00:00
+10               Méne 2026-09-22 01:37:26.369209+00:00
+11            Ductape 2026-09-22 01:37:26.369209+00:00
+12      Justin Bieber 2026-09-22 01:37:26.369209+00:00
+13         The Weeknd 2026-09-22 01:37:26.369209+00:00
+14        Kiddie Gang 2026-09-22 01:37:26.369209+00:00
+15           Belanova 2026-09-22 01:37:26.369209+00:00
+16          fedesttar 2026-09-22 01:37:26.369209+00:00
+17         Kris Floyd 2026-09-22 01:37:26.369209+00:00
+18        Tony Succar 2026-09-22 01:37:26.369209+00:00
+19     Steve Lukather 2026-09-22 01:37:26.369209+00:00
+20            Robot95 2026-09-22 01:37:26.369209+00:00
+21                Zoé 2026-09-22 01:37:26.369209+00:00
+22            Dabeull 2026-09-22 01:37:26.369209+00:00
+23       Daddy Yankee 2026-09-22 01:37:26.369209+00:00
+24             Plan B 2026-09-22 01:37:26.369209+00:00
+25        Linkin Park 2026-09-22 01:37:26.369209+00:00
+26          José José 2026-09-22 01:37:26.369209+00:00
+27     Marilyn Manson 2026-09-22 01:37:26.369209+00:00
+28          Bad Bunny 2026-09-22 01:37:26.369209+00:00
+29               Utro 2026-09-22 01:37:26.369209+00:00
+30           Amduscia 2026-09-22 01:37:26.369209+00:00
+31  Empire Of The Sun 2026-09-22 01:37:26.369209+00:00
+32        Soda Stereo 2026-09-22 01:37:26.369209+00:00
+33         Snoop Dogg 2026-09-22 01:37:26.369209+00:00
+[2026-09-22T01:37:26.570+0000] {spotify_etl_pro.py:317} ERROR - ERROR. Al subir la informacion : expected bytes, int found
+[2026-09-22T01:37:26.570+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T01:37:26.587+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T01:37:26.587+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista_bq_historico.subir_inf_artista_bigquerry, run_id=manual__2026-09-22T01:37:08+00:00, execution_date=20260922T013708, start_date=20260922T013725, end_date=20260922T013726
+[2026-09-22T01:37:26.645+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T01:37:26.686+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T01:37:26.688+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

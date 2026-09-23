@@ -1,0 +1,28 @@
+[2026-09-22T23:14:42.378+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T23:14:42.390+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-22T23:13:47+00:00 [queued]>
+[2026-09-22T23:14:42.396+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-22T23:13:47+00:00 [queued]>
+[2026-09-22T23:14:42.398+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T23:14:42.404+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista.subir_inf_artista> on 2026-09-22 23:13:47+00:00
+[2026-09-22T23:14:42.407+0000] {standard_task_runner.py:72} INFO - Started process 323 to run task
+[2026-09-22T23:14:42.410+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista.subir_inf_artista', 'manual__2026-09-22T23:13:47+00:00', '--job-id', '902', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpcf5pic4n']
+[2026-09-22T23:14:42.414+0000] {standard_task_runner.py:105} INFO - Job 902: Subtask artista.subir_inf_artista
+[2026-09-22T23:14:42.478+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-22T23:13:47+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T23:14:42.585+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista.subir_inf_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T23:13:47+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T23:13:47+00:00'
+[2026-09-22T23:14:42.588+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T23:14:42.591+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T23:14:42.592+0000] {base.py:1863} INFO - INSERT INTO artista (nombre_artista, id_spotify) VALUES (%(nombre_artista)s, %(id_spotify)s) RETURNING artista.id_artista
+[2026-09-22T23:14:42.592+0000] {base.py:1868} INFO - [generated in 0.00038s] {'nombre_artista': 'Bad Bunny', 'id_spotify': '4q3ewBCX7sLwd24euuV69X'}
+[2026-09-22T23:14:42.596+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T23:14:42.597+0000] {logging_mixin.py:190} INFO - ERROR: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "artista_id_spotify_key"
+DETAIL:  Key (id_spotify)=(4q3ewBCX7sLwd24euuV69X) already exists.
+
+[SQL: INSERT INTO artista (nombre_artista, id_spotify) VALUES (%(nombre_artista)s, %(id_spotify)s) RETURNING artista.id_artista]
+[parameters: {'nombre_artista': 'Bad Bunny', 'id_spotify': '4q3ewBCX7sLwd24euuV69X'}]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2026-09-22T23:14:42.597+0000] {spotify_etl_pro.py:287} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-22T23:14:42.597+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T23:14:42.608+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T23:14:42.608+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista.subir_inf_artista, run_id=manual__2026-09-22T23:13:47+00:00, execution_date=20260922T231347, start_date=20260922T231442, end_date=20260922T231442
+[2026-09-22T23:14:42.628+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T23:14:42.649+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T23:14:42.650+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

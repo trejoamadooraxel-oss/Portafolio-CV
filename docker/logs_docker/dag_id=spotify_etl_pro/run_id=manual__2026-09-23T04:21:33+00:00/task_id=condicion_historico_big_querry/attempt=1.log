@@ -1,0 +1,20 @@
+[2026-09-23T04:27:05.601+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T04:27:05.620+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.condicion_historico_big_querry manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:27:05.630+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.condicion_historico_big_querry manual__2026-09-23T04:21:33+00:00 [queued]>
+[2026-09-23T04:27:05.632+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T04:27:05.653+0000] {taskinstance.py:2889} INFO - Executing <Task(ShortCircuitOperator): condicion_historico_big_querry> on 2026-09-23 04:21:33+00:00
+[2026-09-23T04:27:05.665+0000] {standard_task_runner.py:72} INFO - Started process 3527 to run task
+[2026-09-23T04:27:05.673+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'condicion_historico_big_querry', 'manual__2026-09-23T04:21:33+00:00', '--job-id', '1055', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmp8oqqsnxl']
+[2026-09-23T04:27:05.677+0000] {standard_task_runner.py:105} INFO - Job 1055: Subtask condicion_historico_big_querry
+[2026-09-23T04:27:05.767+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.condicion_historico_big_querry manual__2026-09-23T04:21:33+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T04:27:05.841+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='condicion_historico_big_querry' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T04:21:33+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T04:21:33+00:00'
+[2026-09-23T04:27:05.842+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T04:27:05.843+0000] {baseoperator.py:416} WARNING - ShortCircuitOperator.execute cannot be called outside TaskInstance!
+[2026-09-23T04:27:05.844+0000] {python.py:240} INFO - Done. Returned value was: True
+[2026-09-23T04:27:05.844+0000] {python.py:309} INFO - Condition result is True
+[2026-09-23T04:27:05.844+0000] {python.py:312} INFO - Proceeding with downstream tasks...
+[2026-09-23T04:27:05.877+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T04:27:05.877+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=condicion_historico_big_querry, run_id=manual__2026-09-23T04:21:33+00:00, execution_date=20260923T042133, start_date=20260923T042705, end_date=20260923T042705
+[2026-09-23T04:27:05.902+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T04:27:05.932+0000] {taskinstance.py:3895} INFO - 4 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T04:27:05.933+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

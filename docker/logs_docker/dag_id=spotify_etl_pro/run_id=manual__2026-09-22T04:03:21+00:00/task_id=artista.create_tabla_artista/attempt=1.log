@@ -1,0 +1,22 @@
+[2026-09-22T04:04:22.875+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T04:04:22.896+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.create_tabla_artista manual__2026-09-22T04:03:21+00:00 [queued]>
+[2026-09-22T04:04:22.902+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.create_tabla_artista manual__2026-09-22T04:03:21+00:00 [queued]>
+[2026-09-22T04:04:22.902+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T04:04:22.912+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista.create_tabla_artista> on 2026-09-22 04:03:21+00:00
+[2026-09-22T04:04:22.924+0000] {standard_task_runner.py:72} INFO - Started process 2554 to run task
+[2026-09-22T04:04:22.932+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista.create_tabla_artista', 'manual__2026-09-22T04:03:21+00:00', '--job-id', '822', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpgg7l4cfn']
+[2026-09-22T04:04:22.946+0000] {standard_task_runner.py:105} INFO - Job 822: Subtask artista.create_tabla_artista
+[2026-09-22T04:04:23.115+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista.create_tabla_artista manual__2026-09-22T04:03:21+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T04:04:23.246+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista.create_tabla_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:03:21+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:03:21+00:00'
+[2026-09-22T04:04:23.248+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T04:04:23.255+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T04:04:23.257+0000] {base.py:1863} INFO - select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[2026-09-22T04:04:23.261+0000] {base.py:1868} INFO - [generated in 0.00335s] {'name': 'artista'}
+[2026-09-22T04:04:23.262+0000] {base.py:1092} INFO - COMMIT
+[2026-09-22T04:04:23.263+0000] {logging_mixin.py:190} INFO - Tabla 'artista' verificada/creada correctamente.
+[2026-09-22T04:04:23.263+0000] {spotify_etl_pro.py:251} INFO - OK. Se creo la Tabla
+[2026-09-22T04:04:23.264+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T04:04:23.276+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T04:04:23.276+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista.create_tabla_artista, run_id=manual__2026-09-22T04:03:21+00:00, execution_date=20260922T040321, start_date=20260922T040422, end_date=20260922T040423
+[2026-09-22T04:04:23.315+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T04:04:23.331+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

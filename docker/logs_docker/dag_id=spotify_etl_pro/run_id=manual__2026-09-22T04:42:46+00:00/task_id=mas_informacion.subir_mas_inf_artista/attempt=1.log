@@ -1,0 +1,33 @@
+[2026-09-22T05:28:25.843+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T05:28:25.883+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-22T04:42:46+00:00 [queued]>
+[2026-09-22T05:28:25.900+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-22T04:42:46+00:00 [queued]>
+[2026-09-22T05:28:25.903+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T05:28:25.925+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): mas_informacion.subir_mas_inf_artista> on 2026-09-22 04:42:46+00:00
+[2026-09-22T05:28:25.934+0000] {standard_task_runner.py:72} INFO - Started process 3934 to run task
+[2026-09-22T05:28:25.942+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'mas_informacion.subir_mas_inf_artista', 'manual__2026-09-22T04:42:46+00:00', '--job-id', '880', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmptt841nmx']
+[2026-09-22T05:28:25.947+0000] {standard_task_runner.py:105} INFO - Job 880: Subtask mas_informacion.subir_mas_inf_artista
+[2026-09-22T05:28:26.054+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.mas_informacion.subir_mas_inf_artista manual__2026-09-22T04:42:46+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T05:28:26.241+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='mas_informacion.subir_mas_inf_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-22T04:42:46+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-22T04:42:46+00:00'
+[2026-09-22T05:28:26.244+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T05:28:26.252+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:28:26.254+0000] {base.py:1863} INFO - DELETE FROM mas_inf
+[2026-09-22T05:28:26.257+0000] {base.py:1868} INFO - [generated in 0.00269s] {}
+[2026-09-22T05:28:26.264+0000] {base.py:1092} INFO - COMMIT
+[2026-09-22T05:28:26.265+0000] {logging_mixin.py:190} INFO - Tabla 'mas_inf' limpiada correctamente.
+[2026-09-22T05:28:26.267+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-22T05:28:26.273+0000] {logging_mixin.py:190} WARNING - /opt/airflow/include/Spotify_api/Models/sync_more_inf.py:41 SAWarning: Column 'mas_inf.id_artista' is marked as a member of the primary key for table 'mas_inf', but has no Python-side or server-side default generator indicated, nor does it indicate 'autoincrement=True' or 'nullable=True', and no explicit value is passed.  Primary key columns typically may not store NULL.
+[2026-09-22T05:28:26.275+0000] {base.py:1863} INFO - INSERT INTO mas_inf DEFAULT VALUES
+[2026-09-22T05:28:26.276+0000] {base.py:1868} INFO - [generated in 0.00166s] {}
+[2026-09-22T05:28:26.281+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-22T05:28:26.282+0000] {logging_mixin.py:190} INFO - ERROR: (psycopg2.errors.NotNullViolation) null value in column "id_artista" of relation "mas_inf" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, null, null, null, null, null, null).
+
+[SQL: INSERT INTO mas_inf DEFAULT VALUES]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2026-09-22T05:28:26.283+0000] {spotify_etl_pro.py:331} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-22T05:28:26.283+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-22T05:28:26.300+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T05:28:26.300+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=mas_informacion.subir_mas_inf_artista, run_id=manual__2026-09-22T04:42:46+00:00, execution_date=20260922T044246, start_date=20260922T052825, end_date=20260922T052826
+[2026-09-22T05:28:26.329+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T05:28:26.379+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-22T05:28:26.384+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -1,0 +1,34 @@
+[2026-09-23T03:07:39.685+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-23T03:07:39.708+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T03:07:22+00:00 [queued]>
+[2026-09-23T03:07:39.724+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T03:07:22+00:00 [queued]>
+[2026-09-23T03:07:39.725+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-23T03:07:39.737+0000] {taskinstance.py:2889} INFO - Executing <Task(_PythonDecoratedOperator): artista.subir_inf_artista> on 2026-09-23 03:07:22+00:00
+[2026-09-23T03:07:39.745+0000] {standard_task_runner.py:72} INFO - Started process 2140 to run task
+[2026-09-23T03:07:39.757+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'artista.subir_inf_artista', 'manual__2026-09-23T03:07:22+00:00', '--job-id', '979', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmp1qqx68b2']
+[2026-09-23T03:07:39.762+0000] {standard_task_runner.py:105} INFO - Job 979: Subtask artista.subir_inf_artista
+[2026-09-23T03:07:39.859+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.artista.subir_inf_artista manual__2026-09-23T03:07:22+00:00 [running]> on host 96d0bddc4644
+[2026-09-23T03:07:40.003+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='artista.subir_inf_artista' AIRFLOW_CTX_EXECUTION_DATE='2026-09-23T03:07:22+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-23T03:07:22+00:00'
+[2026-09-23T03:07:40.005+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-23T03:07:40.014+0000] {base.py:1863} INFO - select pg_catalog.version()
+[2026-09-23T03:07:40.014+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-23T03:07:40.015+0000] {base.py:1863} INFO - select current_schema()
+[2026-09-23T03:07:40.015+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-23T03:07:40.015+0000] {base.py:1863} INFO - show standard_conforming_strings
+[2026-09-23T03:07:40.016+0000] {base.py:1868} INFO - [raw sql] {}
+[2026-09-23T03:07:40.016+0000] {base.py:1032} INFO - BEGIN (implicit)
+[2026-09-23T03:07:40.017+0000] {base.py:1863} INFO - INSERT INTO artista (nombre_artista, id_spotify) VALUES (%(nombre_artista)s, %(id_spotify)s) RETURNING artista.id_artista
+[2026-09-23T03:07:40.017+0000] {base.py:1868} INFO - [generated in 0.00029s] {'nombre_artista': 'Bad Bunny', 'id_spotify': '4q3ewBCX7sLwd24euuV69X'}
+[2026-09-23T03:07:40.019+0000] {base.py:1060} INFO - ROLLBACK
+[2026-09-23T03:07:40.020+0000] {logging_mixin.py:190} INFO - ERROR: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "artista_id_spotify_key"
+DETAIL:  Key (id_spotify)=(4q3ewBCX7sLwd24euuV69X) already exists.
+
+[SQL: INSERT INTO artista (nombre_artista, id_spotify) VALUES (%(nombre_artista)s, %(id_spotify)s) RETURNING artista.id_artista]
+[parameters: {'nombre_artista': 'Bad Bunny', 'id_spotify': '4q3ewBCX7sLwd24euuV69X'}]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2026-09-23T03:07:40.020+0000] {spotify_etl_pro.py:287} INFO - OK. Se ingreso la informacion en la tabla
+[2026-09-23T03:07:40.020+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-23T03:07:40.032+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-23T03:07:40.033+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=artista.subir_inf_artista, run_id=manual__2026-09-23T03:07:22+00:00, execution_date=20260923T030722, start_date=20260923T030739, end_date=20260923T030740
+[2026-09-23T03:07:40.051+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-23T03:07:40.073+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-23T03:07:40.074+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -1,0 +1,19 @@
+[2026-09-22T01:37:48.792+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-09-22T01:37:48.806+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spotify_etl_pro.condicion_proceso_canciones scheduled__2026-09-21T00:00:00+00:00 [queued]>
+[2026-09-22T01:37:48.813+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spotify_etl_pro.condicion_proceso_canciones scheduled__2026-09-21T00:00:00+00:00 [queued]>
+[2026-09-22T01:37:48.814+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 3
+[2026-09-22T01:37:48.824+0000] {taskinstance.py:2889} INFO - Executing <Task(ShortCircuitOperator): condicion_proceso_canciones> on 2026-09-21 00:00:00+00:00
+[2026-09-22T01:37:48.828+0000] {standard_task_runner.py:72} INFO - Started process 1499 to run task
+[2026-09-22T01:37:48.832+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'spotify_etl_pro', 'condicion_proceso_canciones', 'scheduled__2026-09-21T00:00:00+00:00', '--job-id', '765', '--raw', '--subdir', 'DAGS_FOLDER/spotify_etl_pro.py', '--cfg-path', '/tmp/tmpm5edu0ez']
+[2026-09-22T01:37:48.838+0000] {standard_task_runner.py:105} INFO - Job 765: Subtask condicion_proceso_canciones
+[2026-09-22T01:37:48.885+0000] {task_command.py:467} INFO - Running <TaskInstance: spotify_etl_pro.condicion_proceso_canciones scheduled__2026-09-21T00:00:00+00:00 [running]> on host 96d0bddc4644
+[2026-09-22T01:37:48.951+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='axel' AIRFLOW_CTX_DAG_ID='spotify_etl_pro' AIRFLOW_CTX_TASK_ID='condicion_proceso_canciones' AIRFLOW_CTX_EXECUTION_DATE='2026-09-21T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-21T00:00:00+00:00'
+[2026-09-22T01:37:48.953+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-09-22T01:37:48.955+0000] {baseoperator.py:416} WARNING - ShortCircuitOperator.execute cannot be called outside TaskInstance!
+[2026-09-22T01:37:48.956+0000] {python.py:240} INFO - Done. Returned value was: True
+[2026-09-22T01:37:48.956+0000] {python.py:309} INFO - Condition result is True
+[2026-09-22T01:37:48.957+0000] {python.py:312} INFO - Proceeding with downstream tasks...
+[2026-09-22T01:37:48.978+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-09-22T01:37:48.978+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=spotify_etl_pro, task_id=condicion_proceso_canciones, run_id=scheduled__2026-09-21T00:00:00+00:00, execution_date=20260921T000000, start_date=20260922T013748, end_date=20260922T013748
+[2026-09-22T01:37:49.011+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-09-22T01:37:49.031+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
