@@ -1,19 +1,44 @@
+import os
 from google.cloud import bigquery
+from datetime import datetime, timezone
+import pandas as pd
 
+def get_bq_client():
+    return bigquery.Client(project=os.environ['GCP_PROJECT_ID'])
 
-def verify_conect_bigquerry():
-    print("Paso 1: Instanciando cliente de BigQuery...")
-    client = bigquery.Client()
-    print(f"Paso 1 OK. Cliente conectado al proyecto: {client.project}")
+def asegurar_dataset(client, dataset_id):
+    """Crea el dataset si no existe. Idempotente."""
+    dataset_ref = f"{client.project}.{dataset_id}"
+    try:
+        client.get_dataset(dataset_ref)
+    except Exception:
+        dataset = bigquery.Dataset(dataset_ref)
+        dataset.location = "US"
+        client.create_dataset(dataset)
 
-    print("Paso 2: Listando datasets existentes...")
-    datasets = list(client.list_datasets())
+def obtener_siguiente_id(client, dataset_id, table_id):
+    table_ref = f"{client.project}.{dataset_id}.{table_id}"
+    query = f"SELECT MAX(id_artista) as max_id FROM `{table_ref}`"
 
-    if datasets:
-        print(f"Paso 2 OK. Se encontraron {len(datasets)} dataset(s):")
-        for ds in datasets:
-            print(f"  - {ds.dataset_id}")
-    else:
-        print("Paso 2 OK. Conexión exitosa. Aún no existen datasets en este proyecto.")
+    try:
+        result = list(client.query(query).result())
+        max_id = result[0].max_id
+        return (max_id or 0) + 1
+    except Exception:
+        return 1
 
-    print("Verificación de conexión a BigQuery completada sin errores.")
+def cargar_dataframe(client, datos_artista: list, dataset_id, nombre_table, schema=None):
+
+    df = pd.DataFrame(datos_artista)
+
+    df["fecha_ingesta"] = datetime.now(timezone.utc)
+
+    table_ref = f"{client.project}.{dataset_id}.{nombre_table}"
+    job_config = bigquery.LoadJobConfig(
+        write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+        autodetect=True if schema is None else False,
+        schema=schema,
+    )
+    job = client.load_table_from_dataframe(df, table_ref, job_config=job_config)
+    job.result()
+    return job.output_rows

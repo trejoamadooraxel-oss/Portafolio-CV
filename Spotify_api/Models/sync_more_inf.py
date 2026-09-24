@@ -55,4 +55,5 @@ class Sync_Inf(Base):
             except Exception as e:
                 session.rollback()
                 print(f"ERROR al limpiar la tabla: {e}")
-                raise  # importante: no sigas al insert si el delete falló
+                raise
+

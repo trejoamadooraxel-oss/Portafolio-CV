@@ -1,8 +1,6 @@
 
 import os
 from datetime import datetime, timedelta
-from multiprocessing.forkserver import connect_to_new_process
-
 from airflow import DAG
 from airflow.decorators import task
 from airflow.models.param import Param
@@ -14,8 +12,7 @@ from airflow.providers.docker.operators.docker import DockerOperator
 
 import logging
 
-from wirerope.wire import descriptor_bind
-
+from Spotify_api.Esquemas.esquemas import ArtistaSchemaBQ
 
 
 def verificar_parametros(flag_name, **kwargs):
@@ -77,7 +74,6 @@ def verify_conection_playwright():
             conection_p.close_browser()
             conection_p.close_conection_p()
 
-
 def verificar_conexion_bigquery(**context):
     """
     Reproduce, paso a paso, la misma verificación que se hizo
@@ -119,9 +115,16 @@ with DAG(
         "proceso_artista": Param(default=True, type="boolean", description="Realiza el proceso para la tabla artista crear, extraer y subir inf."),
         "proceso_album": Param(default=True, type="boolean", description="Realiza el proceso para la tabla album crear, extraer y subir inf."),
         "proceso_canciones": Param(default=True, type="boolean", description="Realiza el proceso para la tabla canciones crear, extraer y subir inf."),
-        "proceso_mas_informacion": Param(default=True, type="boolean", description="Realiza el proceso para la tabla mas_inf crear, extraer y subir inf.")
+        "proceso_mas_informacion": Param(default=True, type="boolean", description="Realiza el proceso para la tabla mas_inf crear, extraer y subir inf."),
+        "proceso_historico": Param(default=True, type="boolean", description="Realiza el proceso de subir informacion historica.")
     },
 ) as dag:
+
+    condicion_proceso_artista = ShortCircuitOperator(
+        task_id="condicion_proceso_artista",
+        python_callable=verificar_parametros,
+        op_kwargs={"flag_name": "proceso_artista"},
+    )
 
     condicion_proceso_album = ShortCircuitOperator(
         task_id="condicion_proceso_album",
@@ -139,6 +142,12 @@ with DAG(
         task_id="condicion_mas_informacion",
         python_callable=verificar_parametros,
         op_kwargs={"flag_name": "proceso_mas_informacion"},
+    )
+
+    condicion_proceso_historico = ShortCircuitOperator(
+        task_id="condicion_proceso_historico",
+        python_callable=verificar_parametros,
+        op_kwargs={"flag_name": "proceso_historico"},
     )
 
     start_process = BashOperator(
@@ -236,6 +245,17 @@ with DAG(
 
         return list_info
 
+    @task(multiple_outputs=True)
+    def extraer_historicos() -> dict[str, list]:
+        from Spotify_api.Models.sync_queries import Sync_Queries
+
+        return {
+            "artista": Sync_Queries.all_inf_artist(),
+            "album": Sync_Queries.all_inf_album(),
+            "track": Sync_Queries.all_inf_tracks(),
+            "mas_inf": Sync_Queries.all_inf_mas_inf()
+        }
+
     @task
     def create_tabla_artista():
         from Spotify_api.Models import Sync_Artist
@@ -273,31 +293,106 @@ with DAG(
             logging.error(f"ERRO. No se creo ni se encontro la tabla : {e}")
 
     @task
-    def subir_inf_artista(dic_artist):
+    def subir_inf_artista(list_dic):
         from Spotify_api.Models import Sync_Artist
-        try:
-            Sync_Artist.insert_to_table(dic_artist)
+        from Spotify_api.Esquemas.esquemas import ArtistaSchema
+
+        lista_registros = []
+        for dic in list_dic:
+            try:
+                registro_validado = ArtistaSchema(**dic)
+                lista_registros.append(registro_validado.model_dump())
+            except Exception as e :
+                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+
+        if lista_registros:
+            Sync_Artist.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
-        except Exception as e:
-            logging.error(f"ERROR. Al subir la informacion : {e}")
+        else:
+            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
 
     @task
-    def subir_inf_albums(list_albunes):
+    def subir_inf_historico_bq(list_dic,tabla):
+        from Spotify_api.Models import Sync_Artist
+        from Spotify_api.Esquemas.esquemas import ArtistaSchemaBQ, AlbumSchemaBQ, TrackSchemaBQ, InfSchema
+        import Spotify_api.Conexiones.conect_gcp_bigquerry as BQ
+
+        lista_registros = []
+        for dic in list_dic:
+            try:
+                match tabla:
+                    case 'artista':
+                        registro_validado = ArtistaSchemaBQ(**dic)
+                    case 'album':
+                        registro_validado = AlbumSchemaBQ(**dic)
+                    case 'track':
+                        registro_validado = TrackSchemaBQ(**dic)
+                    case 'mas_inf':
+                        registro_validado = InfSchema(**dic)
+
+                lista_registros.append(registro_validado.model_dump())
+            except Exception as e:
+                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+
+        if lista_registros:
+            dataset = 'Spotify_dataset'
+            cliente = BQ.get_bq_client()
+            BQ.asegurar_dataset(cliente, dataset)
+            BQ.cargar_dataframe(cliente,lista_registros,dataset,tabla)
+            Sync_Artist.insert_to_table(lista_registros)
+            logging.info(f"OK. Se ingreso la informacion en la tabla {tabla} de Big Querry")
+        else:
+            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
+
+    @task
+    def subir_inf_albums(list_dic):
         from Spotify_api.Models import Sync_Album
-        try:
-            Sync_Album.insert_to_table(list_albunes)
+        from Spotify_api.Esquemas.esquemas import AlbumSchema
+
+        lista_registros = []
+        for dic in list_dic:
+            try:
+                registro_validado = AlbumSchema(**dic)
+                lista_registros.append(registro_validado.model_dump())
+            except Exception as e:
+                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+
+        if lista_registros:
+            Sync_Album.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
-        except Exception as e:
-            logging.error(f"ERROR. Al subir la informacion : {e}")
+        else:
+            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
 
     @task
-    def subir_inf_tracks(dic_artist):
+    def subir_inf_tracks(list_dic):
         from Spotify_api.Models import Sync_Track
-        try:
-            Sync_Track.insert_to_table(dic_artist)
+        from Spotify_api.Esquemas.esquemas import TrackSchema
+
+        lista_registros = []
+        for dic in list_dic:
+            try:
+                registro_validado = TrackSchema(**dic)
+                lista_registros.append(registro_validado.model_dump())
+            except Exception as e:
+                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+
+        if lista_registros:
+            Sync_Track.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
-        except Exception as e:
-            logging.error(f"ERROR. Al subir la informacion : {e}")
+        else:
+            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
 
     @task
     def subir_mas_inf_artista(dic_mas_inf):
@@ -336,20 +431,30 @@ with DAG(
         return_dicc_mas_ifor=extraer_mas_info()
         subir_mas_inf_artista(return_dicc_mas_ifor)
 
+    @task_group(group_id="historicos")
+    def procesar_historicos_bq():
+        datos_extraidos = extraer_historicos()
+        subir_inf_historico_bq(datos_extraidos['artista'], 'artista')
+        subir_inf_historico_bq(datos_extraidos['album'], 'album')
+        subir_inf_historico_bq(datos_extraidos['track'], 'track')
+        subir_inf_historico_bq(datos_extraidos['mas_inf'], 'mas_inf')
+
     xcom_artista = procesar_artista()
     xcom_albums = procesar_albunes(xcom_artista["id_spotify"])
     xcom_canciones = procesar_canciones(xcom_albums)
     xcom_mas_inf = procesar_mas_info()
+    xcom_historicos = procesar_historicos_bq()
+
 
 
     (
     start_process
+    >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos
     >> verify_spotify_api_conect
-    >> xcom_artista
-    >> esperar_un_momento
+    >> condicion_proceso_artista >> xcom_artista >> esperar_un_momento
     >> condicion_proceso_album >> xcom_albums
     >> condicion_proceso_canciones >> xcom_canciones
     >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
-    >> verify_big_querry_conect
+
     )
 
