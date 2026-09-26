@@ -229,7 +229,7 @@ with DAG(
             from Spotify_api.Models import Sync_Queries, Sync_Artist
 
 
-            list_artist = Sync_Queries.all_name_artist()
+            list_artist = Sync_Queries.artist_missing()
             logging.info(f'{list_artist}')
             conection_p = con_playwright.Conection_playwright(headless=True)
             logging.info(f"OK. Iniciando proceso de extraccion mediante Playwrite")
@@ -398,7 +398,7 @@ with DAG(
     def subir_mas_inf_artista(dic_mas_inf):
         from Spotify_api.Models import Sync_Inf
         try:
-            Sync_Inf.delete_all()
+
             Sync_Inf.insert_to_table(dic_mas_inf)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
         except Exception as e:
@@ -447,14 +447,19 @@ with DAG(
 
 
 
-    (
-    start_process
-    >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos
-    >> verify_spotify_api_conect
-    >> condicion_proceso_artista >> xcom_artista >> esperar_un_momento
-    >> condicion_proceso_album >> xcom_albums
-    >> condicion_proceso_canciones >> xcom_canciones
-    >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
 
-    )
+    start_process >> verify_spotify_api_conect
+
+    start_process >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
+
+    start_process >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos
+
+    verify_spotify_api_conect >> condicion_proceso_artista >> xcom_artista >> esperar_un_momento \
+        >> condicion_proceso_album >> xcom_albums \
+        >> condicion_proceso_canciones >> xcom_canciones
+
+
+
+
+
 

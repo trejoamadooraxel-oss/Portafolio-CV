@@ -28,15 +28,20 @@ def extract_artist_inf(conection_p, url, list_artist, Sync_Artist):
     time_await_defaut = 1000
     info_artist = []
 
-    try:
-        page = conection_p.get_page()
-        page.goto(url)
 
-        for artist in list_artist:
-            page.locator('[data-testid="home-button"]').click()
+    page = conection_p.get_page()
+    page.goto(url)
 
-            page.locator('[data-testid="home-button"]').click()
+    for idx, artist in enumerate(list_artist):
+        try:
+            if idx > 0:
+                page.goto(url)  # recarga limpia, evita acumulación de memoria
+                page.wait_for_timeout(time_await_defaut)
+            else:
+                page.locator('[data-testid="home-button"]').click()
+                page.locator('[data-testid="home-button"]').click()
 
+            page.wait_for_timeout(time_await_defaut * 2)
             print(f'Ingresamos en el buscador a: {artist}.')
             # 1. Localizamos la caja de búsqueda de forma más segura
             buscador = page.locator('[role="combobox"], input[data-testid="search-input"]').first
@@ -121,13 +126,13 @@ def extract_artist_inf(conection_p, url, list_artist, Sync_Artist):
             page.wait_for_timeout(time_await_defaut * 2)
 
 
-        return info_artist
+            return info_artist
 
-    except TimeoutError:
-            print('Timeout durante la buscar del artista.')
+        except TimeoutError:
+                print('Timeout durante la buscar del artista.')
 
-    except Exception as e:
-        print('Error inesperado durante la bsuqueda del artista:', e)
+        except Exception as e:
+            print('Error inesperado durante la bsuqueda del artista:', e)
 
 
 def main():
