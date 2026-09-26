@@ -37,14 +37,6 @@ def notificar_error_pipeline(context):
     logging.error(f"ERROR: FATAL ERROR DURANTE EL ETL DE SPOTIFY{mensaje}")
 
 
-default_args = {
-    'owner': 'axel',
-    'depends_on_past': False,
-    'retries': 2,
-    'retry_delay': timedelta(minutes=3),
-    'execution_timeout': timedelta(minutes=5),
-    'on_failure_callback': notificar_error_pipeline,
-}
 
 def verify_conection_spotify():
     try:
@@ -103,9 +95,18 @@ def verificar_conexion_bigquery(**context):
     # Deja el project_id disponible en XCom por si otra tarea lo necesita después
     return client.project
 
+default_args = {
+    'owner': 'axel',
+    'depends_on_past': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=3),
+    'execution_timeout': timedelta(minutes=5),
+    'on_failure_callback': notificar_error_pipeline,
+}
 
 with DAG(
     dag_id="spotify_etl_pro",
+    default_args=default_args,
     schedule="@daily",
     start_date=datetime(2026, 9, 9),
     catchup=False,
