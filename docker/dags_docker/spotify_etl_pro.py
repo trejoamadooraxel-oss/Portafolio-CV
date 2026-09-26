@@ -1,5 +1,5 @@
-
 import os
+import logging
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.decorators import task
@@ -9,11 +9,6 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import ShortCircuitOperator, PythonOperator
 from airflow.sensors.python import PythonSensor
 from airflow.providers.docker.operators.docker import DockerOperator
-
-import logging
-
-from Spotify_api.Esquemas.esquemas import ArtistaSchemaBQ
-
 
 def verificar_parametros(flag_name, **kwargs):
     return kwargs['params'].get(flag_name) is True
@@ -35,8 +30,6 @@ def notificar_error_pipeline(context):
     )
 
     logging.error(f"ERROR: FATAL ERROR DURANTE EL ETL DE SPOTIFY{mensaje}")
-
-
 
 def verify_conection_spotify():
     try:
@@ -317,7 +310,6 @@ with DAG(
 
     @task
     def subir_inf_historico_bq(list_dic,tabla):
-        from Spotify_api.Models import Sync_Artist
         from Spotify_api.Esquemas.esquemas import ArtistaSchemaBQ, AlbumSchemaBQ, TrackSchemaBQ, InfSchema
         import Spotify_api.Conexiones.conect_gcp_bigquerry as BQ
 
@@ -343,7 +335,6 @@ with DAG(
             cliente = BQ.get_bq_client()
             BQ.asegurar_dataset(cliente, dataset)
             BQ.cargar_dataframe(cliente,lista_registros,dataset,tabla)
-            Sync_Artist.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla {tabla} de Big Querry")
         else:
             mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
@@ -396,14 +387,25 @@ with DAG(
 
 
     @task
-    def subir_mas_inf_artista(dic_mas_inf):
+    def subir_mas_inf_artista(list_dic):
         from Spotify_api.Models import Sync_Inf
-        try:
+        from Spotify_api.Esquemas.esquemas import InfSchema
 
-            Sync_Inf.insert_to_table(dic_mas_inf)
+        lista_registros = []
+        for dic in list_dic:
+            try:
+                registro_validado = InfSchema(**dic)
+                lista_registros.append(registro_validado.model_dump())
+            except Exception as e:
+                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+
+        if lista_registros:
+            Sync_Inf.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
-        except Exception as e:
-            logging.error(f"ERROR. Al subir la informacion : {e}")
+        else:
+            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
 
     @task_group(group_id="artista")
     def procesar_artista():
