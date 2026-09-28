@@ -1,102 +1,30 @@
 from pydantic import BaseModel
-from fastapi import HTTPException
-from Spotify_api.Models_async import Artist, Album, Track, Queries
 from fastapi.middleware.cors import CORSMiddleware
-import Spotify_api.Conexiones.conection_api as spotify_api
-import Spotify_api.Spotify_Api.extract_inf_api_asyn as inf_api
+from fastapi import FastAPI, HTTPException
+from Spotify_api.FastAPI.routers import artista, album, tracks, mas_inf
 
-from fastapi import FastAPI
+app = FastAPI(
+    title="Main End Point Spotify API",
+    description="Estructura limpia usando APIRouter",
+)
 
-app = FastAPI()
-
-##### GENERAL --------------------
-
-@app.get("/buscar/all/{table}",
-         summary="Listar todos los registros de la tabla a buscar",
-         tags=["General"],
-         response_description="Lista de artistas con su nombre e id_spotify"
-         )
-async def buscar(table: str):
-    querry = await Queries.all_table(table)
-    return {"all_artistas": querry}
-
-##### Album ----------------------
-
-@app.get("/buscar/album/{id_artista}",
-         summary="Lista total de albunes por id de artista",
-         tags=["Album"],
-         response_description="Lista total de albunes por id de artista"
-         )
-
-async def buscar_album_por_id_artista(id_artista: int):
-    querry = await Queries.album_por_id_artista(id_artista)
-    return {"albums": querry}
-
-##### Canciones ----------------------
-
-@app.get("/buscar/album/{id_artista}/{id_album}",
-         summary="Lista total de canciones por id_artista y id_album",
-         tags=["Canciones"],
-         response_description="Lista total de canciones por id_artista y id_album"
-         )
-
-async def buscar_canciones_por_id_album(nombre_album: str):
-    querry = await Queries.canciones_por_id_album(nombre_album)
-    return {"albums": querry}
-
-#####  INGRESAR NUEVO ARTISTA----------------------
-#Con GET usabas parámetros sueltos (termino: str). Con POST, cuando mandas varios campos juntos, se agrupan en una clase:
-class ArtistaInput(BaseModel):
-    nombre_artista: str
-
-@app.post("/artistas",
-          status_code=201,
-          summary="Ingestar un nuevo artista",
-          tags=["Insercion de Datos"],
-          response_description="Ingestar un nuevo artista"
-          )
-
-async def ingresar_artista(artista: ArtistaInput):
-    sp = spotify_api.conection_spotify()
-    id_artista, dic_artist = inf_api.identificador_artistas(sp, artista.nombre_artista)
-    await Artist.insert_to_table(dic_artist)
-
-    dicc_albums = await inf_api.list_albums(sp, id_artista, artista.nombre_artista)
-    await Album.insert_to_table(dicc_albums)
-
-    #dic_canciones = await inf_api.list_tracks(sp, dicc_albums)
-    #await Track.insert_to_table(dic_canciones)
-
-    return {"status": "insertado", "artista": dic_artist}
-
-
-
-#####----------------------
-class ArtistaPatch(BaseModel):
-    nombre: str | None = None
-
-@app.patch("/artista/{id_artista}")
-def actualizacion_parcial(id_artista: int, cambio: ArtistaPatch):
-    if id_artista not in diccionario_artistas:
-        raise HTTPException(status_code=404, detail="El id_artista no se encuentra en la base de datos")
-    if cambio.nombre is not None:
-        diccionario_artistas[id_artista] = cambio.nombre
-    return {"id": id_artista, "nombre":diccionario_artistas[id_artista]}
-
-#####----------------------
-@app.delete("/artista/{id_artista}", status_code=204)
-def borrar_artista(id_artista: int):
-    if id_artista not in diccionario_artistas:
-        raise HTTPException(status_code=404, detail="El id_artista no se encuentra en la base de datos")
-    del diccionario_artistas[id_artista]
-    return None
-
-#####----------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # o una lista específica de dominios permitidos
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-#####----------------------
+app.include_router(artista.router)
+app.include_router(album.router)
+app.include_router(tracks.router)
+app.include_router(mas_inf.router)
+
+@app.get("/", tags=["Root"])
+async def root():
+    return {
+        "status": "online",
+        "message": "Spotify API FastAPI Service is running smoothly"
+    }
+
+

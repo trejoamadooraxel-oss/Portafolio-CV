@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 import requests
 from datetime import datetime
 import spotipy
@@ -88,11 +89,11 @@ async def list_albums(sp, id_artist, name_artist):
     while results['next']:
         results = sp.next(results)
         all_albums.extend(results['items'])
-        time.sleep(1)
+        await asyncio.sleep(1)
 
     #Traemos el id que corresponde al artista:
     id_artista = await Artist.id_db(name_artist)
-    time.sleep(1)
+    await asyncio.sleep(1)
 
     for album in all_albums:
         dicc_abums.append({
@@ -114,7 +115,7 @@ async def list_tracks(sp, dicc_abums):
 
         # Traemos el id que corresponde al artista:
         id_album = await Album.id_db(album_id)
-        time.sleep(1)
+        await asyncio.sleep(1)
 
         tracks = sp.album_tracks(album_id)
         for track in tracks["items"]:
@@ -125,7 +126,7 @@ async def list_tracks(sp, dicc_abums):
                 'duracion': track['duration_ms'],
                 'id_album': id_album
             })
-        time.sleep(1)
+        await asyncio.sleep(1)
 
     return dicc_track
 

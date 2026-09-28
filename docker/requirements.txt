@@ -1,0 +1,9 @@
+spotipy
+pandas
+numpy
+sqlalchemy
+psycopg2-binary
+python-dotenv
+playwright
+google-cloud-bigquery
+db-dtypes

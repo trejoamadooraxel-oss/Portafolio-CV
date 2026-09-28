@@ -15,7 +15,6 @@ class Sync_Artist(Base):
 
     @classmethod
     def create_table(cls):
-        """Crea la tabla de forma síncrona en la base de datos"""
         try:
             cls.__table__.create(bind=engine, checkfirst=True)
             print("Tabla 'artista' verificada/creada correctamente.")

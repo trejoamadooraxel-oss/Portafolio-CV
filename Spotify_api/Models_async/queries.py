@@ -2,6 +2,7 @@ import asyncio
 from Spotify_api.Models_async.artist import Artist
 from Spotify_api.Models_async.album import Album
 from Spotify_api.Models_async.track import Track
+from Spotify_api.Models_async.more_inf import Inf
 from sqlalchemy import select
 from Spotify_api.Conexiones.conect_sqlalchemy import AsyncSessionLocal
 
@@ -162,6 +163,58 @@ class Queries:
 
         return lista
 
+    @staticmethod
+    async def search_by_name(value):
+        async with AsyncSessionLocal() as session:
+            lista = []
+            try:
+
+                stmt = (
+                    select(
+                        Artist.id_artista,
+                        Artist.nombre_artista,
+                        Album.id_album,
+                        Album.nombre_album,
+                        Track.id_cancion,
+                        Track.nombre_cancion,
+                        Track.num_cancion,
+                        Track.duracion
+                    ).
+                    join(Album, Artist.id_artista == Album.id_artista, isouter=True).
+                    join(Track, Album.id_album == Track.id_album, isouter=True).
+                    where(Artist.nombre_artista == value)
+                )
+
+                result = await session.execute(stmt)
+                resultados = result.mappings().all()
+
+                for registro in resultados:
+                    lista.append(registro)
+
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+
+        return lista
+
+    @classmethod
+    async def artist_missing(cls):
+        async with AsyncSessionLocal() as session:
+            lista = []
+            try:
+                stmt = (
+                    select(Artist.nombre_artista)
+                    .outerjoin(Inf, Artist.nombre_artista == Inf.artista)
+                    .where(Inf.artista.is_(None)))
+                result = await session.execute(stmt)
+
+                lista = list(result.scalars().all())
+
+            except Exception as e:
+                session.rollback()
+                print(f"ERROR: {e}")
+
+            return lista
 
 async def main():
     infor = await Queries.querry_custom_spark()

@@ -49,3 +49,4 @@ class Album(Base):
                 await session.rollback()
                 print(f"ERROR: {e}")
             return id
+
