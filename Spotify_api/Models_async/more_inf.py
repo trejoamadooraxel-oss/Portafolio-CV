@@ -46,7 +46,7 @@ class Inf(Base):
                 print(f"ERROR: {e}")
 
     @classmethod
-    def delete_all(cls):
+    async def delete_all(cls, values):
         async with AsyncSessionLocal() as session:
             try:
                 session.execute(delete(cls))

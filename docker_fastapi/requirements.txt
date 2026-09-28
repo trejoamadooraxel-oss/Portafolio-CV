@@ -5,4 +5,5 @@ asyncpg
 python-dotenv
 pydantic
 spotipy
+playwright
 psycopg2-binary

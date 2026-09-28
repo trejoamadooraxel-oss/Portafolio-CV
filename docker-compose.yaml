@@ -100,6 +100,7 @@ services:
   fastapi:
     build:
       context: ./docker_fastapi
+    shm_size: "1gb"
     container_name: fastapi_app
     env_file:
       - ./Spotify_api/env_var/varaibles_credential.env

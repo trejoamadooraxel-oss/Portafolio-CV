@@ -45,3 +45,25 @@ class Sync_Artist(Base):
                 print(f"ERROR: {e}")
 
         return id_artist
+
+    @classmethod
+    def id_spotify_by_name(cls, value):
+        with SessionLocal() as session:
+            lista = []
+            datos = None
+            try:
+                stmt = select(Sync_Artist.id_artista,
+                              Sync_Artist.id_spotify
+                              ).where(Sync_Artist.nombre_artista == value)
+                result = session.execute(stmt)
+                resultados = result.mappings().all()
+
+                for registro in resultados:
+                    lista.append(registro)
+
+                print(f"El id_spotify asociado a {value} es {lista}")
+            except Exception as e:
+                session.rollback()
+                print(f"ERROR: {e}")
+
+            return lista

@@ -19,6 +19,8 @@ class Queries:
                     search = Album
                 elif table == 'tracks' or table == 'Tracks' or table == 'canciones' or table == 'Canciones' :
                     search = Track
+                elif table == 'mas_inf':
+                    search = Inf
                 else:
                     search = None
                 stmt = select(search)

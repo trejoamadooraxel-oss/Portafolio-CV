@@ -9,7 +9,7 @@ import logging
 
 router = APIRouter(
     prefix='/album',
-    tags=["Album"]
+    tags=["Albums"]
 )
 
 class ArtistaSchemaEndpoint(BaseModel):
