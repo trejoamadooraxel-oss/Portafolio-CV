@@ -36,7 +36,7 @@ def ingresar_mas_informacion_por_artista(artista:AlbumSchemaEndpoint):
                 lista_registros.append(artista.nombre_artista)
 
                 conection_p = con_playwright.Conection_playwright(headless=True)
-                list_info = extract_artist_inf(conection_p, 'https://open.spotify.com/', list_dicc_album, Sync_Artist)
+                list_info = extract_artist_inf(conection_p, 'https://open.spotify.com/', lista_registros, Sync_Artist)
                 Sync_Inf.insert_to_table(list_info)
 
                 return {
