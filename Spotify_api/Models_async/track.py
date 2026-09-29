@@ -1,7 +1,8 @@
 
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy import insert, select
+from sqlalchemy import insert, select, delete
 from Spotify_api.Conexiones.conect_sqlalchemy import Base, engine, AsyncSessionLocal
+from Spotify_api.Models_async.album import Album
 
 class Track(Base):
     __tablename__ = 'canciones'
@@ -15,7 +16,7 @@ class Track(Base):
 
 
     def __str__(self):
-        return self.username
+        return self.nombre_cancion
 
     @classmethod
     async def create_table(cls):
@@ -47,3 +48,43 @@ class Track(Base):
                 print(f"ERROR: {e}")
 
         return id
+
+    @classmethod
+    async def ids_spotify_existentes(cls, ids_album):
+        async with AsyncSessionLocal() as session:
+            result = await session.scalars(
+                select(cls.id_spotify).where(cls.id_album.in_(ids_album))
+            )
+            return set(result.all())
+
+    @classmethod
+    async def delete_register_by_id_artista(cls, values):
+        async with (AsyncSessionLocal() as session):
+            try:
+                subq = select(Album.id_album).where(Album.id_artista == values)
+                stmt = delete(cls).where(cls.id_album.in_(subq))
+                await session.execute(stmt)
+                await session.commit()
+                print("Tabla 'mas_inf' limpiada correctamente.")
+            except Exception as e:
+                session.rollback()
+                print(f"ERROR al limpiar la tabla: {e}")
+                raise
+
+    @classmethod
+    async def get_by_id_artista(cls, values):
+        async with (AsyncSessionLocal() as session):
+            registro = None
+            try:
+                stmt = (select(cls)
+                .join(Album, cls.id_album == Album.id_album)
+                .where(Album.id_artista == values))
+                result = await session.scalars(stmt)
+                registro = result.first()
+                print(f"El registro asociado con id_artista {values} es: {registro}")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+                raise
+
+        return registro

@@ -24,7 +24,7 @@ class Inf(Base):
 
 
     def __str__(self):
-        return self.username
+        return self.artista
 
     @classmethod
     def create_table(cls):
@@ -46,14 +46,30 @@ class Inf(Base):
                 print(f"ERROR: {e}")
 
     @classmethod
-    async def delete_all(cls, values):
+    async def delete_register_by_id_artista(cls, values):
         async with AsyncSessionLocal() as session:
             try:
-                session.execute(delete(cls))
-                session.commit()
+                stmt = delete(cls).where(cls.id_artista==values)
+                await session.execute(stmt)
+                await session.commit()
                 print("Tabla 'mas_inf' limpiada correctamente.")
             except Exception as e:
                 session.rollback()
                 print(f"ERROR al limpiar la tabla: {e}")
                 raise
 
+    @classmethod
+    async def get_by_id_artist(cls, values):
+        async with AsyncSessionLocal() as session:
+            registro = None
+            try:
+                stmt = select(Inf).where(Inf.id_artista == values)
+                result = await session.scalars(stmt)
+                registro = result.first()
+                print(f"El registro asociado con id_artista {values} es: {registro}")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+                raise
+
+        return registro

@@ -1,85 +1,149 @@
 import Spotify_api.Spotify_Api.extract_inf_api_asyn as spotify_api
-from Spotify_api.Esquemas.esquemas import TrackSchema
+from Spotify_api.Esquemas.esquemas import TrackSchema, TrackSchemaBQ
 from Spotify_api.Models_async.album import Album
 from Spotify_api.Models_async.artist import Artist
 from Spotify_api.Models_async.track import Track
 from Spotify_api.Models_async.queries import Queries
 from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import StreamingResponse
+from datetime import datetime, timezone
 from pydantic import BaseModel
 import logging
+import asyncio
+import csv
+import io
 
 router = APIRouter(
     prefix='/canciones',
     tags=["canciones"]
 )
 
-class AlbumSchemaEndpoint(BaseModel):
+class CancionesIngestaInput(BaseModel):
     nombre_artista: str
 
-@router.post("/",status_code=status.HTTP_201_CREATED)
-async def ingresar_canciones_por_album_y_artista(artista:AlbumSchemaEndpoint):
+@router.post("/", status_code=status.HTTP_201_CREATED)
+async def ingresar_canciones_por_artista(artista: CancionesIngestaInput):
     try:
-        nuevo_artista = Artist(nombre_artista = artista.nombre_artista)
-
-        #Verificamos que exista el artista en la tabla y obtener el id_spotify con el id_artista de la tabla artista
         result = await Artist.id_spotify_by_name(artista.nombre_artista)
-        if result:
-            datos = result[0]
-            id_artista = datos["id_artista"]
+        if not result:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"El artista '{artista.nombre_artista}' no se encuentra registrado en la DB."
+            )
+        id_artista = result[0]["id_artista"]
 
-            # Usamos los valores de retornados para Validar que existe el artista en la tabla de albunes
-            list_dicc_album = await Queries.album_por_id_artista(id_artista)
+        albums = await Queries.album_por_id_artista(id_artista)
+        if not albums:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"'{artista.nombre_artista}' no tiene álbumes registrados. Ingrésalos primero con POST /album/."
+            )
 
-            datos = list_dicc_album[0]
+        sp = spotify_api.conection_spotify()
+        dicc_canciones = await spotify_api.list_tracks(sp, albums)
+        if not dicc_canciones:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Spotify no devolvió canciones para los álbumes de este artista."
+            )
 
-            if datos["id_album"] != None:
+        validadas = []
+        for dic in dicc_canciones:
+            try:
+                validadas.append(TrackSchema(**dic).model_dump())
+            except Exception as e:
+                logging.warning(f"No se pudo validar {dic}, {e}")
 
-                registro = None
-                lista_registros = []
+        if not validadas:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Ninguna canción pasó la validación."
+            )
 
-                for dic in list_dicc_album:
-                    try:
-                        registro_validado = TrackSchema(**dic)
-                        lista_registros.append(registro_validado.model_dump())
+        # Solo insertamos las canciones que todavía no están en la tabla
+        existentes = await Track.ids_spotify_existentes([a["id_album"] for a in albums])
+        nuevas = [c for c in validadas if c["id_spotify"] not in existentes]
 
-                    except Exception as e:
-                        logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
+        if not nuevas:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Todas las canciones de este artista ya están registradas."
+            )
 
-                sp = spotify_api.conection_spotify()
-                dicc_canciones = await spotify_api.list_tracks(sp,list_dicc_album)
+        await Track.insert_to_table(nuevas)
+        logging.info(f"OK. Se ingresaron {len(nuevas)} canción(es)")
 
-                if dicc_canciones:
-                    await Track.insert_to_table(dicc_canciones)
-                    logging.info(f"OK. Se ingreso la informacion en la tabla canciones")
-                    registro = await Queries.search_by_name(artista.nombre_artista)
+        return {"Insertados": len(nuevas), "Registro": nuevas}
 
-                    return {
-                        "Registro": registro
-                    }
-
-                else:
-                    return {
-                        f"Error": f"El diccionario de canciones viene vacio: {dicc_canciones}."
-                    }
-
-            else:
-                return {
-                    f"Error": f"El artista: {artista.nombre_artista} no cuenta con albunes registrados en al DB."
-                }
-
-        else:
-            return {
-                f"Error": f"El artista: {artista.nombre_artista}  no se encuentra registrado en al DB."
-            }
-
+    except HTTPException:
+        raise
     except Exception as e:
-        logging.error(f'Error al intresar el album: {e}')
+        logging.error(f"Error al ingresar las canciones: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error interno al procesar el album con Spotify: {e}"
+            detail=f"Error interno al procesar las canciones con Spotify: {e}"
         )
 
 @router.get("/")
 async def consultar_table_canciones():
     registros = await Queries.all_table('tracks')
     return {"registros":registros}
+
+@router.delete("/{id_artista}", status_code=status.HTTP_204_NO_CONTENT)
+async def eliminar_cancion_by_id(id_artista: int):
+    try:
+        existe = await Track.get_by_id_artista(id_artista)
+        if not existe:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No existe una canción con id_artista={id_artista}"
+            )
+        await Track.delete_register_by_id_artista(id_artista)
+        return None
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error al borrar la canción: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error interno al borrar la canción: {e}"
+        )
+
+@router.get("/descarga_inf")
+async def descargar_tabla_canciones():
+    try:
+        datos = await Queries.all_table('tracks')
+
+        lista_registros = []
+        for dic in datos:
+            try:
+                lista_registros.append(TrackSchemaBQ(**dic).model_dump())
+            except Exception as e:
+                logging.warning(f"No se pudo validar {dic}, {e}")
+
+        if not lista_registros:
+            return {"consulta": [], "mensaje": "No se encontraron registros válidos"}
+
+        buffer = io.StringIO()
+
+        cabeceras = list(lista_registros[0].keys())
+        writer = csv.DictWriter(buffer, fieldnames=cabeceras)
+
+        writer.writeheader()
+        writer.writerows(lista_registros)
+
+        buffer.seek(0)
+
+        headers = {
+            "Content-Disposition": f"attachment; filename=Table_Canciones_{datetime.now()}.csv"
+        }
+
+        return StreamingResponse(
+            buffer,
+            media_type="text/csv",
+            headers=headers
+        )
+
+    except Exception as e:
+        return {"Error":f"{e}"}

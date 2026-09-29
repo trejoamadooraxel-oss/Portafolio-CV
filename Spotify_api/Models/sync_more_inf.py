@@ -49,6 +49,7 @@ class Sync_Inf(Base):
     def delete_all(cls):
         with SessionLocal() as session:
             try:
+
                 session.execute(delete(cls))
                 session.commit()
                 print("Tabla 'mas_inf' limpiada correctamente.")

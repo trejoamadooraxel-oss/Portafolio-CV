@@ -218,6 +218,8 @@ class Queries:
 
             return lista
 
+
+
 async def main():
     infor = await Queries.querry_custom_spark()
     print(infor)

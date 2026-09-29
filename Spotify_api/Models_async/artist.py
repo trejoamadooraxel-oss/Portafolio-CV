@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy import insert, select
+from sqlalchemy import insert, select, delete
 from Spotify_api.Conexiones.conect_sqlalchemy import Base, engine, AsyncSessionLocal
 
 class Artist(Base):
@@ -80,3 +80,32 @@ class Artist(Base):
                 print(f"ERROR: {e}")
 
             return lista
+
+    @classmethod
+    async def delete_register_by_id_artista(cls, values):
+        async with AsyncSessionLocal() as session:
+            try:
+                stmt = delete(Artist).where(Artist.id_artista == values)
+                await session.execute(stmt)
+                await session.commit()
+                print("Tabla 'mas_inf' limpiada correctamente.")
+            except Exception as e:
+                session.rollback()
+                print(f"ERROR al limpiar la tabla: {e}")
+                raise
+
+    @classmethod
+    async def get_by_id_artist(cls, values):
+        async with AsyncSessionLocal() as session:
+            registro = None
+            try:
+                stmt = select(Artist).where(Artist.id_artista == values)
+                result = await session.scalars(stmt)
+                registro = result.first()
+                print(f"El registro asociado con id_artista {values} es: {registro}")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR: {e}")
+                raise
+
+        return registro
