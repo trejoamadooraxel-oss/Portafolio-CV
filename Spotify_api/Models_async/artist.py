@@ -1,5 +1,6 @@
+
 from sqlalchemy import Column, Integer, String
-from sqlalchemy import insert, select, delete
+from sqlalchemy import insert, select, delete, update
 from Spotify_api.Conexiones.conect_sqlalchemy import Base, engine, AsyncSessionLocal
 
 class Artist(Base):
@@ -90,7 +91,7 @@ class Artist(Base):
                 await session.commit()
                 print("Tabla 'mas_inf' limpiada correctamente.")
             except Exception as e:
-                session.rollback()
+                await session.rollback()
                 print(f"ERROR al limpiar la tabla: {e}")
                 raise
 
@@ -109,3 +110,42 @@ class Artist(Base):
                 raise
 
         return registro
+
+    @classmethod
+    async def update_by_id_artista(cls, id_viejo, id_nuevo):
+        async with AsyncSessionLocal() as session:
+            try:
+                stmt = (
+                    update(cls)
+                    .where(cls.id_artista == id_viejo)
+                    .values({cls.id_artista: id_nuevo})
+                )
+                await session.execute(stmt)
+                await session.commit()
+                print("Tabla 'mas_inf' actualizada correctamente.")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR al actualizar la tabla: {e}")
+                raise
+
+    @classmethod
+    async def update_register_by_id_artista(cls, id_viejo, id_nuevo, nombre_artist_nuevo, id_spotify_nuevo):
+        async with AsyncSessionLocal() as session:
+            try:
+                stmt = (
+                    update(cls)
+                    .where(cls.id_artista == id_viejo)
+                    .values({
+                        cls.id_artista: id_nuevo,
+                        cls.nombre_artista:nombre_artist_nuevo,
+                        cls.id_spotify:id_spotify_nuevo}
+                    )
+                )
+                await session.execute(stmt)
+                await session.commit()
+                print("Tabla 'mas_inf' actualizada correctamente.")
+            except Exception as e:
+                await session.rollback()
+                print(f"ERROR al actualizar la tabla: {e}")
+                raise
+

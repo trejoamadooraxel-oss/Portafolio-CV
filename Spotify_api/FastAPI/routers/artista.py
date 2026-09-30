@@ -20,6 +20,10 @@ router = APIRouter(
 class ArtistaSchemaEndpoint(BaseModel):
     nombre: str
 
+class UpdateSchemaEndpoint(BaseModel):
+    id_viejo: str
+    id_nuevo: int
+
 @router.post("/",status_code=status.HTTP_201_CREATED)
 async def ingresar_artista(artista:ArtistaSchemaEndpoint):
     try:
@@ -118,3 +122,47 @@ async def descargar_tabla_artistas():
 
     except Exception as e:
         return {"Error":f"{e}"}
+
+
+
+@router.patch("/{id_viejo}/{id_nuevo}", status_code=status.HTTP_204_NO_CONTENT)
+async def actualizar_parcial_info_by_id(id_viejo: int, id_nuevo: int ):
+    try:
+        existe = await Artist.get_by_id_artist(id_viejo)
+        if not existe:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No existe el artista con id_artista={id_viejo}"
+            )
+        await Artist.update_by_id_artista(id_viejo, id_nuevo)
+        return None
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error al borrar el artista: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error interno al borrar la canción: {e}"
+        )
+
+@router.put("/actualizacion_completo/{id_viejo}/{id_nuevo}", status_code=status.HTTP_204_NO_CONTENT)
+async def actualizar_total_info_by_id(id_viejo: int, id_nuevo: int, nombre_artista:str, id_spotifiy:str):
+    try:
+        existe = await Artist.get_by_id_artist(id_viejo)
+        if not existe:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No existe el artista con id_artista={id_viejo}"
+            )
+        await Artist.update_register_by_id_artista(id_viejo, id_nuevo, nombre_artista, id_spotifiy)
+        return None
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error al borrar el artista: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error interno al borrar la canción: {e}"
+        )
