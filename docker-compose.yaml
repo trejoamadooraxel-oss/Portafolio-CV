@@ -109,5 +109,26 @@ services:
     ports:
       - "8000:8000"
 
+  dbt:
+    build:
+      context: ./docker_dbt
+    container_name: dbt_spotify
+    profiles: [ "tools" ]
+    #profiles: ["tools"] hace que dbt no arranque con docker compose up: es un job de ejecución puntual
+    #y no un servicio permanente. Se activa solo cuando lo invocas por nombre.
+    working_dir: /usr/app/dbt
+    env_file:
+      - ./Spotify_api/env_var/varaibles_credential.env
+    environment:
+      DBT_PROFILES_DIR: /usr/app/dbt
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/gcp_adc.json
+      GOOGLE_CLOUD_PROJECT: vital-pillar-509021-s9
+      #Se comento la siguiente linea debido a que la autentificacion se manjera con
+      #""type": "authorized_user"" en el archivo de gcp_adc.json y  no con una se service acount
+      #DBT_KEYFILE: /secrets/gcp_adc.json
+    volumes:
+      - ./docker_dbt:/usr/app/dbt
+      - ./docker/secrets:/secrets:ro
+
 volumes:
   postgres_data:

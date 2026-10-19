@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: spotify_raw
+    database: "{{ env_var('GCP_PROJECT_ID') }}"
+    schema: Spotify_dataset
+    tables:
+      - name: artista
+      - name: album
+      - name: track
+      - name: mas_inf

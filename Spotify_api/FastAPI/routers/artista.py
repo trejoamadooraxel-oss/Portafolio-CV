@@ -123,8 +123,6 @@ async def descargar_tabla_artistas():
     except Exception as e:
         return {"Error":f"{e}"}
 
-
-
 @router.patch("/{id_viejo}/{id_nuevo}", status_code=status.HTTP_204_NO_CONTENT)
 async def actualizar_parcial_info_by_id(id_viejo: int, id_nuevo: int ):
     try:

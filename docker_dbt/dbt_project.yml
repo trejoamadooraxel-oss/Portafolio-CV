@@ -1,0 +1,11 @@
+name: docker_dbt
+version: "1.0.0"
+profile: spotify
+model-paths: ["models"]
+
+models:
+  docker_dbt:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

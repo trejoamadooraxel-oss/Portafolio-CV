@@ -453,7 +453,7 @@ with DAG(
 
     start_process >> verify_spotify_api_conect
 
-    start_process >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
+    start_process >> esperar_un_momento >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
 
     start_process >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos
 

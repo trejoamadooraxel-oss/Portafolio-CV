@@ -221,7 +221,7 @@ class Queries:
 
 
 async def main():
-    infor = await Queries.querry_custom_spark()
+    infor = await Queries.album_por_id_artista(3)
     print(infor)
 
 if __name__ == '__main__':
