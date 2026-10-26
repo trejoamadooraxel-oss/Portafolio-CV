@@ -13,3 +13,8 @@ RUN playwright install --with-deps chromium && \
     chmod -R 775 /usr/local/share/playwright
 
 USER airflow
+
+RUN python -m venv /home/airflow/dbt_venv \
+    && /home/airflow/dbt_venv/bin/pip install --no-cache-dir \
+       "dbt-core==1.12.6" "dbt-bigquery==1.12.1"
+

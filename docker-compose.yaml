@@ -95,6 +95,7 @@ services:
       - ./docker/plugins:/opt/airflow/plugins
       - ./Spotify_api:/opt/airflow/include/Spotify_api
       - ./docker/secrets/gcp_adc.json:/opt/airflow/gcloud/adc.json:ro
+      - ./docker_dbt:/opt/airflow/dbt
     command: scheduler
 
   fastapi:
@@ -126,9 +127,12 @@ services:
       #Se comento la siguiente linea debido a que la autentificacion se manjera con
       #""type": "authorized_user"" en el archivo de gcp_adc.json y  no con una se service acount
       #DBT_KEYFILE: /secrets/gcp_adc.json
+    ports:
+      - "8085:8085"
     volumes:
       - ./docker_dbt:/usr/app/dbt
       - ./docker/secrets:/secrets:ro
+    command: docs serve --port 8085 --host 0.0.0.0
 
 volumes:
   postgres_data:

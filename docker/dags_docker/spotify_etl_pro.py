@@ -10,6 +10,17 @@ from airflow.operators.python import ShortCircuitOperator, PythonOperator
 from airflow.sensors.python import PythonSensor
 from airflow.providers.docker.operators.docker import DockerOperator
 
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+
+disparar_dbt = TriggerDagRunOperator(
+    task_id="disparar_dbt_spotify",
+    trigger_dag_id="dbt_spotify_transform",
+    wait_for_completion=True,
+    poke_interval=20,
+    allowed_states=["success"],
+    failed_states=["failed"],
+)
+
 def verificar_parametros(flag_name, **kwargs):
     return kwargs['params'].get(flag_name) is True
 
@@ -97,6 +108,28 @@ default_args = {
     'on_failure_callback': notificar_error_pipeline,
 }
 
+'''
+NOTE:
+    Para configurar la configuracion de la tarea:
+    con schedule:,
+        schedule="@hourly" Se ejecuta automáticamente cada hora.
+        schedule="@daily" Se ejecuta diario a la media noche
+        schedule="@weekly" Se ejecuta automaticamente a la semana
+        
+        Conf Personalizada.
+        
+         ┌───────────── Minuto (0 - 59)
+         │ ┌─────────── Hora (0 - 23)
+         │ │ ┌───────── Día del mes (1 - 31)
+         │ │ │ ┌─────── Mes del año (1 - 12)
+         │ │ │ │ ┌───── Día de la semana (0 - 6 o 1 - 7) (1 = Lunes)
+         │ │ │ │ │
+         * * * * *
+         
+        schedule="* * * * *"
+        schedule="0 8 1 1 *"         
+        
+'''
 with DAG(
     dag_id="spotify_etl_pro",
     default_args=default_args,
@@ -414,12 +447,14 @@ with DAG(
         subir_inf_artista(resultado_artista_xcom["datos_artista"])
         return resultado_artista_xcom
 
+
     @task_group(group_id="albun")
     def procesar_albunes(id_spotify):
         create_tabla_album()
         return_dicc_albums = extraer_album(id_artist=id_spotify)
         subir_inf_albums(return_dicc_albums)
         return return_dicc_albums
+
 
     @task_group(group_id="canciones")
     def procesar_canciones(lista_albums):
@@ -428,11 +463,13 @@ with DAG(
         subir_inf_tracks(return_dicc_tracks)
         return return_dicc_tracks
 
+
     @task_group(group_id="mas_informacion")
     def procesar_mas_info():
         create_table_mas_inf()
         return_dicc_mas_ifor=extraer_mas_info()
         subir_mas_inf_artista(return_dicc_mas_ifor)
+
 
     @task_group(group_id="historicos")
     def procesar_historicos_bq():
@@ -449,17 +486,14 @@ with DAG(
     xcom_historicos = procesar_historicos_bq()
 
 
-
-
     start_process >> verify_spotify_api_conect
 
-    start_process >> esperar_un_momento >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
-
-    start_process >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos
+    start_process >> esperar_un_momento >> verify_big_querry_conect >> condicion_proceso_historico >> xcom_historicos >> disparar_dbt
 
     verify_spotify_api_conect >> condicion_proceso_artista >> xcom_artista >> esperar_un_momento \
         >> condicion_proceso_album >> xcom_albums \
-        >> condicion_proceso_canciones >> xcom_canciones
+        >> condicion_proceso_canciones >> xcom_canciones \
+        >> condicion_mas_inf >> verify_playwright_conect >> xcom_mas_inf
 
 
 
