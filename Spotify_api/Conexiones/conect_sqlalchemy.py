@@ -1,10 +1,20 @@
 import os
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+import platform
+import os
 
-#from dotenv import load_dotenv
-#load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
-credenciales = os.getenv('SQLALCHEMY_HOST_ASYNC')  # debe iniciar con postgresql+asyncpg://
+if platform.system() == 'Darwin':
+    from dotenv import load_dotenv
+
+    load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
+
+    credenciales = os.getenv('SQLALCHEMY_HOST_ASYNC_LOCAL')
+
+else:
+    credenciales = os.getenv('SQLALCHEMY_HOST_ASYNC')
+
+
 
 engine = create_async_engine(
     credenciales,

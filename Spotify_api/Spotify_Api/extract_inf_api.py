@@ -7,6 +7,8 @@ from datetime import datetime
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from Spotify_api.Models import Sync_Artist, Sync_Album, Sync_Track
 
+
+
 def all_artist_by_token():
 
     auth = SpotifyClientCredentials(
@@ -43,10 +45,12 @@ def identificador_artistas(sp, name_artist):
     #Imprime lo almacenado en la lista-"artistas"
     name_artist = artist_full["name"]
     id_spotify = artist_full["id"]
+    url = artist_full['external_urls']
 
     artistas.append({
         'nombre_artista':name_artist,
-        'id_spotify': id_spotify
+        'id_spotify': id_spotify,
+        'url': url
     })
 
     return id_spotify, artistas
@@ -73,7 +77,7 @@ def list_albums(sp, id_artist, name_artist):
     all_albums = []
     dicc_abums = []
 
-    results = sp.artist_albums(id_artist, album_type='album', country='MX', limit=10)
+    results = sp.artist_albums(id_artist, album_type='album,single,compilation', country='MX', limit=10)
     #print(json.dumps(results, indent=4, sort_keys=True))
     all_albums.extend(results['items'])
 
@@ -87,11 +91,17 @@ def list_albums(sp, id_artist, name_artist):
 
     for album in all_albums:
         dicc_abums.append({
-            'nombre_album': album['name'],
-            'id_spotify': album['id'],
-            'fecha_lanzamiento': normalizar_fecha(album['release_date']),
+
+            'id_spotify_artist': id_artist,
             'num_canciones': album['total_tracks'],
+            'url': album['external_urls'],
+            'id_spotify': album['id'],
+            'nombre_album': album['name'],
+            'tipo_album': album['type'],
+            'fecha_precisa': album['release_date_precision'],
+            'fecha_lanzamiento': album['release_date'],
             'id_artista': id_artista
+
         })
 
     return dicc_abums
@@ -110,10 +120,16 @@ def list_tracks(sp, dicc_abums):
         tracks = sp.album_tracks(album_id)
         for track in tracks["items"]:
             dicc_track.append({
+
+
+                'id_spotify_album': album_id,
                 'nombre_cancion': track['name'],
                 'id_spotify': track['id'],
                 'num_cancion': track['track_number'],
                 'duracion': track['duration_ms'],
+                'discos': track['disc_number'],
+                'explicito': track['explicit'],
+                'url': track['external_urls'],
                 'id_album': id_album
             })
         time.sleep(1)
@@ -121,15 +137,23 @@ def list_tracks(sp, dicc_abums):
     return dicc_track
 
 def main():
+
+    '''
+        Para Pruebas en local
+    '''
+
     sp = spotify_api.conection_spotify()
 
-    #Conexion mediante token
-    #all_artist_by_token()
+    name_artista = 'Buscabulla'
 
-    id_artista, dic_artist = identificador_artistas(sp, "Nigga")
+    id_artista, dic_artist = identificador_artistas(sp, name_artista)
+    #lista_albums = list_albums(sp, id_artista, name_artista)
+    #dicc_canciones = list_tracks(sp, lista_albums)
 
-    Sync_Artist.insert_to_table(dic_artist)
+    print(dic_artist)
 
+    #for i in dicc_canciones:
+    #    print(i)
 
 if __name__ == "__main__":
 

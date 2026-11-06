@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
 
 class ArtistaSchema(BaseModel):
@@ -7,10 +7,9 @@ class ArtistaSchema(BaseModel):
     id_spotify: str
 
 class ArtistaSchemaBQ(BaseModel):
-    id_artista: int
     nombre_artista: str
     id_spotify: str
-
+    url: str
 
 class AlbumSchema(BaseModel):
     nombre_album: str
@@ -20,12 +19,15 @@ class AlbumSchema(BaseModel):
     id_artista: int
 
 class AlbumSchemaBQ(BaseModel):
-    id_album: int
-    nombre_album: str
-    id_spotify: str
-    fecha_lanzamiento: Optional[date] = None
+    id_spotify_artist: str
     num_canciones: int
-    id_artista: int
+    url: str
+    id_spotify: str
+    nombre_album: str
+    tipo_album: str
+    fecha_precisa: str
+    fecha_lanzamiento: Optional[date] = None
+
 
 class TrackSchema(BaseModel):
     nombre_cancion: str
@@ -35,12 +37,15 @@ class TrackSchema(BaseModel):
     id_album: int
 
 class TrackSchemaBQ(BaseModel):
-    id_cancion: int
+    id_spotify_album: str
     nombre_cancion: str
     id_spotify: str
     num_cancion: int
     duracion: int
-    id_album: int
+    discos: int
+    explicito: str
+    url: str
+
 
 class InfSchema(BaseModel):
     id_artista: int

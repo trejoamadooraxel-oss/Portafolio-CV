@@ -24,6 +24,9 @@ import Spotify_api.Esquemas.etl_esquemas_big_querry as esquemas
 import Spotify_api.Conexiones.conection_api as spotify_api
 import Spotify_api.Spotify_Api.extract_inf_api as extract_inf
 
+#Tratamiento y Transformacion
+from Spotify_api.Transforms.pipeline_transform import DataPipeline
+
 
 def verify_conection_spotify():
     try:
@@ -77,9 +80,11 @@ with DAG(
     )
 
     @task
-    def extraer_album(id_artist,**kwargs):
+    def extraer_album(nombre_artista ,id_artist):
 
-        nombre_artista = 'Don Omar'#kwargs["params"]["nombre_artista"]
+        logging.info(f"OK. NOMBRE ARTISTA: {nombre_artista}")
+        logging.info(f"OK. ID_ARTISTA: {id_artist}")
+
         sp = spotify_api.conection_spotify()
         dic_albunes = extract_inf.list_albums(sp, id_artist, nombre_artista)
         logging.info(f"OK. Albunes extraídos: {dic_albunes}")
@@ -94,40 +99,71 @@ with DAG(
         except Exception as e:
             logging.error(f"ERROR. No se creo ni se encontro la tabla : {e}")
 
+    @task
+    def tratamiento_de_datos(list_dic, tabla):
+        pipeline = DataPipeline()
+        df_limpio = pipeline._transformar_datos(list_dic)
+        registros_postgres = pipeline._Postgres_data(df_limpio, tabla)
+        #df_big_query = pipeline._Big_Query_data(df_limpio, tabla)
+        return registros_postgres
 
     @task
-    def subir_inf_artista(list_dic, project_id,tabla, dataset ):
+    def subir_inf_postgres(lista_registros, project_id):
 
         logging.info(f'El Proyecto ID es: {project_id}')
-        lista_registros = []
-        for dic in list_dic:
-            try:
-                registro_validado = AlbumSchema(**dic)
-                lista_registros.append(registro_validado.model_dump())
-            except Exception as e:
-                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
 
         if lista_registros:
-            #PostgresSQL
+            # PostgresSQL
             Sync_Album.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
 
-            #BigQurry
+        else:
+            mensaje = f"ERROR. La lista de registros para Postgres esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
+
+    @task
+    def subir_inf_big_query(lista_registros, project_id, tabla, dataset):
+
+        logging.info(f'El Proyecto ID es: {project_id}')
+
+        try:
+            # BigQurry
             cliente_gcp = gcp.get_bq_client(project_id)
             gcp.cargar_dataframe(cliente_gcp, lista_registros, dataset, tabla, esquemas.SCHEMAS_BQ[tabla])
             logging.info(f"OK. Se ingreso la informacion en la tabla {tabla} de Big Querry")
 
-        else:
-            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+        except Exception as e:
+            mensaje = f"ERROR. Error al subir informacion a Big query: {str(e)}."
             logging.error(mensaje)
             raise ValueError(mensaje)
 
-    @task_group(group_id="artista")
-    def procesar_artista(cliente_project_id,tabla, dataset ):
+
+    @task(multiple_outputs=True)
+    def obtener_parametros_orquestador(**kwargs):
+        dag_run_conf = kwargs.get("dag_run").conf if kwargs.get("dag_run") else {}
+
+
+        return {
+            "nombre": dag_run_conf.get("artista_nombre", "Artista Por Defecto"),
+            # Asegura que la clave coincida con el conf del orquestador
+            "id_spotify": dag_run_conf.get("artista_id_spotify")
+        }
+
+    @task_group(group_id="album")
+    def procesar_artista(cliente_project_id,tabla, dataset):
+
+        params_artista = obtener_parametros_orquestador()
         create_tabla_album()
-        return_dicc_albums = extraer_album(id_artist='33ScadVnbm2X8kkUqOkC6Z')
-        #return_dicc_albums = extraer_album(id_artist=id_spotify)
-        subir_inf_artista(return_dicc_albums,cliente_project_id,tabla, dataset)
+
+        return_dicc_albums = extraer_album(id_artist=params_artista["id_spotify"],
+                                            nombre_artista=params_artista["nombre"]
+        )
+
+        retorno_datos = tratamiento_de_datos(return_dicc_albums, tabla)
+        subir_inf_postgres(retorno_datos,cliente_project_id)
+        #subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
         return return_dicc_albums
 
 

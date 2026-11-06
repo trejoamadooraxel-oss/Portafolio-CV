@@ -15,7 +15,7 @@ import Spotify_api.Conexiones.etl_conect_big_querry as gcp
 
 #Postgres
 from Spotify_api.Models import Sync_Artist
-from Spotify_api.Esquemas.esquemas import ArtistaSchema
+
 
 #Esquemas
 import Spotify_api.Esquemas.etl_esquemas_big_querry as esquemas
@@ -23,6 +23,9 @@ import Spotify_api.Esquemas.etl_esquemas_big_querry as esquemas
 #Extraer Inf
 import Spotify_api.Conexiones.conection_api as spotify_api
 import Spotify_api.Spotify_Api.extract_inf_api as extract_inf
+
+#Tratamiento y Transformacion
+from Spotify_api.Transforms.pipeline_transform import DataPipeline
 
 
 def verify_conection_spotify():
@@ -79,8 +82,8 @@ with DAG(
     @task(multiple_outputs=True)
     def extraer_artista(**kwargs):
 
-
-        nombre_artista = 'Don Omar '#kwargs["params"]["nombre_artista"]
+        dag_run_conf = kwargs.get("dag_run").conf if kwargs.get("dag_run") else {}
+        nombre_artista = dag_run_conf.get("artista_a_procesar", "Artista Por Defecto")
         sp = spotify_api.conection_spotify()
         id_spotify, artistas = extract_inf.identificador_artistas(sp, nombre_artista)
         logging.info(f"OK. Artista extraído: {artistas}")
@@ -99,38 +102,54 @@ with DAG(
             logging.error(f"ERROR. No se creo ni se encontro la tabla : {e}")
 
     @task
-    def subir_inf_artista(list_dic, project_id,tabla, dataset ):
+    def tratamiento_de_datos(list_dic,tabla):
+        pipeline = DataPipeline()
+        df_limpio = pipeline._transformar_datos(list_dic)
+        registros_postgres = pipeline._Postgres_data(df_limpio, tabla)
+        #df_big_query = pipeline._Big_Query_data(df_limpio, tabla)
+        return registros_postgres
+
+    @task(task_id="subir_inf_postgres")
+    def subir_inf_postgres(lista_registros, project_id, id_artista ):
 
         logging.info(f'El Proyecto ID es: {project_id}')
-        lista_registros = []
-        for dic in list_dic:
-            try:
-                registro_validado = ArtistaSchema(**dic)
-                lista_registros.append(registro_validado.model_dump())
-            except Exception as e:
-                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
 
         if lista_registros:
             #PostgresSQL
             Sync_Artist.insert_to_table(lista_registros)
             logging.info(f"OK. Se ingreso la informacion en la tabla")
 
+        else:
+            mensaje = f"ERROR. La lista de registros para Postgres esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
+        return id_artista
+
+    @task
+    def subir_inf_big_query(lista_registros, project_id,tabla, dataset ):
+
+        logging.info(f'El Proyecto ID es: {project_id}')
+
+        try:
             #BigQurry
             cliente_gcp = gcp.get_bq_client(project_id)
             gcp.cargar_dataframe(cliente_gcp, lista_registros, dataset, tabla, esquemas.SCHEMAS_BQ[tabla])
             logging.info(f"OK. Se ingreso la informacion en la tabla {tabla} de Big Querry")
 
-        else:
-            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+        except Exception as e:
+            mensaje = f"ERROR. Error al subir informacion a Big query: {str(e)}."
             logging.error(mensaje)
             raise ValueError(mensaje)
+
 
     @task_group(group_id="artista")
     def procesar_artista(cliente_project_id,tabla, dataset ):
         create_tabla_artista()
         resultado_artista_xcom = extraer_artista()
-        subir_inf_artista(resultado_artista_xcom["datos_artista"],cliente_project_id,tabla, dataset)
-        return resultado_artista_xcom
+        retorno_datos = tratamiento_de_datos(resultado_artista_xcom["datos_artista"], tabla)
+        id_artists = subir_inf_postgres(retorno_datos,cliente_project_id, resultado_artista_xcom["id_spotify"])
+        #subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
 
 
     xcom_artista = procesar_artista(verify_big_querry_conect.output,'artista','Spotify_dataset')

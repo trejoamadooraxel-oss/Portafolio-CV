@@ -2,11 +2,19 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import platform
+import os
 
-from dotenv import load_dotenv
-load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
+if platform.system() == 'Darwin':
+    from dotenv import load_dotenv
 
-credenciales = os.getenv('SQLALCHEMY_HOST_SYNC')
+    load_dotenv('/Users/axel/Documents/Portafolio/Spotify_api/env_var/varaibles_credential.env')
+
+    credenciales = os.getenv('SQLALCHEMY_HOST_SYNC_LOCAL')
+
+else:
+    credenciales = os.getenv('SQLALCHEMY_HOST_SYNC')
+
 
 # Creamos el motor síncrono tradicional
 engine = create_engine(

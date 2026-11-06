@@ -24,6 +24,9 @@ import Spotify_api.Esquemas.etl_esquemas_big_querry as esquemas
 import Spotify_api.Conexiones.conection_api as spotify_api
 import Spotify_api.Spotify_Api.extract_inf_api as extract_inf
 
+#Tratamiento y Transformacion
+from Spotify_api.Transforms.pipeline_transform import DataPipeline
+
 
 def verify_conection_spotify():
     try:
@@ -96,54 +99,57 @@ with DAG(
 
 
     @task
-    def subir_inf_artista(list_dic, project_id,tabla, dataset ):
+    def tratamiento_de_datos(list_dic, tabla):
+        pipeline = DataPipeline()
+        df_limpio = pipeline._transformar_datos(list_dic)
+        #registros_postgres = pipeline._Postgres_data(df_limpio, tabla)
+        df_big_query = pipeline._Big_Query_data(df_limpio, tabla)
+        return df_big_query
+
+
+    @task
+    def subir_inf_postgres(lista_registros, project_id):
 
         logging.info(f'El Proyecto ID es: {project_id}')
-        lista_registros = []
-        for dic in list_dic:
-            try:
-                registro_validado = TrackSchema(**dic)
-                lista_registros.append(registro_validado.model_dump())
-            except Exception as e:
-                logging.warning(f"Warning. No se pudo validar la informacion de {dic}, {e}")
 
         if lista_registros:
-            print(lista_registros)
-            #BigQurry
+            # PostgresSQL
+            Sync_Track.insert_to_table(lista_registros)
+            logging.info(f"OK. Se ingreso la informacion en la tabla")
+
+        else:
+            mensaje = f"ERROR. La lista de registros para Postgres esta vacia: {lista_registros}."
+            logging.error(mensaje)
+            raise ValueError(mensaje)
+
+
+    @task
+    def subir_inf_big_query(lista_registros, project_id, tabla, dataset):
+
+        logging.info(f'El Proyecto ID es: {project_id}')
+
+        try:
+            # BigQurry
             cliente_gcp = gcp.get_bq_client(project_id)
             gcp.cargar_dataframe(cliente_gcp, lista_registros, dataset, tabla, esquemas.SCHEMAS_BQ[tabla])
             logging.info(f"OK. Se ingreso la informacion en la tabla {tabla} de Big Querry")
 
-            lista_canciones_limpia = [
-                {k: v for k, v in cancion.items() if k != 'id_album_spotify'}
-                for cancion in lista_registros
-            ]
-
-            #PostgresSQL
-            Sync_Track.insert_to_table(lista_canciones_limpia)
-            logging.info(f"OK. Se ingreso la informacion en la tabla")
-
-        else:
-            mensaje = f"ERROR. La lista de registros esta vacia: {lista_registros}."
+        except Exception as e:
+            mensaje = f"ERROR. Error al subir informacion a Big query: {str(e)}."
             logging.error(mensaje)
             raise ValueError(mensaje)
 
-    @task_group(group_id="artista")
+
+    @task_group(group_id="canciones")
     def procesar_canciones(cliente_project_id,tabla, dataset ):
 
-        lista_albums = [
-                        {'nombre_album': 'DeBÍ TiRAR MáS FOToS', 'id_spotify': '5K79FLRUCSysQnVESLcTdb', 'num_canciones': 17, 'id_artista': 37},
-                        {'nombre_album': 'nadie sabe lo que va a pasar mañana', 'id_spotify': '4FftCsAcXXD1nFO9RFUNFO', 'num_canciones': 22, 'id_artista': 37},
-                        {'nombre_album': 'Un Verano Sin Ti', 'id_spotify': '3RQQmkQEvNCY4prGKE6oc5', 'num_canciones': 23, 'id_artista': 37},
-                        {'nombre_album': 'EL ÚLTIMO TOUR DEL MUNDO', 'id_spotify': '2d9BCZeAAhiZWPpbX9aPCW', 'num_canciones': 16, 'id_artista': 37},
-                        {'nombre_album': 'LAS QUE NO IBAN A SALIR', 'id_spotify': '4gvQO5mEuhbMSrLIuwXkmz', 'num_canciones': 10, 'id_artista': 37},
-                        {'nombre_album': 'YHLQMDLG', 'id_spotify': '5lJqux7orBlA1QzyiBGti1', 'num_canciones': 20, 'id_artista': 37},
-                        {'nombre_album': 'OASIS', 'id_spotify': '6ylFfzx32ICw4L1A7YWNLN', 'num_canciones': 8, 'id_artista': 37},
-                        {'nombre_album': 'X 100PRE', 'id_spotify': '7CjJb2mikwAWA1V6kewFBF', 'num_canciones': 15, 'id_artista': 37}
-                    ]
+        lista_albums = [{'id_spotify_artist': '3rWZHrfrsPBxVy692yAIxF', 'num_canciones': 10, 'url': {'spotify': 'https://open.spotify.com/album/6x9IdAz7Br6NnlK7BBJubL'}, 'id_spotify': '6x9IdAz7Br6NnlK7BBJubL', 'nombre_album': 'The Thread', 'tipo_album': 'album', 'fecha_precisa': 'day', 'fecha_lanzamiento': '2026-07-24', 'id_artista': 161}, {'id_spotify_artist': '3rWZHrfrsPBxVy692yAIxF', 'num_canciones': 12, 'url': {'spotify': 'https://open.spotify.com/album/055CZXcGINxmZKxwQ9hroP'}, 'id_spotify': '055CZXcGINxmZKxwQ9hroP', 'nombre_album': 'petal rock black', 'tipo_album': 'album', 'fecha_precisa': 'day', 'fecha_lanzamiento': '2026-02-17', 'id_artista': 161}]
+
         create_tabla_canciones()
         return_dicc_tracks = extraer_tacks(lista_albums)
-        subir_inf_artista(return_dicc_tracks,cliente_project_id,tabla, dataset)
+        retorno_datos = tratamiento_de_datos(return_dicc_tracks, tabla)
+        #subir_inf_postgres(retorno_datos,cliente_project_id)
+        subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
         return return_dicc_tracks
 
 

@@ -100,58 +100,22 @@ def obtener_siguiente_id_artista(table_ref, client):
     except Exception:
         return 1
 
-def cargar_dataframe(client, datos_artista: list, dataset_id, nombre_table, schema=None):
+def cargar_dataframe(client, df_datos, dataset_id, nombre_table, schema=None):
 
     asegurar_dataset(client, dataset_id)
 
     table_ref = f"{client.project}.{dataset_id}.{nombre_table}"
     job_config = bigquery.LoadJobConfig(
         write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
-        autodetect=True if schema is None else False,
+        autodetect=False if schema is None else False,
         schema=schema,
     )
 
     time.sleep(5)
 
-
-    df = pd.DataFrame(datos_artista)
-    print(df.columns)
-    #id_siguiente = obtener_siguiente_id_artista(table_ref, client)
-    #df.insert(0,'id_artista', id_siguiente)
-
-    if nombre_table == 'album':
-
-        def normalizar_fecha(fecha_str):
-            if not isinstance(fecha_str, str) or not fecha_str:
-                return datetime(1998, 1, 27)
-            try:
-                # Fecha completa: "2003-06-15"
-                if len(fecha_str) == 10:
-                    return datetime.strptime(fecha_str, "%Y-%m-%d")
-                # Solo año y mes: "2003-06"
-                elif len(fecha_str) == 7:
-                    return datetime.strptime(fecha_str, "%Y-%m")
-                # Solo año: "2003"
-                elif len(fecha_str) == 4:
-                    return datetime.strptime(fecha_str, "%Y")
-                else:
-                    return datetime(1998, 1, 27)
-            except:
-                return datetime(1998, 1, 27)
-
-        col_drop = ['id_artista']
-        df.drop(col_drop, axis=1, inplace=True)
-
-        df['fecha_lanzamiento'] = df["fecha_lanzamiento"].apply(lambda x: normalizar_fecha(x))
-
-    if nombre_table == 'track':
-        col_drop = ['id_album']
-        df.drop(col_drop, axis=1, inplace=True)
-
-    df["fecha_ingesta"] = datetime.now(timezone.utc)
-
-    job = client.load_table_from_dataframe(df, table_ref, job_config=job_config)
+    job = client.load_table_from_dataframe(df_datos, table_ref, job_config=job_config)
     job.result()
+
     return job.output_rows
 
 if __name__ == "__main__":
