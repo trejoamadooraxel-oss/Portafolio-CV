@@ -1,6 +1,12 @@
 select
-    cast(id_cancion as INT64) as cancion_id,
+    id_spotify_album as id_album,
     trim(nombre_cancion) as cancion_nombre,
-    id_spotify as spotify_cancion_id,
-    cast(id_album as INT64) as album_id
+    id_spotify as id_cancion,
+    cast(num_cancion as INT64) as num_cancion_album,
+    cast(duracion as INT64) as duracion_milisegundos,
+    FORMAT_TIME('%M:%S', TIME_ADD(TIME '00:00:00', INTERVAL duracion MILLISECOND)) AS duracion_segundos,
+    cast(discos as INT64) as disco,
+    explicito as explicito,
+    url as url_cancion,
+    cast(fecha_ingesta as TIMESTAMP) as fecha_actualizacion
 from {{ source('spotify_raw', 'track') }}

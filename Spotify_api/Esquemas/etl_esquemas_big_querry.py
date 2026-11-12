@@ -31,6 +31,23 @@ SCHEMAS_BQ = {
         bigquery.SchemaField("fecha_ingesta", "TIMESTAMP", mode="REQUIRED", description="Fecha de auditoría del ETL")
 
 
+    ],
+    'mas_inf':[
+        bigquery.SchemaField( 'artista', "STRING", mode="NULLABLE", description="Ciudad Oyente Num "),
+        bigquery.SchemaField( 'seguidores',"INTEGER", mode="NULLABLE", description="Seguidores Totales "),
+        bigquery.SchemaField( 'escuchas_mensuales',"INTEGER", mode="NULLABLE", description="Escuchas Mensuales "),
+        bigquery.SchemaField( 'ciudad_oyente_uno',"STRING", mode="NULLABLE", description="Ciudad Oyente Num 1"),
+        bigquery.SchemaField( 'num_oyentes_uno',"INTEGER", mode="NULLABLE", description="Num Oyentes Ciudad Num 1"),
+        bigquery.SchemaField( 'ciudad_oyente_dos',"STRING", mode="NULLABLE", description="Ciudad Oyente Num 2"),
+        bigquery.SchemaField( 'num_oyentes_dos',"INTEGER", mode="NULLABLE", description="Num Oyentes Ciudad Num 2"),
+        bigquery.SchemaField( 'ciudad_oyente_tres',"STRING", mode="NULLABLE", description="Ciudad Oyente Num 3"),
+        bigquery.SchemaField( 'num_oyentes_tres',"INTEGER", mode="NULLABLE", description="Num Oyentes Ciudad Num 3"),
+        bigquery.SchemaField( 'ciudad_oyente_cuatro',"STRING", mode="NULLABLE", description="Ciudad Oyente Num 4"),
+        bigquery.SchemaField( 'num_oyentes_cuatro',"INTEGER", mode="NULLABLE", description="Num Oyentes Ciudad Num 4"),
+        bigquery.SchemaField( 'ciudad_oyente_cinco',"STRING", mode="NULLABLE", description="Ciudad Oyente Num 5"),
+        bigquery.SchemaField( 'num_oyentes_cinco',"INTEGER", mode="NULLABLE", description="Num Oyentes Ciudad Num 5"),
+        bigquery.SchemaField("fecha_ingesta", "TIMESTAMP", mode="REQUIRED", description="Fecha de auditoría del ETL")
+
     ]
 
 }

@@ -45,7 +45,7 @@ class DataPipeline:
         return  df_salida
 
 
-    def _Postgres_data(self, df_clean: pd.DataFrame, tabla: str) -> list:
+    def _Postgres_data(self, tabla: str, df_clean: pd.DataFrame) -> list:
 
         logging.info(f'Generando la lista de registros para {tabla}.')
 
@@ -93,6 +93,9 @@ class DataPipeline:
 
                 if tabla == 'track':
                     registro_validado_big_query = TrackSchemaBQ(**dic)
+
+                if tabla == 'mas_inf':
+                    registro_validado_big_query = InfSchema(**dic)
 
                 registros_bigquerry.append(registro_validado_big_query.model_dump(mode='json'))
 

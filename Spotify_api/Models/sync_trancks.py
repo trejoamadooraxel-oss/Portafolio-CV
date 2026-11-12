@@ -1,6 +1,7 @@
 
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy import insert, select
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 from Spotify_api.Conexiones.sync_conect_sqlalchemy import Base, engine, SessionLocal
 
 
@@ -8,8 +9,8 @@ class Sync_Track(Base):
     __tablename__ = 'canciones'
 
     id_cancion = Column(Integer, primary_key=True, autoincrement=True)
-    nombre_cancion = Column(String(100), nullable=False)
-    id_spotify = Column(String(100), nullable=False, )
+    nombre_cancion = Column(String(100), nullable=False, unique=False)
+    id_spotify = Column(String(100), nullable=False, unique=True)
     num_cancion = Column(Integer)
     duracion = Column(Integer)
     id_album = Column(Integer, ForeignKey("album.id_album"), nullable=False)
@@ -30,9 +31,14 @@ class Sync_Track(Base):
     def insert_to_table(cls, values):
         with SessionLocal() as session:
             try:
-                session.execute(insert(cls), values)
+                stmt = insert(cls)
+
+                # 2. Si el nombre del artista ya existe, no hacemos nada (evita el rollback por UniqueViolation)
+                stmt_on_conflict = stmt.on_conflict_do_nothing(index_elements=['id_spotify'])
+
+                # 3. Ejecutamos pasando el lote de valores
+                session.execute(stmt_on_conflict, values)
                 session.commit()
-                print("Registro insertado correctamente")
             except Exception as e:
                 session.rollback()
                 print(f"ERROR: {e}")

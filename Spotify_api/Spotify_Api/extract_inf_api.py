@@ -77,6 +77,9 @@ def list_albums(sp, id_artist, name_artist):
     all_albums = []
     dicc_abums = []
 
+    id_artista = Sync_Artist.id_db(name_artist)
+    print(f'El id es: {id_artist}')
+
     results = sp.artist_albums(id_artist, album_type='album,single,compilation', country='MX', limit=10)
     #print(json.dumps(results, indent=4, sort_keys=True))
     all_albums.extend(results['items'])
@@ -86,7 +89,7 @@ def list_albums(sp, id_artist, name_artist):
         all_albums.extend(results['items'])
         time.sleep(1)
 
-    id_artista = Sync_Artist.id_db(name_artist)
+
     time.sleep(1)
 
     for album in all_albums:
@@ -107,11 +110,11 @@ def list_albums(sp, id_artist, name_artist):
     return dicc_abums
 
 
-def list_tracks(sp, dicc_abums):
+def list_tracks(sp, list_albums):
     dicc_track = []
-    all_albums = [album["id_spotify"] for album in dicc_abums]
+    #all_albums = [album["id_spotify"] for album in dicc_abums]
 
-    for album_id in all_albums:
+    for album_id in list_albums:
 
         # Traemos el id que corresponde al artista:
         id_album = Sync_Album.id_db(album_id)

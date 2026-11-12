@@ -1,8 +1,11 @@
 select
-    cast(id_album as INT64) as album_id,
+    id_spotify_artist as id_artista,
+    cast(num_canciones as INT64) as num_canciones_album,
+    url as url_artista,
+    id_spotify as id_album,
     trim(nombre_album) as album_nombre,
-    id_spotify as spotify_album_id,
+    trim(tipo_album) as discografia,
+    trim(fecha_precisa) as temporalidad,
     cast(fecha_lanzamiento as DATE) as lanzado_fecha,
-    cast(num_canciones as INT64) as total_tracks_album,
-    cast(id_artista as INT64) as artista_id
+    cast(fecha_ingesta as TIMESTAMP) as fecha_actualizacion
 from {{ source('spotify_raw', 'album') }}

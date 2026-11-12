@@ -7,12 +7,24 @@ detalles_extra as (
 )
 
 select
-    a.artista_id,
-    a.artista_nombre,
-    a.spotify_artista_id,
-    coalesce(d.artista_seguidores, 0) as artista_seguidores,
-    coalesce(d.oyentes_mensuales, 0) as oyentes_mensuales,
-    'Sin Género' as genero,
-    a.cargado_at
+
+    a.id_artista,
+    a.nombre_artista,
+    a.url_artista,
+    a.fecha_actualizacion as ultima_actualizacion_artista,
+    d.seguidores,
+    d.oyentes_mensuales,
+    d.ciudad_num_uno,
+    d.oyentes_ciudad_num_uno,
+    d.ciudad_num_dos,
+    d.oyentes_ciudad_num_dos,
+    d.ciudad_num_tres,
+    d.oyentes_ciudad_num_tres,
+    d.ciudad_num_cuatro,
+    d.oyentes_ciudad_num_cuatro,
+    d.ciudad_num_cinco,
+    d.oyentes_ciudad_num_cinco,
+    d.fecha_actualizacion as ultima_actualizacion_mas_inf
+
 from artistas_base a
-left join detalles_extra d on a.artista_id = d.artista_id
+left join detalles_extra d on a.nombre_artista = d.nombre_artista

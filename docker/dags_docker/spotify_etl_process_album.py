@@ -41,6 +41,8 @@ def verify_conection_spotify():
 def verificar_conexion_bigquery(**context):
     return gcp.verificar_conexion_bigquery()
 
+
+
 with DAG(
     dag_id="spotify_etl_process_album",
     schedule=None,
@@ -108,9 +110,7 @@ with DAG(
         return registros_postgres
 
     @task
-    def subir_inf_postgres(lista_registros, project_id):
-
-        logging.info(f'El Proyecto ID es: {project_id}')
+    def subir_inf_postgres(lista_registros):
 
         if lista_registros:
             # PostgresSQL
@@ -151,10 +151,16 @@ with DAG(
             "id_spotify": dag_run_conf.get("artista_id_spotify")
         }
 
+
+    @task()
+    def retorno_de_variables_canciones(list_dicc):
+        return [registro['id_spotify'] for registro in list_dicc]
+
+    '''
     @task_group(group_id="album")
     def procesar_artista(cliente_project_id,tabla, dataset):
 
-        params_artista = obtener_parametros_orquestador()
+
         create_tabla_album()
 
         return_dicc_albums = extraer_album(id_artist=params_artista["id_spotify"],
@@ -162,11 +168,33 @@ with DAG(
         )
 
         retorno_datos = tratamiento_de_datos(return_dicc_albums, tabla)
-        subir_inf_postgres(retorno_datos,cliente_project_id)
+        subir_informacion = subir_inf_postgres(retorno_datos,cliente_project_id)
         #subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
         return return_dicc_albums
 
 
-    xcom_albums = procesar_artista(verify_big_querry_conect.output,'album','Spotify_dataset')
+    #xcom_albums = procesar_artista(verify_big_querry_conect.output,'album','Spotify_dataset')
+    '''
 
-    start_process >> verify_spotify_api_conect >> verify_big_querry_conect >> xcom_albums
+    params_artista = obtener_parametros_orquestador()
+    return_dicc_albums = extraer_album(id_artist=params_artista["id_spotify"],
+                                       nombre_artista=params_artista["nombre"])
+    retorno_datos = tratamiento_de_datos(return_dicc_albums, 'album')
+    subir_info_postgres = subir_inf_postgres(retorno_datos)
+    #subir_info_bq = subir_inf_big_query(retorno_datos, verify_big_querry_conect.output,'album', 'Spotify_dataset')
+    varaibles_canciones =  retorno_de_variables_canciones(retorno_datos)
+
+
+
+    #Flujos
+    start_process >> verify_spotify_api_conect  >> create_tabla_album() >> params_artista >> return_dicc_albums >> retorno_datos
+    retorno_datos >> subir_info_postgres
+    retorno_datos >> varaibles_canciones
+
+    #retorno_datos >> verify_big_querry_conect >> subir_info_bq
+
+
+
+
+    #
+

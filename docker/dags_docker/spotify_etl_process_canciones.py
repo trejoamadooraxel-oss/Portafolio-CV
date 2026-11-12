@@ -23,6 +23,7 @@ import Spotify_api.Esquemas.etl_esquemas_big_querry as esquemas
 #Extraer Inf
 import Spotify_api.Conexiones.conection_api as spotify_api
 import Spotify_api.Spotify_Api.extract_inf_api as extract_inf
+from Spotify_api.Spotify_Api.extract_inf_api import list_albums
 
 #Tratamiento y Transformacion
 from Spotify_api.Transforms.pipeline_transform import DataPipeline
@@ -102,15 +103,13 @@ with DAG(
     def tratamiento_de_datos(list_dic, tabla):
         pipeline = DataPipeline()
         df_limpio = pipeline._transformar_datos(list_dic)
-        #registros_postgres = pipeline._Postgres_data(df_limpio, tabla)
-        df_big_query = pipeline._Big_Query_data(df_limpio, tabla)
-        return df_big_query
+        registros_postgres = pipeline._Postgres_data(df_limpio, tabla)
+        #df_big_query = pipeline._Big_Query_data(df_limpio, tabla)
+        return registros_postgres
 
 
     @task
-    def subir_inf_postgres(lista_registros, project_id):
-
-        logging.info(f'El Proyecto ID es: {project_id}')
+    def subir_inf_postgres(lista_registros):
 
         if lista_registros:
             # PostgresSQL
@@ -140,19 +139,37 @@ with DAG(
             raise ValueError(mensaje)
 
 
+    @task()
+    def obtener_parametros_orquestador_album(**kwargs):
+        dag_run_conf = kwargs.get("dag_run").conf if kwargs.get("dag_run") else {}
+        list_albums_id = dag_run_conf.get("list_albums_id")
+
+        logging.info(f"DATOS RECIBIDOS EN CANCIONES: {list_albums_id}")
+        return list_albums_id
+
+
+    """
     @task_group(group_id="canciones")
     def procesar_canciones(cliente_project_id,tabla, dataset ):
 
-        lista_albums = [{'id_spotify_artist': '3rWZHrfrsPBxVy692yAIxF', 'num_canciones': 10, 'url': {'spotify': 'https://open.spotify.com/album/6x9IdAz7Br6NnlK7BBJubL'}, 'id_spotify': '6x9IdAz7Br6NnlK7BBJubL', 'nombre_album': 'The Thread', 'tipo_album': 'album', 'fecha_precisa': 'day', 'fecha_lanzamiento': '2026-07-24', 'id_artista': 161}, {'id_spotify_artist': '3rWZHrfrsPBxVy692yAIxF', 'num_canciones': 12, 'url': {'spotify': 'https://open.spotify.com/album/055CZXcGINxmZKxwQ9hroP'}, 'id_spotify': '055CZXcGINxmZKxwQ9hroP', 'nombre_album': 'petal rock black', 'tipo_album': 'album', 'fecha_precisa': 'day', 'fecha_lanzamiento': '2026-02-17', 'id_artista': 161}]
-
+      
         create_tabla_canciones()
         return_dicc_tracks = extraer_tacks(lista_albums)
         retorno_datos = tratamiento_de_datos(return_dicc_tracks, tabla)
-        #subir_inf_postgres(retorno_datos,cliente_project_id)
-        subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
+        subir_inf_postgres(retorno_datos,cliente_project_id)
+        #subir_inf_big_query(retorno_datos, cliente_project_id, tabla, dataset)
         return return_dicc_tracks
 
 
     xcom_canciones = procesar_canciones(verify_big_querry_conect.output,'track','Spotify_dataset')
+    """
 
-    start_process >> verify_spotify_api_conect >> verify_big_querry_conect >> xcom_canciones
+    list_id_albums = obtener_parametros_orquestador_album()
+    return_dicc_tracks = extraer_tacks(list_id_albums)
+    retorno_datos = tratamiento_de_datos(return_dicc_tracks, 'track')
+    subir_info_postgres = subir_inf_postgres(retorno_datos)
+    #subir_info_bq = subir_inf_big_query(retorno_datos, verify_big_querry_conect.output, 'track', 'Spotify_dataset')
+
+    #Flujos
+    start_process >> verify_spotify_api_conect  >> create_tabla_canciones() >> list_id_albums >> return_dicc_tracks >> retorno_datos
+    retorno_datos >> subir_info_postgres

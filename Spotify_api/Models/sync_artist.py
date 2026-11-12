@@ -1,7 +1,13 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import insert, select
 from Spotify_api.Conexiones.sync_conect_sqlalchemy import Base, engine, SessionLocal
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 class Sync_Artist(Base):
     __tablename__ = 'artista'
@@ -35,14 +41,16 @@ class Sync_Artist(Base):
     @classmethod
     def id_db(cls, value):
         with SessionLocal() as session:
+            logging.info(f"El id_artista a buscar es {value} ")
             id_artist = None
             try:
                 stmt = select(Sync_Artist.id_artista).where(Sync_Artist.nombre_artista == value)
                 result = session.scalars(stmt)
                 id_artist = result.first()
-                print(f"El id_artista asociado con {value} es: {id_artist}")
+                logging.info(f"El id_artista asociado con {value} es: {id_artist}")
             except Exception as e:
-                print(f"ERROR: {e}")
+                logging.error(f"ERROR. Error crítico procesando el DataFrame: {str(e)}")
+                raise e
 
         return id_artist
 
