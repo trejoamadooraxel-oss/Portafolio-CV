@@ -3,3 +3,4 @@ docker/secrets/
 *.env
 __pycache__/
 .DS_Store
+.cache
