@@ -43,5 +43,7 @@ with DAG(
     test_staging = dbt_task("dbt_test_staging", "test --select path:models/staging")
     run_intermediate = dbt_task("dbt_run_intermediate", "run --select path:models/intermediate")
     test_intermediate = dbt_task("dbt_test_intermediate", "test --select path:models/intermediate")
+    run_marts = dbt_task("dbt_run_mars", "run --select path:models/marts")
+    test_marts = dbt_task("dbt_test_mars", "test --select path:models/marts")
 
-    run_staging >> test_staging >> run_intermediate >> test_intermediate
+    run_staging >> test_staging >> run_intermediate >> test_intermediate >> run_marts >> test_marts

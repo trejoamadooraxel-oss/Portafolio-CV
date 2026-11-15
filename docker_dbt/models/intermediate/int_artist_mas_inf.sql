@@ -1,9 +1,18 @@
 with artistas_base as (
     select * from {{ ref('stg_artistas') }}
+    qualify row_number() over(
+        partition by id_artista
+        order by fecha_actualizacion desc
+    ) = 1
+
 ),
 
 detalles_extra as (
     select * from {{ ref('stg_mas_inf') }}
+    qualify row_number() over(
+        partition by nombre_artista
+        order by fecha_actualizacion desc
+    ) = 1
 )
 
 select

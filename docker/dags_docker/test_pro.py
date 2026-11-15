@@ -273,7 +273,7 @@ with (DAG(
             conection_p = None
             list_info = None
             try:
-                list_artist = Sync_Queries.artist_missing()
+                list_artist = [nombre_artista]
                 logging.info(f'{list_artist}')
                 conection_p = con_playwright.Conection_playwright(headless=True)
                 logging.info(f"OK. Iniciando proceso de extraccion mediante Playwrite")

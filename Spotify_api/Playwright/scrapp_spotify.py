@@ -78,10 +78,11 @@ def extract_artist_inf(conection_p, url, list_artist, Sync_Artist):
             # Debug: qué títulos hay realmente en pantalla
             titulos = page.locator('p[data-encore-id="cardTitle"]').all_inner_texts()
             print(f'Tarjetas encontradas: {titulos}')
+            page.wait_for_timeout(time_await_defaut * 5)
 
             tarjeta_artista = page.locator(f'p[title="{artist}"]').first
             tarjeta_artista.wait_for(state="visible", timeout=10000)
-            tarjeta_artista.click(force=True)
+            tarjeta_artista.click()
 
             print('Nos movemos al elemento de Acerc de:')
             page.wait_for_timeout(time_await_defaut * 13)
@@ -92,11 +93,11 @@ def extract_artist_inf(conection_p, url, list_artist, Sync_Artist):
             nodo_padre.click()
             page.wait_for_timeout(time_await_defaut * 5)
 
-            nodo_seguidores = page.locator('//div[@class="e-101040-text encore-text-body-small"]').filter(
+            nodo_seguidores = page.locator('//div[@class="e-101111-text encore-text-body-small"]').filter(
                 has_text="Seguidores")
             seguidores = nodo_seguidores.locator("..").locator("div").first.inner_text()
 
-            nodo_oyentes = page.locator('//div[@class="e-101040-text encore-text-body-small"]').filter(has_text="Oyentes")
+            nodo_oyentes = page.locator('//div[@class="e-101111-text encore-text-body-small"]').filter(has_text="Oyentes")
             print(f'numero de oyentes:{nodo_oyentes.count()} ')
             ciudades = []
             oyentes_ciudad = []
@@ -142,8 +143,7 @@ def extract_artist_inf(conection_p, url, list_artist, Sync_Artist):
 
 def main():
     url = "https://open.spotify.com/"
-    list_artist = ['Virus']
-
+    list_artist = ['Kendrick Lamar']
     conection_p = verifi_conection_playwrigth()
     list_info = extract_artist_inf(conection_p, url, list_artist, Sync_Artist)
     print(list_info)

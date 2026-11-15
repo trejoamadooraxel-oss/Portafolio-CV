@@ -1,6 +1,6 @@
 select
     id_spotify_album as id_album,
-    trim(nombre_cancion) as cancion_nombre,
+    trim(nombre_cancion) as nombre_cancion,
     id_spotify as id_cancion,
     cast(num_cancion as INT64) as num_cancion_album,
     cast(duracion as INT64) as duracion_milisegundos,
