@@ -6,7 +6,7 @@ Proyecto integral de Ingeniería y Analítica de Datos que extrae, procesa, mode
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## Arquitectura del Sistema
 
 ```text
 [Spotify API & Web Scraper (Playwright)] ──▶ [API Propia FastAPI] ──▶ [Pandas & PySpark]
@@ -28,7 +28,7 @@ Proyecto integral de Ingeniería y Analítica de Datos que extrae, procesa, mode
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 * **Lenguajes:** Python, SQL
 * **Extracción de Datos:** Spotipy (Spotify Web API), FastAPI (APIs REST propias), Playwright (Web Scraping)
@@ -41,7 +41,7 @@ Proyecto integral de Ingeniería y Analítica de Datos que extrae, procesa, mode
 
 ---
 
-## 💡 Decisiones Técnicas y Retos Resueltos
+## Decisiones Técnicas y Retos Resueltos
 
 * **Ingesta Idempotente:** Implementación de sentencias nativas de PostgreSQL `ON CONFLICT DO NOTHING` indexadas por el identificador único de Spotify (`id_spotify`) mediante SQLAlchemy. Esto evita fallos por duplicidad de nombres de álbumes o canciones y mantiene limpia la integridad transaccional.
 * **Orquestación Modular en Airflow:** Estructuración del flujo en módulos desacoplados con `@task_group` (`Proceso_Artista`, `Proceso_Album`, `Proceso_Canciones`), utilizando parámetros dinámicos (`Param`) y operadores `ShortCircuitOperator` para ejecuciones condicionales.
@@ -50,7 +50,7 @@ Proyecto integral de Ingeniería y Analítica de Datos que extrae, procesa, mode
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```text
 Portafolio/
@@ -76,7 +76,7 @@ Portafolio/
 
 ---
 
-## 📊 Evidencia Física y Resultados del Pipeline
+## Evidencia Física y Resultados del Pipeline
 
 ### 1. Orquestación en Apache Airflow
 Flujo completo de extracción, transformación y carga (ETL), junto con la ejecución de modelos analíticos en dbt.
@@ -118,3 +118,17 @@ Tableros interactivos finales construidos sobre los modelos analíticos de dbt.
 
 * **Dashboard en Power BI:**
   <img src="Spotify_api/Evidencia Fisica (Imagenes)/power-bi-reporte.png" alt="Reporte Power BI" width="800"/>
+
+
+---
+
+## Próximas Implementaciones (Roadmap)
+
+Para escalar la arquitectura hacia un entorno empresarial moderno de tipo **Data Lakehouse**, las siguientes fases del proyecto contemplan:
+
+* **Migración y Procesamiento en Databricks (Arquitectura Medallón):**
+  * **Capa Bronze (Bronce):** Ingesta de datos crudos provenientes de la API de Spotify y Playwright en formato **Delta Lake**.
+  * **Capa Silver (Plata):** Limpieza, deduplicación y estandarización de esquemas utilizando **PySpark** y transacciones ACID nativas (`MERGE INTO`).
+  * **Capa Gold (Oro):** Modelado dimensional y tablas agregadas de negocio listas para consumo analítico, integrando gobernanza con **Unity Catalog**.
+* **Visualización Ejecutiva en Tableau:**
+  * Conexión directa de **Tableau** a las tablas de la capa Gold en Databricks para desarrollar un dashboard interactivo enfocado en el análisis de tendencias musicales, popularidad de artistas y métricas de rendimiento de álbumes.

@@ -6,7 +6,7 @@ An end-to-end Data Engineering and Analytics project that extracts, processes, m
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```text
 [Spotify API & Web Scraper (Playwright)] ──▶ [Custom FastAPI] ──▶ [Pandas & PySpark]
@@ -28,7 +28,7 @@ An end-to-end Data Engineering and Analytics project that extracts, processes, m
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Languages:** Python, SQL
 * **Data Extraction:** Spotipy (Spotify Web API), FastAPI (Custom REST API), Playwright (Web Scraping)
@@ -41,7 +41,7 @@ An end-to-end Data Engineering and Analytics project that extracts, processes, m
 
 ---
 
-## 💡 Key Engineering Highlights & Challenges Solved
+## Key Engineering Highlights & Challenges Solved
 
 * **Idempotent Data Ingestion:** Implemented PostgreSQL native `ON CONFLICT DO NOTHING` clauses indexed by unique Spotify IDs (`id_spotify`) via SQLAlchemy, preventing pipeline crashes on duplicate album or track names while maintaining transactional integrity.
 * **Modular Airflow Orchestration:** Refactored monolithic workflows into decoupled `@task_group` modules (`Proceso_Artista`, `Proceso_Album`, `Proceso_Canciones`) utilizing dynamic parameters (`Param`) and `ShortCircuitOperator` flags for conditional execution.
@@ -50,7 +50,7 @@ An end-to-end Data Engineering and Analytics project that extracts, processes, m
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 Portafolio/
@@ -76,7 +76,7 @@ Portafolio/
 
 ---
 
-## 📊 Pipeline Execution & Results
+## Pipeline Execution & Results
 
 ### 1. Apache Airflow Orchestration
 End-to-end ETL workflow execution and downstream dbt transformation triggers.
@@ -118,3 +118,16 @@ Executive reports powered by dbt dimensional models.
 
 * **Power BI Dashboard:**
   <img src="Spotify_api/Evidencia Fisica (Imagenes)/power-bi-reporte.png" alt="Power BI Dashboard" width="800"/>
+
+---
+
+## Upcoming Implementations (Roadmap)
+
+To scale the current architecture into a modern enterprise **Data Lakehouse** paradigm, the next development phases include:
+
+* **Databricks Integration (Medallion Architecture):**
+  * **Bronze Layer:** Raw data ingestion from the Spotify Web API and Playwright scrapers stored in **Delta Lake** format.
+  * **Silver Layer:** Data cleansing, deduplication, and schema enforcement leveraging **PySpark** and native ACID `MERGE INTO` operations.
+  * **Gold Layer:** Dimensional modeling and business-level aggregations ready for analytics, governed via **Unity Catalog**.
+* **Executive Dashboard in Tableau:**
+  * Direct connection between **Tableau** and Databricks Gold tables to build an interactive dashboard focused on music trends, artist popularity, and album performance metrics.
