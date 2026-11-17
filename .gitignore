@@ -4,3 +4,8 @@ docker/secrets/
 __pycache__/
 .DS_Store
 .cache
+.idea/
+.vscode/
+*.py[cod]
+env_var/
+
